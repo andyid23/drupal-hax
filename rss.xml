@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>mysite</title>
+    <link>https://localhost/_sites/mysite/</link>
+    <description></description>
+    <copyright>Copyright (C) 2026 https://localhost/_sites/mysite</copyright>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 Sep 2026 00:36:42 GMT</lastBuildDate>
+    <generator>HAXcms NodeJS</generator>
+    <atom:link href="https://localhost/_sites/mysite/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Welcome to mysite</title>
+      <link>https://localhost/_sites/mysite/welcome</link>
+      <description>Welcome to your new HAX site! Click edit on the top bar to get started What can I do? We&apos;ve got a ton of blocks that are easy to use and get a lot done with little effort, so much in fact we made a little video exploring some of them! Here&apos;s a list of just a few things to get started, or if your a pro, delete this content and have fun! Edit this content by hitting &quot;Edit page&quot; above Hit enter in a paragraph of text to add another one Click &quot;Merlin&quot; to see a list of all the things you can do Tr...</description>
+      <guid>https://localhost/_sites/mysite/welcome</guid>
+      <pubDate>Sat, 19 Sep 2026 00:36:42 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
