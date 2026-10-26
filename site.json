@@ -136,6 +136,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-3f2195b3-b41e-41a9-a124-ee36f867ddc4",
+      "indent": 0,
+      "location": "pages/item-3f2195b3-b41e-41a9-a124-ee36f867ddc4/index.html",
+      "slug": "hasil-cloning-db-web-belajarweb",
+      "order": 0,
+      "parent": null,
+      "title": "Hasil Cloning DB web → belajarweb (2.57) — BERHASIL",
+      "description": "",
+      "metadata": {
+        "created": 1793056789,
+        "updated": 1793056789,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
