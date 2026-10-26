@@ -37,5 +37,12 @@
       <guid>https://localhost/mysite/cara-cek-container-vhost-nginx</guid>
       <pubDate>Mon, 26 Oct 2026 22:43:29 GMT</pubDate>
     </item>
+    <item>
+      <title>Cloning DB web ke belajarweb (2.57) — Status &amp; Penjelasan Backup/Bind/vhost</title>
+      <link>https://localhost/mysite/cloning-db-web-belajarweb-2-57</link>
+      <description>Status: CLONING BELUM DIJALANKAN — menunggu konfirmasi Langkah destruktif (DROP DATABASE + import) dihentikan sistem karena butuh persetujuan eksplisit. Belum ada data yang diubah. Semua backup sudah dibuat lebih dulu (lihat §3). Penjelasan diminta pengguna dicatat di §4–§7. 1. Folder /data/compose di 192.168.2.57 (sebelumnya belum diketahui) Isinya: 84 88 92 94 98 104 111 — pola sama dengan home (penomoran urut deployment). Yang aktif hanya 98 (stack swarm drupal-nfs , dibuktikan via label c...</description>
+      <guid>https://localhost/mysite/cloning-db-web-belajarweb-2-57</guid>
+      <pubDate>Mon, 26 Oct 2026 23:10:55 GMT</pubDate>
+    </item>
   </channel>
 </rss>

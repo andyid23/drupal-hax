@@ -120,6 +120,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-a7a3b998-ade4-46bf-8176-8938465f7b21",
+      "indent": 0,
+      "location": "pages/item-a7a3b998-ade4-46bf-8176-8938465f7b21/index.html",
+      "slug": "cloning-db-web-belajarweb-2-57",
+      "order": 0,
+      "parent": null,
+      "title": "Cloning DB web ke belajarweb (2.57) — Status & Penjelasan Backup/Bind/vhost",
+      "description": "",
+      "metadata": {
+        "created": 1793056255,
+        "updated": 1793056255,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
