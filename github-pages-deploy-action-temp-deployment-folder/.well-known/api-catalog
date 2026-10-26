@@ -1,0 +1,27 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://localhost/_sites/mysite/",
+      "item": [
+        {
+          "href": "https://localhost/_sites/mysite/x/api",
+          "rel": "service"
+        }
+      ],
+      "service-desc": [
+        {
+          "href": "https://localhost/_sites/mysite/x/api/openapi",
+          "type": "application/json"
+        },
+        {
+          "href": "https://localhost/_sites/mysite/x/api/openapi.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://localhost/_sites/mysite/x/api/openapi.yaml",
+          "type": "application/yaml"
+        }
+      ]
+    }
+  ]
+}

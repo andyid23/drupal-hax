@@ -23,5 +23,12 @@
       <guid>https://localhost/mysite/hasil-cek-config</guid>
       <pubDate>Mon, 26 Oct 2026 17:51:26 GMT</pubDate>
     </item>
+    <item>
+      <title>Hasil Cek Config Server 192.168.2.57 (belajarweb)</title>
+      <link>https://localhost/mysite/hasil-cek-belajarweb-192-168-2-57</link>
+      <description>Ringkasan Hasil cek langsung ke mesin 192.168.2.57 (hostname armbian-master ) via SSH hop dari home.pesanweb.my.id . Konfirmasi: belajarweb.pesanweb.my.id live di 192.168.2.57 , bukan di home.pesanweb.my.id. Sumber kebenaran routing ada di tabel proxy_host Nginx Proxy Manager (NPM) yang berjalan di mesin ini. 1. Routing NPM (otoritatif) Query langsung ke DB NPM ( npm_db , database npm , tabel proxy_host ): id domain forward enabled 1 belajarweb.pesanweb.my.id http://192.168.2.57:8087 ya 2 tty...</description>
+      <guid>https://localhost/mysite/hasil-cek-belajarweb-192-168-2-57</guid>
+      <pubDate>Mon, 26 Oct 2026 22:32:57 GMT</pubDate>
+    </item>
   </channel>
 </rss>

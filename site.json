@@ -88,6 +88,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-5005e0ae-f74d-40ed-88af-68f1c6425baa",
+      "indent": 0,
+      "location": "pages/item-5005e0ae-f74d-40ed-88af-68f1c6425baa/index.html",
+      "slug": "hasil-cek-belajarweb-192-168-2-57",
+      "order": 0,
+      "parent": null,
+      "title": "Hasil Cek Config Server 192.168.2.57 (belajarweb)",
+      "description": "",
+      "metadata": {
+        "created": 1793053977,
+        "updated": 1793053977,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
