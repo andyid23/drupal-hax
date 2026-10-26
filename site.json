@@ -168,6 +168,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-9d0a24b9-cf36-44c1-b8dd-1262cc433400",
+      "indent": 0,
+      "location": "pages/item-9d0a24b9-cf36-44c1-b8dd-1262cc433400/index.html",
+      "slug": "inventaris-db-situs-kondisi-password",
+      "order": 0,
+      "parent": null,
+      "title": "Inventaris DB & Situs, Kondisi Password, Cara Akses DB — home & 2.57",
+      "description": "",
+      "metadata": {
+        "created": 1793058716,
+        "updated": 1793058716,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
