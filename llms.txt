@@ -15,6 +15,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Welcome to mysite](https://localhost/mysite/pages/item-d8b3e8f5-581c-4317-bd26-5b76408483b7/index.md)
 - [Hasil Cek Config Server Drupal](https://localhost/mysite/pages/item-fe44d6d5-7e6e-4f4b-b50e-3813fae14eb9/index.md)
 - [Hasil Cek Config Server 192.168.2.57 (belajarweb)](https://localhost/mysite/pages/item-5005e0ae-f74d-40ed-88af-68f1c6425baa/index.md)
+- [Cara Cek Container Aktif, vhost nginx & Arti /data/compose](https://localhost/mysite/pages/item-f2adf3de-27b3-491f-98ae-31a8767f62ce/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
