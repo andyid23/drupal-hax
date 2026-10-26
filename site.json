@@ -72,7 +72,22 @@
         "created": 1789778202,
         "updated": 1789778202
       }
+    },
+    {
+      "id": "item-fe44d6d5-7e6e-4f4b-b50e-3813fae14eb9",
+      "indent": 0,
+      "location": "pages/item-fe44d6d5-7e6e-4f4b-b50e-3813fae14eb9/index.html",
+      "slug": "hasil-cek-config",
+      "order": 0,
+      "parent": null,
+      "title": "Hasil Cek Config Server Drupal",
+      "description": "",
+      "metadata": {
+        "created": 1793037086,
+        "updated": 1793037086,
+        "images": [],
+        "videos": []
+      }
     }
-  ],
-  "location": "/_sites/mysite/index.html"
+  ]
 }
