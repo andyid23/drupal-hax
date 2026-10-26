@@ -1,0 +1,64 @@
+<h2>Status: CLONING BELUM DIJALANKAN — menunggu konfirmasi</h2>
+<p>Langkah destruktif (DROP DATABASE + import) dihentikan sistem karena butuh persetujuan eksplisit. <strong>Belum ada data yang diubah.</strong> Semua backup sudah dibuat lebih dulu (lihat §3). Penjelasan diminta pengguna dicatat di §4–§7.</p>
+
+<h2>1. Folder /data/compose di 192.168.2.57 (sebelumnya belum diketahui)</h2>
+<p>Isinya: <code>84 88 92 94 98 104 111</code> — pola sama dengan home (penomoran urut deployment). Yang aktif hanya <strong><code>98</code></strong> (stack swarm <code>drupal-nfs</code>, dibuktikan via label container <code>com.docker.compose.project.working_dir</code> untuk container non-swarm dan nama volume <code>drupal-nfs_*</code>). Sisanya snapshot deployment lama (Jul–Des 2025) yang inaktif — arsip/rollback.</p>
+<table>
+<thead><tr><th>Mesin</th><th>Folder aktif</th><th>Orkestrator</th><th>Project</th></tr></thead>
+<tbody>
+<tr><td>home.pesanweb.my.id (192.168.2.40)</td><td>/data/compose/34</td><td>docker compose</td><td>drupal811 (6 container)</td></tr>
+<tr><td>192.168.2.57 (armbian-master)</td><td>/data/compose/98</td><td>docker swarm</td><td>drupal-nfs</td></tr>
+</tbody>
+</table>
+
+<h2>2. Bind mount vs edit di terminal root (nginx-conf)</h2>
+<p>Container <code>drupal_web_server</code> mem-bind <code>/data/compose/34/nginx-conf</code> (host) → <code>/etc/nginx/conf.d</code> (container). Karena bind mount, <strong>file di host dan di container adalah file yang sama</strong> (inode sama). Dua cara edit, hasilnya identik:</p>
+<ul>
+<li><strong>Edit di host (direkomendasikan)</strong>: <code>vi /data/compose/34/nginx-conf/drupal.conf</code> lalu reload: <code>docker exec drupal_web_server nginx -s reload</code></li>
+<li><strong>Edit dari terminal root di dalam container</strong>: <code>docker exec -it drupal_web_server sh</code> → edit <code>/etc/nginx/conf.d/drupal.conf</code>. Editor di container sering tak lengkap (busybox), tapi perubahannya tetap terlihat di host karena bind mount</li>
+</ul>
+<p>Perbedaan krusial hanya untuk path yang <em>bukan</em> bind mount: perubahan di dalam container (misal <code>/etc/nginx/nginx.conf</code> bawaan image) akan <strong>hilang saat container di-recreate</strong>, sedangkan file di bind mount dan named volume tetap ada. Untuk vhost, selalu edit lewat bind <code>nginx-conf</code> di host.</p>
+
+<h2>3. Cara kerja container backup (<code>drupal_backup</code> / fradelg/mysql-cron-backup)</h2>
+<p><strong>Dibuat via docker compose</strong> — bukan <code>docker run</code> manual. Buktinya label container: <code>com.docker.compose.project=drupal811</code>, <code>com.docker.compose.service=mysql-cron-backup</code>, <code>com.docker.compose.project.config_files=/data/compose/34/docker-compose.yml</code>, <code>com.docker.compose.depends_on=drupal_db:service_started</code>.</p>
+<p>Mekanisme (dari ENV + CMD):</p>
+<ul>
+<li>CMD: <code>dockerize -wait tcp://${MYSQL_HOST}:${MYSQL_PORT} -timeout ${TIMEOUT} /run.sh</code> → tunggu DB (service <code>drupal_db</code>, port 3306) benar-benar hidup sebelum mulai</li>
+<li><code>/run.sh</code> loop: tidur sampai <code>CRON_TIME=0 3 * * *</code> (setiap hari pukul 03:00 waktu container), lalu <code>mysqldump</code> dengan <code>MYSQLDUMP_OPTS=--no-tablespaces</code></li>
+<li><code>MYSQL_DATABASE</code> tidak di-set → <strong>dump SEMUA database</strong>, satu file per DB: <code>&lt;timestamp&gt;.&lt;nama-db&gt;.sql.gz</code></li>
+<li><code>GZIP_LEVEL=9</code>, <code>MAX_BACKUPS=15</code> (rotasi: hapus yang lebih lama dari 15), <code>INIT_BACKUP=1</code> (langsung backup sekali saat container start)</li>
+<li>Output ke <code>/backup</code> = bind mount host <code>/data/compose/34/db-backup/</code>. Ada juga symlink <code>latest.&lt;db&gt;.sql.gz</code></li>
+</ul>
+<p>Bukti nyata (Oct 26 03:00): <code>202610260300.web.sql.gz</code> (964K), <code>202610260300.drupal8.sql.gz</code> (4.2M), <code>202610260300.drupaldb.sql.gz</code> (480 byte — DB nyaris kosong), <code>latest.belajarweb.sql.gz</code>, dst.</p>
+
+<h2>4. Persiapan cloning web → belajarweb (SUDAH DILAKUKAN, non-destruktif)</h2>
+<table>
+<thead><tr><th>Item</th><th>Lokasi</th><th>Ukuran</th></tr></thead>
+<tbody>
+<tr><td>Backup DB belajarweb (2.57) sebelum ditimpa</td><td>/data/compose/98/db-backup/belajarweb-pre-clone-20261026.sql.gz</td><td>3.0M</td></tr>
+<tr><td>Backup files belajarweb (2.57)</td><td>/data/compose/98/drupal8-src/web/sites/belajarweb.pesanweb.my.id/files.bak-pre-clone-20261026</td><td>49M</td></tr>
+<tr><td>Dump clean DB drupal8 sumber (home) — tanpa CREATE/USE DATABASE agar tidak nyasar</td><td>/data/compose/34/db-backup/drupal8-web-clone-clean-20261026.sql.gz</td><td>4.3M</td></tr>
+</tbody>
+</table>
+<p>Catatan teknis: dump pertama memakai <code>--databases</code> (mengandung <code>CREATE/USE DATABASE drupal8</code>) — kalau diimpor apa adanya ke target, datanya masuk ke DB <code>drupal8</code> target (bukan <code>belajarweb</code>). Maka dibuat dump <em>clean</em> tanpa flag tersebut.</p>
+
+<h2>5. Rencana eksekusi cloning (DESTRUKTIF — butuh konfirmasi)</h2>
+<ol>
+<li>scp dump clean home → 192.168.2.57:/tmp (via SSH hop, key sudah terpasang)</li>
+<li>Di 2.57: <code>DROP DATABASE belajarweb; CREATE DATABASE belajarweb;</code> di container <code>drupal-nfs_drupal_db.1.*</code> (menghapus 244 tabel lama — sudah dibackup di §4)</li>
+<li>Import: <code>zcat dump.sql.gz | docker exec -i &lt;db&gt; mariadb -uroot -p... belajarweb</code></li>
+<li>Sync files: <code>rsync -a --delete</code> dari <code>sites/web.pesanweb.my.id/files/</code> (home) ke <code>sites/belajarweb.pesanweb.my.id/files/</code> (2.57) — target sudah dibackup</li>
+<li><code>drush cr</code> via container <code>drupal-nfs_drupal_fpm7.*</code> (drush ada di <code>/var/www/html2/drupal8/vendor/bin/drush</code>, docroot <code>/var/www/html2/drupal8/web</code>, URI <code>-l belajarweb.pesanweb.my.id</code>)</li>
+<li>Verifikasi: jumlah tabel, <code>curl -H 'Host: belajarweb.pesanweb.my.id' http://192.168.2.57:8087</code> bandingkan dengan homepage web.pesanweb.my.id</li>
+</ol>
+<p><strong>Efek:</strong> belajarweb.pesanweb.my.id berubah menjadi salinan persis konten web.pesanweb.my.id (artikel/user/config web). Backup §4 bisa dipakai untuk rollback: import ulang <code>belajarweb-pre-clone-20261026.sql.gz</code> + restore <code>files.bak-pre-clone-20261026</code>.</p>
+
+<h2>6. Temuan keamanan (penting)</h2>
+<p>Di kedua mesin, <code>MYSQL_ROOT_PASSWORD</code> pada compose/env dan password di <code>settings.php</code> <strong>masih berisi placeholder default</strong> (string <em>your_drupal_db_password</em> — belum pernah diganti). DB home membuka port 3306 ke host. Segera ganti password root DB dan password user situs, lalu update settings.php + compose env + restart container. Nilai aslinya sengaja tidak ditulis di halaman ini.</p>
+
+<h2>7. Ringkasan jawaban pertanyaan awal</h2>
+<ul>
+<li><strong>Folder 2.57</strong>: 84, 88, 92, 94, 98, 104, 111 — hanya 98 aktif (swarm drupal-nfs), sisanya snapshot lama</li>
+<li><strong>Bind vs terminal root</strong>: bind mount = file host &amp; container sama; edit di host + <code>nginx -s reload</code> adalah cara benar; edit dalam container hanya untuk path non-mount yang akan hilang saat recreate</li>
+<li><strong>drupal_backup</strong>: service compose <code>mysql-cron-backup</code> (image fradelg), cron harian 03:00, dump semua DB, gzip -9, rotasi 15 file, output ke /data/compose/34/db-backup via bind /backup</li>
+</ul>
