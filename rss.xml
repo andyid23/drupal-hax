@@ -58,5 +58,12 @@
       <guid>https://localhost/mysite/keamanan-phpmyadmin-runbook-password-db</guid>
       <pubDate>Mon, 26 Oct 2026 23:31:44 GMT</pubDate>
     </item>
+    <item>
+      <title>Inventaris DB &amp; Situs, Kondisi Password, Cara Akses DB — home &amp; 2.57</title>
+      <link>https://localhost/mysite/inventaris-db-situs-kondisi-password</link>
+      <description>Status Fase 1 hardening (SUDAH DILAKUKAN, 2025-10-26) Home: container drupal_pma STOPPED (Exited) — phpMyAdmin :8083 offline, situs tetap live (D8 port 8087 = HTTP 200) 192.168.2.57: service drupal-nfs_phpmyadmin di-scale ke 0 replica (1/0) — :8083 offline Belum ada password yang diubah — ini baru menutup pintu masuk. Fase 2-4 (rotasi password) menunggu keputusan 1. Kondisi password DB (state, tanpa nilai asli) Nilai asli tersimpan di settings.php masing-masing situs dan env container — senga...</description>
+      <guid>https://localhost/mysite/inventaris-db-situs-kondisi-password</guid>
+      <pubDate>Mon, 26 Oct 2026 23:51:56 GMT</pubDate>
+    </item>
   </channel>
 </rss>
