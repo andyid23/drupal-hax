@@ -51,5 +51,12 @@
       <guid>https://localhost/mysite/hasil-cloning-db-web-belajarweb</guid>
       <pubDate>Mon, 26 Oct 2026 23:19:49 GMT</pubDate>
     </item>
+    <item>
+      <title>Keamanan phpMyAdmin :8083, Runbook Ganti Password DB, &amp; Rollback Cloning</title>
+      <link>https://localhost/mysite/keamanan-phpmyadmin-runbook-password-db</link>
+      <description>A. Penjelasan rollback cloning (pertanyaan: bagaimana cara pakainya) Rollback = mengembalikan belajarweb.pesanweb.my.id di 192.168.2.57 ke keadaan sebelum cloning (konten lama belajarweb, bukan konten web). Dipakai kalau hasil clone bermasalah: konten salah, ada modul/config yang bentrok, atau ada data penting yang ternyata hanya ada di belajarweb lama. Tiga langkah (urutan wajib): Import backup DB — file belajarweb-pre-clone-20261026.sql.gz di /data/compose/98/db-backup/ (2.57). Dump dibuat ...</description>
+      <guid>https://localhost/mysite/keamanan-phpmyadmin-runbook-password-db</guid>
+      <pubDate>Mon, 26 Oct 2026 23:31:44 GMT</pubDate>
+    </item>
   </channel>
 </rss>

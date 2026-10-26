@@ -18,6 +18,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Cara Cek Container Aktif, vhost nginx & Arti /data/compose](https://localhost/mysite/pages/item-f2adf3de-27b3-491f-98ae-31a8767f62ce/index.md)
 - [Cloning DB web ke belajarweb (2.57) — Status & Penjelasan Backup/Bind/vhost](https://localhost/mysite/pages/item-a7a3b998-ade4-46bf-8176-8938465f7b21/index.md)
 - [Hasil Cloning DB web → belajarweb (2.57) — BERHASIL](https://localhost/mysite/pages/item-3f2195b3-b41e-41a9-a124-ee36f867ddc4/index.md)
+- [Keamanan phpMyAdmin :8083, Runbook Ganti Password DB, & Rollback Cloning](https://localhost/mysite/pages/item-94565818-94c8-43c6-9b9e-fce1eb71ee24/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
