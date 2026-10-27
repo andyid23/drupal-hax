@@ -1,0 +1,162 @@
+id: item-3f2195b3-b41e-41a9-a124-ee36f867ddc4
+indent: 0
+location: pages/item-3f2195b3-b41e-41a9-a124-ee36f867ddc4/index.yaml
+slug: hasil-cloning-db-web-belajarweb
+order: 0
+parent: null
+title: Hasil Cloning DB web → belajarweb (2.57) — BERHASIL
+description: ''
+metadata:
+  created: 1793056789
+  updated: 1793056789
+  images: []
+  videos: []
+content: >-
+  <h2>Hasil: CLONING BERHASIL (2026-10-26)</h2>
+
+  <p>DB <code>drupal8</code> (web.pesanweb.my.id, home.pesanweb.my.id) berhasil
+  di-clone ke DB <code>belajarweb</code> di 192.168.2.57, termasuk sync files.
+  Situs <strong>belajarweb.pesanweb.my.id sekarang menyajikan konten persis
+  web.pesanweb.my.id</strong>.</p>
+
+
+  <h2>1. Eksekusi (urutan waktu)</h2>
+
+  <ol>
+
+  <li>Backup DB tujuan: <code>belajarweb-pre-clone-20261026.sql.gz</code> (3.0M)
+  → <code>/data/compose/98/db-backup/</code> di 2.57</li>
+
+  <li>Backup files tujuan: <code>files.bak-pre-clone-20261026</code> (49M) di
+  <code>sites/belajarweb.pesanweb.my.id/</code></li>
+
+  <li>Dump source <strong>clean</strong> (tanpa <code>--databases</code> agar
+  tidak bawa CREATE/USE DATABASE):
+  <code>drupal8-web-clone-clean-20261026.sql.gz</code> (4.3M) di
+  <code>/data/compose/34/db-backup/</code> home</li>
+
+  <li>scp dump → <code>/tmp/</code> di 192.168.2.57 (via SSH hop,
+  key-based)</li>
+
+  <li><code>DROP DATABASE belajarweb; CREATE DATABASE belajarweb;</code> di
+  container <code>drupal-nfs_drupal_db.1.*</code> (244 tabel lama terhapus —
+  sudah dibackup)</li>
+
+  <li>Import: <code>zcat dump.sql.gz | docker exec -i &lt;db&gt; mariadb -uroot
+  -p... belajarweb</code> → IMPORT_DONE</li>
+
+  <li><code>rsync -a --delete</code> files web → files belajarweb (2x pass —
+  pass kedua mengambil artifact css/js yang baru dibuat drush)</li>
+
+  <li><code>drush cr</code> di container <code>drupal-nfs_drupal_fpm7.*</code>
+  dengan <code>-r /var/www/html2/drupal8/web -l belajarweb.pesanweb.my.id</code>
+  → <em>Cache rebuild complete</em></li>
+
+  </ol>
+
+
+  <h2>2. Verifikasi (bukti)</h2>
+
+  <table>
+
+  <thead><tr><th>Cek</th><th>Sebelum clone</th><th>Sesudah
+  clone</th><th>Hasil</th></tr></thead>
+
+  <tbody>
+
+  <tr><td>Jumlah tabel DB belajarweb (2.57)</td><td>244</td><td>246</td><td>=
+  source drupal8 (246) ✓</td></tr>
+
+  <tr><td>Jumlah node (node_field_data)</td><td>—</td><td>236</td><td>= source
+  236 ✓</td></tr>
+
+  <tr><td>Daftar nid+title (diff
+  byte-per-byte)</td><td>—</td><td>—</td><td><strong>NODES_IDENTICAL</strong>
+  ✓</td></tr>
+
+  <tr><td>Jumlah file di sites/.../files</td><td>49M</td><td>1255 file /
+  81M</td><td>= source 1255 ✓</td></tr>
+
+  <tr><td>Fingerprint konten live (JSON-LD <code>contentTypeCounts</code>
+  homepage)</td><td>lesson:33, exercise:12, project:12,
+  quiz:1</td><td>lesson:83, exercise:44, badge:0, pattern:10, principle:2,
+  model:2</td><td><strong>sama persis dengan web.pesanweb.my.id</strong>
+  ✓</td></tr>
+
+  <tr><td>HTTP belajarweb via
+  192.168.2.57:8087</td><td>200</td><td>200</td><td>✓</td></tr>
+
+  </tbody>
+
+  </table>
+
+  <p>Fingerprint paling meyakinkan: homepage belajarweb dulu
+  <code>lesson:33</code> (konten lokal lamanya), sekarang <code>lesson:83,
+  exercise:44, pattern:10, principle:2, model:2</code> — persis angka
+  web.pesanweb.my.id. Perubahan terlihat di situs publik tanpa perlu login.</p>
+
+
+  <h2>3. Rollback (kalau diperlukan)</h2>
+
+  <pre><code># di 192.168.2.57
+
+  zcat /data/compose/98/db-backup/belajarweb-pre-clone-20261026.sql.gz | \
+    docker exec -i drupal-nfs_drupal_db.1.* mariadb -uroot -p&lt;root_db_pass&gt;
+  # backup tsb memakai --databases (mengandung CREATE/USE belajarweb) — aman
+  untuk restore ke nama sama
+
+  rm -rf /data/compose/98/drupal8-src/web/sites/belajarweb.pesanweb.my.id/files
+
+  mv
+  /data/compose/98/drupal8-src/web/sites/belajarweb.pesanweb.my.id/files.bak-pre-clone-20261026
+  \
+     /data/compose/98/drupal8-src/web/sites/belajarweb.pesanweb.my.id/files
+  docker exec drupal-nfs_drupal_fpm7.1.* /var/www/html2/drupal8/vendor/bin/drush
+  \
+    -r /var/www/html2/drupal8/web -l belajarweb.pesanweb.my.id cr</code></pre>
+
+  <h2>4. Catatan pasca-clone</h2>
+
+  <ul>
+
+  <li>Artifact <code>files/css/</code> dan <code>files/js/</code> (agregasi)
+  akan berbeda sementara sampai belajarweb membuka halaman dan meregenerasi
+  sendiri — bukan masalah, sifatnya cache</li>
+
+  <li>Tabel <code>sessions</code> ikut ter-clone (isi session web) — tidak
+  berbahaya, hangus setelah expiry</li>
+
+  <li>Path &amp; versi identik (D8.9.20, docroot sama) sehingga dump+import
+  valid tanpa migrasi</li>
+
+  <li><strong>Keamanan:</strong> root password DB kedua mesin masih placeholder
+  default — penggantian password tetap disarankan (detail di halaman
+  sebelumnya)</li>
+
+  <li>File dump/backup sementara:
+  <code>/tmp/drupal8-web-clone-clean-20261026.sql.gz</code> di 2.57 bisa
+  dihapus</li>
+
+  </ul>
+
+
+  <h2>5. Lokasi backup &amp; dump</h2>
+
+  <table>
+
+  <thead><tr><th>File</th><th>Mesin</th><th>Path</th></tr></thead>
+
+  <tbody>
+
+  <tr><td>belajarweb-pre-clone-20261026.sql.gz (rollback
+  DB)</td><td>192.168.2.57</td><td>/data/compose/98/db-backup/</td></tr>
+
+  <tr><td>files.bak-pre-clone-20261026 (rollback files,
+  49M)</td><td>192.168.2.57</td><td>sites/belajarweb.pesanweb.my.id/</td></tr>
+
+  <tr><td>drupal8-web-clone-clean-20261026.sql.gz (source
+  dump)</td><td>home.pesanweb.my.id</td><td>/data/compose/34/db-backup/</td></tr>
+
+  </tbody>
+
+  </table>
