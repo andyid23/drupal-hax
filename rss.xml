@@ -86,5 +86,12 @@
       <guid>https://localhost/mysite/sync-db-files-penamaan-site</guid>
       <pubDate>Tue, 27 Oct 2026 02:14:23 GMT</pubDate>
     </item>
+    <item>
+      <title>Analisis &amp; Rekomendasi VHost Multisite Drupal (drupal8.pesanweb.my.id)</title>
+      <link>https://localhost/mysite/analisis-rekomendasi-vhost-multisite-drupal-drupal8-pesanweb-my-id</link>
+      <description>Analisis &amp;amp; Rekomendasi VHost Multisite Drupal (drupal8.pesanweb.my.id) # Analisis &amp;amp; Rekomendasi Setup VHost Multisite Drupal (drupal8.pesanweb.my.id) Temuan saat ini Home.pesanweb.my.id (192.168.2.40) - stack drupal811 Compose aktif: `/data/compose/34/` (drupal811). Nginx di container `drupal_web_server` listen di: Port 80 (host 8086) -&amp;gt; vhost default `server_name localhost`, root `/var/www/html/drupal11/web`, fastcgi ke `drupal_fpm:9000` (Drupal 11) Port 81 (host 8087) -&amp;gt; vhost...</description>
+      <guid>https://localhost/mysite/analisis-rekomendasi-vhost-multisite-drupal-drupal8-pesanweb-my-id</guid>
+      <pubDate>Tue, 27 Oct 2026 04:53:24 GMT</pubDate>
+    </item>
   </channel>
 </rss>
