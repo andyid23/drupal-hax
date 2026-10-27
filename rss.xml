@@ -100,5 +100,12 @@
       <guid>https://localhost/mysite/install-scroll-top-button-sync-db-files-situs-python-webapps-vba</guid>
       <pubDate>Tue, 27 Oct 2026 07:37:17 GMT</pubDate>
     </item>
+    <item>
+      <title>Kloning Web Python</title>
+      <link>https://localhost/mysite/kloning-web-python</link>
+      <description>Kloning Web Python Ini adalah laporan halaman baru yang mengabadikan proses kloning otomatis situs web Skilling (python, webapps, vba) ke Drupal multisite menggunakan pipeline yang sepenuhnya otonom. Langkah Klon Antrian – `crawl_queue.py` mengekstrak 260 pelajaran (vba:62, python:73, webapps:125) dari sumber aslinya (vba.skilling.us, python.skilling.us, webapps.skilling.us) ke dalam skilling-queue.json yang digabungkan dan *_queue.json per-situs. Ekstraksi Blok – `extract_blocks.py` mengubah...</description>
+      <guid>https://localhost/mysite/kloning-web-python</guid>
+      <pubDate>Tue, 27 Oct 2026 11:45:21 GMT</pubDate>
+    </item>
   </channel>
 </rss>
