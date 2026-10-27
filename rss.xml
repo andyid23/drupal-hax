@@ -72,5 +72,12 @@
       <guid>https://localhost/mysite/sync-file-web-belajarweb</guid>
       <pubDate>Tue, 27 Oct 2026 00:16:13 GMT</pubDate>
     </item>
+    <item>
+      <title>Inventory DB &amp; Rekomendasi Multisite (web + belajarweb)</title>
+      <link>https://localhost/mysite/inventaris-db-rekomendasi-multisite</link>
+      <description>Pertanyaan yang Dijawab Dari inventaris DB: di home.pesanweb.my.id ada database untuk web.pesanweb.my.id dan belajarweb.pesanweb.my.id . Apa bedanya, bisakah multi-host dilayani lewat Nginx Proxy Manager (NPM), dan apa rekomendasi multisite-nya. 1. Isi Database (verifikasi langsung, bukan dari catatan lama) home/drupal8 — 246 tabel, 236 node, 12 user. LIVE untuk web.pesanweb.my.id. home/belajarweb — 245 tabel, 117 node, 12 user. Konfigurasi multisite ada, tetapi tidak dilayani ; ini salinan l...</description>
+      <guid>https://localhost/mysite/inventaris-db-rekomendasi-multisite</guid>
+      <pubDate>Tue, 27 Oct 2026 01:12:54 GMT</pubDate>
+    </item>
   </channel>
 </rss>

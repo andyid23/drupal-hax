@@ -627,4 +627,82 @@ docker exec drupal-nfs_drupal_fpm7.1.* /var/www/html2/drupal8/vendor/bin/drush \
 </ul> ]]>
     </content>
   </entry>
+  <entry>
+    <title>Inventory DB &amp; Rekomendasi Multisite (web + belajarweb)</title>
+    <id>item-65dba502-7536-4581-bcc9-afc32c6c1259</id>
+    <updated>2026-10-27T01:12:54.000Z</updated>
+    <published>2026-10-27T01:12:54.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/inventaris-db-rekomendasi-multisite"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Pertanyaan yang Dijawab</h2>
+<p>Dari inventaris DB: di <code>home.pesanweb.my.id</code> ada database untuk <code>web.pesanweb.my.id</code> dan <code>belajarweb.pesanweb.my.id</code>. Apa bedanya, bisakah multi-host dilayani lewat Nginx Proxy Manager (NPM), dan apa rekomendasi multisite-nya.</p>
+
+<h2>1. Isi Database (verifikasi langsung, bukan dari catatan lama)</h2>
+<ul>
+  <li><strong>home/drupal8</strong> — 246 tabel, 236 node, 12 user. <strong>LIVE</strong> untuk web.pesanweb.my.id.</li>
+  <li><strong>home/belajarweb</strong> — 245 tabel, 117 node, 12 user. Konfigurasi multisite ada, tetapi <strong>tidak dilayani</strong>; ini salinan lama.</li>
+  <li><strong>home/web</strong> — 244 tabel, 47 node. Legacy, tidak ada settings/vhost aktif.</li>
+  <li><strong>home/appdb</strong> — 240 tabel, 1 node. Orphan.</li>
+  <li><strong>2.57/belajarweb</strong> — 246 tabel, 236 node. <strong>LIVE</strong> untuk belajarweb.pesanweb.my.id (lewat NPM).</li>
+  <li><strong>2.57/drupal8</strong> — 244 tabel, 47 node. Orphan, tidak direferensikan settings aktif.</li>
+  <li><strong>2.57/drupal11</strong> — 74 tabel, 0 node. Vhost internal saja, settings 0 byte.</li>
+  <li><strong>2.57/drupal8db</strong> — 22 tabel, bukan skema Drupal.</li>
+</ul>
+
+<h2>2. Temuan Kunci: Kedua Situs Isinya Identik</h2>
+<p>Checksum judul seluruh node di kedua DB live sama persis:</p>
+<pre><code>md5(group_concat(title order by nid)) = 94dd346050c38bbd6b6f6897465ff142
+node = 236, max(nid) = 246  (home/drupal8 dan 2.57/belajarweb)</code></pre>
+<p>Artinya <code>belajarweb</code> saat ini adalah <strong>mirror</strong> dari <code>web</code>, bukan situs dengan konten berbeda. Perbedaan yang nyata hanya: domain di <code>settings.php</code>, direktori <code>sites/&lt;domain&gt;/files</code>, dan aggregate css/js yang digenerate per instalasi.</p>
+
+<h2>3. Beda Tiap Database</h2>
+<ul>
+  <li><strong>Dua DB live</strong> (<code>drupal8</code> di home, <code>belajarweb</code> di 2.57) memuat konten yang sama tetapi hidup di dua instalasi Drupal terpisah, dengan user DB dan host DB masing-masing.</li>
+  <li><strong>DB legacy/orphan</strong> (<code>web</code>, <code>appdb</code>, <code>drupal8</code> di 2.57, <code>drupal8db</code>) tidak dipakai settings/vhost mana pun — kandidat arsip, bukan sumber kebenaran.</li>
+  <li><strong>DB belajarweb di home</strong> adalah salinan lebih tua (117 node). Jangan dipakai untuk migrasi tanpa membandingkan dulu.</li>
+</ul>
+
+<h2>4. Multi-host lewat NPM</h2>
+<p><strong>Bisa.</strong> NPM hanya reverse proxy berbasis Host header, tidak peduli target ada di mesin mana. Saat ini NPM (di 192.168.2.57) baru memetakan:</p>
+<pre><code>belajarweb.pesanweb.my.id -&gt; 192.168.2.57:8087
+tty.drupal.lokal          -&gt; 192.168.2.52:2222
+curhatmu.my.id            -&gt; 192.168.2.52:81</code></pre>
+<p><code>web.pesanweb.my.id</code> belum lewat NPM — dilayani langsung home port 8087. Menambahkannya cukup satu entry baru ke <code>192.168.2.40:8087</code>.</p>
+<p>Yang harus diperhatikan:</p>
+<ul>
+  <li>TLS per domain di NPM (Let's Encrypt), dan DNS mengarah ke edge NPM.</li>
+  <li>Nginx di kedua host memakai vhost catch-all berbasis port; pemilihan domain terjadi di Drupal multisite lewat Host header. Jadi uji dengan <code>curl -H 'Host: ...'</code>, jangan simpulkan dari curl biasa.</li>
+  <li>NPM DB (<code>proxy_host</code>) adalah sumber kebenaran routing, bukan hasil curl ke satu port.</li>
+  <li>Bila NPM mem-proxy ke host yang sama untuk dua domain, keduanya tetap butuh direktori <code>sites/&lt;domain&gt;</code> masing-masing.</li>
+</ul>
+
+<h2>5. Rekomendasi Multisite</h2>
+<p>Pilih berdasarkan niat: apakah belajarweb akan <em>selalu</em> sama dengan web, atau akan bercabang?</p>
+<ul>
+  <li><strong>Jika tetap mirror</strong> — paling murah: satu instalasi, satu DB, dua domain. Home sudah bisa melayani keduanya sekarang (tes Host header: keduanya HTTP 200). Matikan sync, arahkan kedua domain ke satu host + satu DB, dan selesai. Tidak ada drift, tidak ada rsync.</li>
+  <li><strong>Jika akan bercabang</strong> — pertahankan dua instalasi, tetapi standarkan: (a) semua domain masuk NPM, (b) satu pipeline deploy, (c) sinkron file satu arah hanya selama konten masih sama, (d) hentikan sync begitu konten mulai berbeda supaya tidak saling menimpa.</li>
+  <li><strong>Yang tidak disarankan</strong> — dua instalasi dengan dua DB yang dipakai bergantian tanpa aturan sumber kebenaran. Itu kondisi sekarang dan sumber masalah referensi file yang baru diperbaiki.</li>
+</ul>
+
+<h2>6. Langkah Menuju Satu Edge (NPM)</h2>
+<ol>
+  <li>Pastikan DNS <code>web.pesanweb.my.id</code> mengarah ke IP publik edge (saat ini Cloudflare/ tunnel ke home).</li>
+  <li>Di NPM: <em>Hosts → Proxy Hosts → Add</em>, domain <code>web.pesanweb.my.id</code>, forward <code>192.168.2.40</code>:<code>8087</code>, aktifkan Websockets dan Block Common Exploits, lalu request sertifikat SSL.</li>
+  <li>Verifikasi dari dalam LAN: <code>curl -s -H 'Host: web.pesanweb.my.id' http://192.168.2.40:8087 | grep -o '&lt;title&gt;[^&lt;]*'</code> — harus judul situs web, bukan halaman default.</li>
+  <li>Verifikasi dari luar: <code>curl -sI https://web.pesanweb.my.id</code> → 200, dan cek sertifikat.</li>
+  <li>Setelah yakin, tutup akses langsung ke port 8087 dari internet bila ada, supaya semua trafik lewat edge.</li>
+  <li>Untuk konsolidasi ke satu host: import dump DB belajarweb dari 2.57 ke DB baru di home, arahkan <code>sites/belajarweb.pesanweb.my.id/settings.php</code> ke DB itu, lalu <code>drush cr</code> dan uji kedua domain.</li>
+</ol>
+
+<h2>7. Verifikasi yang Sudah Dilakukan</h2>
+<ul>
+  <li>Checksum judul node kedua DB live identik (lihat bagian 2).</li>
+  <li>Home melayani kedua Host header dengan HTTP 200 dan judul situs yang benar.</li>
+  <li>NPM <code>proxy_host</code> dibaca langsung dari DB: hanya tiga entry, <code>web</code> belum tercantum.</li>
+  <li>Direktori <code>sites/web.pesanweb.my.id</code> dan <code>sites/belajarweb.pesanweb.my.id</code> keduanya ada di home.</li>
+</ul> ]]>
+    </content>
+  </entry>
 </feed>
