@@ -65,5 +65,12 @@
       <guid>https://localhost/mysite/inventaris-db-situs-kondisi-password</guid>
       <pubDate>Mon, 26 Oct 2026 23:51:56 GMT</pubDate>
     </item>
+    <item>
+      <title>Sinkronisasi File &amp; Perbaikan Referensi Silang web ↔ belajarweb</title>
+      <link>https://localhost/mysite/sync-file-web-belajarweb</link>
+      <description>Ringkasan Masalah Gambar dan aset di belajarweb.pesanweb.my.id tidak tampil karena halaman di database menunjuk ke direktori files situs lain. Contoh laporan: https://web.pesanweb.my.id/sites/web.pesanweb.my.id/files/gambar/manja-vitolic-gKXKBY-C-Dk-unsplash.jpg bisa dibuka, sedangkan URL setara di belajarweb gagal. Hasil Diagnosis File konten tidak hilang : direktori gambar/ berisi 310 file di kedua host dengan ukuran identik. Selisih 876 file (66,8 MB) seluruhnya css/ , js/ , dan php/ — agg...</description>
+      <guid>https://localhost/mysite/sync-file-web-belajarweb</guid>
+      <pubDate>Tue, 27 Oct 2026 00:16:13 GMT</pubDate>
+    </item>
   </channel>
 </rss>
