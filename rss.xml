@@ -93,5 +93,12 @@
       <guid>https://localhost/mysite/analisis-rekomendasi-vhost-multisite-drupal-drupal8-pesanweb-my-id</guid>
       <pubDate>Tue, 27 Oct 2026 04:53:24 GMT</pubDate>
     </item>
+    <item>
+      <title>Install scroll_top_button, Sync DB/Files &amp; Situs Baru python/webapps/vba</title>
+      <link>https://localhost/mysite/install-scroll-top-button-sync-db-files-situs-python-webapps-vba</link>
+      <description>Install scroll_top_button, Sync DB/Files &amp;amp; Persiapan 3 Situs Baru (python/webapps/vba) Laporan eksekusi 27 Oktober 2026 — stack drupal811 di home.pesanweb.my.id (192.168.2.40) dan stack drupal-nfs di 192.168.2.57. 1. Install module scroll_top_button Versi: drupal/scroll_top_button 2.1.1 — kompatibel Drupal ^8.8 || ^9 || ^10 || ^11 (terverifikasi dari drupal.org), aman untuk Drupal 8.9.20. home (d8_fpm): composer require drupal/scroll_top_button:^2.1 berhasil; module di-ENABLE di web.pesan...</description>
+      <guid>https://localhost/mysite/install-scroll-top-button-sync-db-files-situs-python-webapps-vba</guid>
+      <pubDate>Tue, 27 Oct 2026 07:37:17 GMT</pubDate>
+    </item>
   </channel>
 </rss>
