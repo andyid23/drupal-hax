@@ -184,6 +184,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-4f27a17d-c569-4ed7-b13d-06177d941b7d",
+      "indent": 0,
+      "location": "pages/item-4f27a17d-c569-4ed7-b13d-06177d941b7d/index.html",
+      "slug": "sync-file-web-belajarweb",
+      "order": 0,
+      "parent": null,
+      "title": "Sinkronisasi File & Perbaikan Referensi Silang web ↔ belajarweb",
+      "description": "",
+      "metadata": {
+        "created": 1793060173,
+        "updated": 1793060173,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
