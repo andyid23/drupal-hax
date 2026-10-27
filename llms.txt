@@ -24,6 +24,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Inventory DB & Rekomendasi Multisite (web + belajarweb)](https://localhost/mysite/pages/item-65dba502-7536-4581-bcc9-afc32c6c1259/index.md)
 - [Sync DB & Files + Penamaan Site per DB (home & 2.57)](https://localhost/mysite/pages/item-89cf8101-0341-4659-bf10-319e0039c173/index.md)
 - [Analisis & Rekomendasi VHost Multisite Drupal (drupal8.pesanweb.my.id)](https://localhost/mysite/pages/item-6ad401e2-f689-4f52-b3d8-83df0e214597/index.md)
+- [Install scroll_top_button, Sync DB/Files & Situs Baru python/webapps/vba](https://localhost/mysite/pages/item-f237395d-beb6-46ed-ad16-2f4873a1bbd8/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
