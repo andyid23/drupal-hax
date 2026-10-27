@@ -22,6 +22,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Inventaris DB & Situs, Kondisi Password, Cara Akses DB — home & 2.57](https://localhost/mysite/pages/item-9d0a24b9-cf36-44c1-b8dd-1262cc433400/index.md)
 - [Sinkronisasi File & Perbaikan Referensi Silang web ↔ belajarweb](https://localhost/mysite/pages/item-4f27a17d-c569-4ed7-b13d-06177d941b7d/index.md)
 - [Inventory DB & Rekomendasi Multisite (web + belajarweb)](https://localhost/mysite/pages/item-65dba502-7536-4581-bcc9-afc32c6c1259/index.md)
+- [Sync DB & Files + Penamaan Site per DB (home & 2.57)](https://localhost/mysite/pages/item-89cf8101-0341-4659-bf10-319e0039c173/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
