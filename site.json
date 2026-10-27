@@ -200,6 +200,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-65dba502-7536-4581-bcc9-afc32c6c1259",
+      "indent": 0,
+      "location": "pages/item-65dba502-7536-4581-bcc9-afc32c6c1259/index.html",
+      "slug": "inventaris-db-rekomendasi-multisite",
+      "order": 0,
+      "parent": null,
+      "title": "Inventory DB & Rekomendasi Multisite (web + belajarweb)",
+      "description": "",
+      "metadata": {
+        "created": 1793063574,
+        "updated": 1793063574,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
