@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-4f27a17d-c569-4ed7-b13d-06177d941b7d</id>
+<indent>0</indent>
+<location>pages/item-4f27a17d-c569-4ed7-b13d-06177d941b7d/index.xml</location>
+<slug>sync-file-web-belajarweb</slug>
+<order>0</order>
+<parent></parent>
+<title>Sinkronisasi File &amp; Perbaikan Referensi Silang web ↔ belajarweb</title>
+<description></description>
+<metadata>
+<created>1793060173</created>
+<updated>1793060173</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Ringkasan Masalah</h2>
+<p>Gambar dan aset di <code>belajarweb.pesanweb.my.id</code> tidak tampil karena halaman di database menunjuk ke direktori files situs lain. Contoh laporan: <code>https://web.pesanweb.my.id/sites/web.pesanweb.my.id/files/gambar/manja-vitolic-gKXKBY-C-Dk-unsplash.jpg</code> bisa dibuka, sedangkan URL setara di belajarweb gagal.</p>
+
+<h2>Hasil Diagnosis</h2>
+<ul>
+  <li>File konten <strong>tidak hilang</strong>: direktori <code>gambar/</code> berisi 310 file di kedua host dengan ukuran identik. Selisih 876 file (66,8 MB) seluruhnya <code>css/</code>, <code>js/</code>, dan <code>php/</code> — aggregate yang digenerate per situs, bukan konten.</li>
+  <li>Akar masalah ada di <strong>URL di database</strong>: body node menyebut direktori site milik domain lain.</li>
+  <li>Setiap host hanya punya direktori site-nya sendiri, sehingga path silang menghasilkan 404.</li>
+</ul>
+
+<h3>Sebaran referensi silang sebelum perbaikan</h3>
+<ul>
+  <li><code>belajarweb</code> (192.168.2.57, DB <code>belajarweb</code>): 69 node menunjuk <code>sites/web.pesanweb.my.id/files/...</code>.</li>
+  <li><code>web</code> (home, DB <code>drupal8</code>): 13 node menunjuk <code>sites/belajarweb.pesanweb.my.id/files/...</code>.</li>
+</ul>
+
+<h2>Tindakan Perbaikan</h2>
+<ol>
+  <li>Backup database kedua situs sebelum perubahan, disimpan di direktori backup masing-masing host (<code>*-pre-refsync-*.sql.gz</code>).</li>
+  <li>UPDATE seluruh kolom teks pada DB: referensi ke direktori site lain diganti ke direktori site sendiri (<code>REPLACE()</code> pada tabel <code>node__body</code>, revisi, paragraph, field, dan tabel teks lain).</li>
+  <li>Rebuild cache kedua situs dengan drush agar body yang tersimpan di cache ikut diperbarui.</li>
+  <li>Memasang sinkronisasi file konten satu arah web → belajarweb (harian 02:30) untuk unggahan baru.</li>
+</ol>
+
+<h2>Verifikasi</h2>
+<ul>
+  <li>DB: 0 baris <code>node__body</code> yang masih memuat referensi site lama di kedua host.</li>
+  <li>Halaman <code>belajarweb/node/225</code>: 17 URL aset diperiksa, semuanya HTTP 200 — termasuk <code>manja-vitolic-gKXKBY-C-Dk-unsplash.jpg</code>.</li>
+  <li>Sampel 8 halaman per situs: tidak ada lagi referensi ke direktori site yang salah.</li>
+  <li>Uji sync: file uji di <code>gambar/</code> web tersalin ke belajarweb dalam sekali jalan, lalu dibersihkan.</li>
+</ul>
+
+<h2>Catatan Operasional</h2>
+<ul>
+  <li>Skrip perbaikan referensi: <code>/root/fix-sites-refs.sh &lt;db&gt; &lt;site-lama&gt; &lt;site-baru&gt; &lt;dir-backup&gt;</code> di host home.</li>
+  <li>Skrip sync: <code>/root/sync-haxcms-files.sh</code> di host home; jadwal di <code>/etc/cron.d/haxcms-files-sync</code>; log di <code>/var/log/haxcms-files-sync.log</code>.</li>
+  <li>Sync bersifat aditif (tanpa <code>--delete</code>) agar unggahan yang dibuat langsung di belajarweb tidak terhapus.</li>
+  <li>Direktori <code>css/</code>, <code>js/</code>, <code>php/</code> sengaja dikecualikan karena aggregate tersebut harus digenerate per instalasi.</li>
+</ul>]]></content>
+</item>
