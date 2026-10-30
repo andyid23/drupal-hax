@@ -280,6 +280,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-bae72550-6120-4094-a70b-2bffecc9b491",
+      "indent": 0,
+      "location": "pages/item-bae72550-6120-4094-a70b-2bffecc9b491/index.html",
+      "slug": "practice-more-functions",
+      "order": 0,
+      "parent": null,
+      "title": "Practice: more functions",
+      "description": "",
+      "metadata": {
+        "created": 1793357336,
+        "updated": 1793357336,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
