@@ -1,0 +1,129 @@
+id: item-bae72550-6120-4094-a70b-2bffecc9b491
+indent: 0
+location: pages/item-bae72550-6120-4094-a70b-2bffecc9b491/index.yaml
+slug: practice-more-functions
+order: 0
+parent: null
+title: 'Practice: more functions'
+description: ''
+metadata:
+  created: 1793357336
+  updated: 1793357336
+  images: []
+  videos: []
+content: >-
+  <h2>Practice: more functions</h2>
+
+
+  <h3>Multiple choice</h3>
+
+
+  <p>What will the following output, if the user enters 2, 3, and 5?</p>
+
+
+  <div class="skilling-code-container">
+    <ul>
+      <li># Input</li>
+      <li>laugh_rating1 = float(input('How funny was the first comedian? '))</li>
+      <li>laugh_rating2 = float(input('How funny was the second comedian? '))</li>
+      <li>laugh_rating3 = float(input('How funny was the third comedian? '))</li>
+      <li>&nbsp;</li>
+      <li># Processing</li>
+      <li>average = compute_average(laugh_rating1, laugh_rating2, laugh_rating3)</li>
+      <li>&nbsp;</li>
+      <li># Output</li>
+      <li>print('Average: '+ str(average))</li>
+      <li>&nbsp;</li>
+      <li>def compute_average(value1, value2, value3):</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;total = value1 + value2 + value3</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;average = total/3</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;return average</li>
+    </ul>
+  </div>
+
+
+  <p><strong>A</strong></p>
+
+  <p>3</p>
+
+
+  <p><strong>B</strong></p>
+
+  <p>3.333333</p>
+
+
+  <p><strong>C</strong></p>
+
+  <p>4</p>
+
+
+  <p><strong>D</strong></p>
+
+  <p>Error</p>
+
+
+  <p><span class="skilling-form-instructions">Not graded. <a href="#/"
+  tabindex="0" role="button" data-trigger="focus" data-toggle="popover"
+  title="Why you should do this" data-content="Recalling something improves your
+  memory for it. You get more value from your learning time.">So why do
+  it?</a></span></p>
+
+
+  <h3>Reflect</h3>
+
+
+  <p>Write a docstring for this function.</p>
+
+
+  <div class="skilling-code-container">
+    <ul>
+      <li>def predict_bitcoin_price(today_price):</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;five_years = today_price / 2</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;ten_years = 0</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;return today_price, five_years, ten_years</li>
+    </ul>
+  </div>
+
+
+  <p><em>If you were logged in as a student, the lesson would pause here, and
+  you'd be asked to type in a response. If you want to try that out, ask for an
+  account on this site.</em></p>
+
+
+  <div class="skilling-insert-character-container" id="ethan_smile1">
+    <div class="skilling-insert-character">
+      <img src="https://python.skilling.us/sites/default/files/skilling/characters/ethan-smile1.png" alt="Ethan"><br>
+      Ethan
+    </div>
+    <div class="skilling-insert-character-content">
+      <p>Here's what I have:</p>
+
+      <div class="skilling-code-container">
+        <ul>
+          <li>def predict_bitcoin_price(today_price):</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;'''</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;Predict bitcoin prices over time.</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;Parameters</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;----------</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;today_price : float|int</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price today.</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;Returns</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;-------</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;today_price : float|int</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price today.</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;five_years : float|int</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price in five years.</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;ten_years : float|int</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price in ten years.</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;'''</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;five_years = today_price / 2</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;ten_years = 0</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;return today_price, five_years, ten_years</li>
+        </ul>
+      </div>
+
+      <p>Yay!</p>
+    </div>
+  </div>

@@ -107,5 +107,12 @@
       <guid>https://localhost/mysite/kloning-web-python</guid>
       <pubDate>Tue, 27 Oct 2026 11:45:21 GMT</pubDate>
     </item>
+    <item>
+      <title>Practice: more functions</title>
+      <link>https://localhost/mysite/practice-more-functions</link>
+      <description>Practice: more functions Multiple choice What will the following output, if the user enters 2, 3, and 5? # Input laugh_rating1 = float(input(&apos;How funny was the first comedian? &apos;)) laugh_rating2 = float(input(&apos;How funny was the second comedian? &apos;)) laugh_rating3 = float(input(&apos;How funny was the third comedian? &apos;)) &amp;nbsp; # Processing average = compute_average(laugh_rating1, laugh_rating2, laugh_rating3) &amp;nbsp; # Output print(&apos;Average: &apos;+ str(average)) &amp;nbsp; def compute_average(value1, value2,...</description>
+      <guid>https://localhost/mysite/practice-more-functions</guid>
+      <pubDate>Fri, 30 Oct 2026 10:48:56 GMT</pubDate>
+    </item>
   </channel>
 </rss>
