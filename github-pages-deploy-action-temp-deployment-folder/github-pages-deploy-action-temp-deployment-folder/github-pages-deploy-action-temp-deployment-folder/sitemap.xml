@@ -78,4 +78,16 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/kloning-web-python</loc>
+    <lastmod>2026-10-27T11:45:21.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://localhost/mysite/practice-more-functions</loc>
+    <lastmod>2026-10-30T10:48:56.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>

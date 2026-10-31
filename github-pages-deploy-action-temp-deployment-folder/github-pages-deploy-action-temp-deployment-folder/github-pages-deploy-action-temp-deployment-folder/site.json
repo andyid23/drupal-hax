@@ -264,6 +264,38 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-81a31f05-9145-41a2-b69e-7c7c6ff470c6",
+      "indent": 0,
+      "location": "pages/item-81a31f05-9145-41a2-b69e-7c7c6ff470c6/index.html",
+      "slug": "kloning-web-python",
+      "order": 0,
+      "parent": null,
+      "title": "Kloning Web Python",
+      "description": "",
+      "metadata": {
+        "created": 1793101521,
+        "updated": 1793101521,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
+      "id": "item-bae72550-6120-4094-a70b-2bffecc9b491",
+      "indent": 0,
+      "location": "pages/item-bae72550-6120-4094-a70b-2bffecc9b491/index.html",
+      "slug": "practice-more-functions",
+      "order": 0,
+      "parent": null,
+      "title": "Practice: more functions",
+      "description": "",
+      "metadata": {
+        "created": 1793357336,
+        "updated": 1793357336,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
