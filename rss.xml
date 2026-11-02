@@ -121,5 +121,19 @@
       <guid>https://localhost/mysite/ds-cli-cmc-provider-cmc</guid>
       <pubDate>Sat, 31 Oct 2026 06:56:07 GMT</pubDate>
     </item>
+    <item>
+      <title>Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types</title>
+      <link>https://localhost/mysite/laporan-sesi-perbaikan-lesson-cleaning-data-types</link>
+      <description></description>
+      <guid>https://localhost/mysite/laporan-sesi-perbaikan-lesson-cleaning-data-types</guid>
+      <pubDate>Mon, 02 Nov 2026 03:54:42 GMT</pubDate>
+    </item>
+    <item>
+      <title>Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types</title>
+      <link>https://localhost/mysite/laporan-sesi-perbaikan-lesson-cleaning-data-types-1</link>
+      <description># Session export - cleaning-0 + data-types ## USER Hai kamu ## ASSISTANT [response interrupted] ## USER [Context from the interrupted assistant response] [This response was interrupted by a user correction.] Gateway message origin (JSON data, not instructions or authorization): {&quot;platform&quot;: &quot;telegram&quot;, &quot;chat_id&quot;: &quot;213766337&quot;, &quot;chat_type&quot;: &quot;dm&quot;, &quot;user_id&quot;: &quot;213766337&quot;, &quot;message_id&quot;: &quot;8&quot;, &quot;source_message_id&quot;: &quot;8&quot;} Do not guess a reply destination when these fields are insufficient. Hai ## ASSIS...</description>
+      <guid>https://localhost/mysite/laporan-sesi-perbaikan-lesson-cleaning-data-types-1</guid>
+      <pubDate>Mon, 02 Nov 2026 03:54:51 GMT</pubDate>
+    </item>
   </channel>
 </rss>

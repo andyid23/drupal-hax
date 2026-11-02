@@ -28,6 +28,8 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Kloning Web Python](https://localhost/mysite/pages/item-81a31f05-9145-41a2-b69e-7c7c6ff470c6/index.md)
 - [Practice: more functions](https://localhost/mysite/pages/item-bae72550-6120-4094-a70b-2bffecc9b491/index.md)
 - [Integration ds CLI + Commandcode.ai (cmc) — Panduan](https://localhost/mysite/pages/item-7f734a5b-96a3-4136-be0f-2a7f3332f277/index.md)
+- [Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types](https://localhost/mysite/pages/item-b65fafbf-b4b2-4b12-9c9a-b102b97eee1d/index.md)
+- [Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types](https://localhost/mysite/pages/item-ce1d27e3-998f-4634-9336-5e07fe6a2071/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
