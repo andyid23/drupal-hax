@@ -328,6 +328,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-ce1d27e3-998f-4634-9336-5e07fe6a2071",
+      "indent": 0,
+      "location": "pages/item-ce1d27e3-998f-4634-9336-5e07fe6a2071/index.html",
+      "slug": "laporan-sesi-perbaikan-lesson-cleaning-data-types-1",
+      "order": 0,
+      "parent": null,
+      "title": "Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types",
+      "description": "",
+      "metadata": {
+        "created": 1793591691,
+        "updated": 1793591691,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
