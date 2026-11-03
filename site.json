@@ -360,6 +360,38 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-5c8cec28-b28f-4cbf-a856-20d7f8da034d",
+      "indent": 0,
+      "location": "pages/item-5c8cec28-b28f-4cbf-a856-20d7f8da034d/index.html",
+      "slug": "laporan-perbaikan-periksa-harga-daging",
+      "order": 0,
+      "parent": null,
+      "title": "Laporan Perbaikan Lesson Periksa Harga Daging (Validasi Input)",
+      "description": "",
+      "metadata": {
+        "created": 1793687013,
+        "updated": 1793687013,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
+      "id": "item-7e0202d9-3153-4e70-9920-b89eda532ffe",
+      "indent": 0,
+      "location": "pages/item-7e0202d9-3153-4e70-9920-b89eda532ffe/index.html",
+      "slug": "laporan-perbaikan-latihan-while",
+      "order": 0,
+      "parent": null,
+      "title": "Laporan Perbaikan Lesson Latihan: while",
+      "description": "",
+      "metadata": {
+        "created": 1793690652,
+        "updated": 1793690652,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
