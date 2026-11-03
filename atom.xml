@@ -1207,4 +1207,67 @@ $body = str_replace(chr(13), '', $body);                     // CR telanjang</co
 </ul> ]]>
     </content>
   </entry>
+  <entry>
+    <title>Laporan Perbaikan Lesson Latihan: while</title>
+    <id>item-7e0202d9-3153-4e70-9920-b89eda532ffe</id>
+    <updated>2026-11-03T07:24:12.000Z</updated>
+    <published>2026-11-03T07:24:12.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/laporan-perbaikan-latihan-while"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Ringkasan</h2>
+<p>Lesson <strong>Latihan: while</strong> (node 474, alias <code>/lesson/latihan-while</code>) di <code>python.pesanweb.my.id</code> telah diperbaiki dari sumber <code>https://python.skilling.us/lesson/practice-while</code>. Halaman kini render bersih dengan 4 MCQ, 3 pause, dan 0 error parser.</p>
+<h2>Gejala sebelum perbaikan</h2>
+<p>Halaman <em>tidak</em> memunculkan string error apa pun, tetapi isinya praktis hilang: hanya muncul widget "Lesson contents" (toc) dan dua baris teks literal:</p>
+<ul>
+<li><code>character.\n  internal_name=character_adela</code></li>
+<li><code>character.\n  internal_name=character_georgina</code></li>
+</ul>
+<p>Intro, 4 MCQ, dan 3 pause tidak render sama sekali (0 <code>skilling-insert-mcq</code>, 0 <code>skilling-pause-container</code>).</p>
+<h2>Akar masalah</h2>
+<h3>1. Artefak dump body: <code>&lt;br /&gt;</code> + literal backslash-n</h3>
+<p>Body node 474 hasil build sebelumnya memakai pemisah <code>&lt;br /&gt;</code> yang diikuti teks literal <code>\n</code> (bukan LF asli). Setelah parser mengubah <code>&lt;br /&gt;</code> menjadi LF, tidak ada dua LF berturut-turut (<code>\n\n</code>) yang pernah terbentuk — padahal opsi setiap tag diekstrak sampai <code>\n\n</code> pertama. Akibatnya opsi tag pertama (toc) "menelan" seluruh sisa body: annotation, intro, dan keempat MCQ.</p>
+<h3>2. Tag yatim tanpa konten</h3>
+<p>Body lama diakhiri dua tag <code>character.</code> tanpa dialog dan tanpa penutup — sisa build gagal sebelumnya. Karena barisnya memuat teks literal <code>\n</code> di antara <code>character.</code> dan <code>internal_name=</code>, baris itu tidak lagi berbentuk <code>character.</code> murni, jadi parser memperlakukannya sebagai teks biasa.</p>
+<h3>3. Node MCQ berupa placeholder</h3>
+<p>Keempat node MCQ sudah ada (947-950: while1, while2, while3, while6) tetapi berisi placeholder: judul "MCQ: while 1", pertanyaan "MCQ 1 from practice-while", dan respons sampah ("Nothing" ditandai benar, "Something"). Widget MCQ akan render tanpa error meski isinya tidak berarti.</p>
+<h2>Yang dilakukan</h2>
+<ul>
+<li><strong>Isi 4 node MCQ dengan konten asli</strong> (pertanyaan Bahasa Indonesia + blok kode + respons benar/salah + penjelasan):
+  <ul>
+  <li>947 <code>while1</code> — output loop doggos; benar: C (3 iterasi)</li>
+  <li>948 <code>while2</code> — output loop Snorlax, input 2; benar: C (count &lt;= times → 3 iterasi)</li>
+  <li>949 <code>while3</code> — output "Ready, set", input 4; benar: D (4 titik)</li>
+  <li>950 <code>while6</code> — perkalian nilai, input 20; benar: C (16, karena 16*2=32 tidak &lt; 20)</li>
+  </ul>
+  Paragraf respons lama dihapus, diganti paragraf baru (4/4/5/5 respons).</li>
+<li><strong>Rebuild body node 474</strong> sesuai struktur sumber: annotation catatan login (konvensi situs), intro, <code>&lt;h3&gt;Latihan&lt;/h3&gt;</code>, lalu siklus <code>mcq. internal_name=whileN</code> + <code>pause.</code> (4 MCQ, 3 pause). Semua penutup <code>/mcq.</code> dan tag <code>character.</code> yatim dibuang (tag mcq tidak berpenutup; sumber tidak punya karakter).</li>
+<li>Pemisah baris memakai <code>&lt;br /&gt;</code> + LF asli; escape hanya NBSP → <code>&amp;nbsp;</code> dan apostrof → <code>&amp;#039;</code> (tanpa escape <code>&amp;</code>).</li>
+</ul>
+<h2>Verifikasi (render HTTP 200)</h2>
+<table>
+<tbody>
+<tr><th>Item</th><th>Hasil</th></tr>
+<tr><td>skilling-parsing-error</td><td>0</td></tr>
+<tr><td>skilling-custom-tag-option-parse-error</td><td>0</td></tr>
+<tr><td>MCQ widget ter-render</td><td>4 (while1, while2, while3, while6)</td></tr>
+<tr><td>Respons per MCQ</td><td>4 / 4 / 5 / 5 — sesuai sumber</td></tr>
+<tr><td>Jawaban benar (DB)</td><td>C, C, D, C — satu per node</td></tr>
+<tr><td>Pause (More...)</td><td>3</td></tr>
+<tr><td>Code container</td><td>4 (satu di setiap MCQ)</td></tr>
+<tr><td>Heading section</td><td>1 (Latihan, h4 hasil offset)</td></tr>
+<tr><td>Catatan login anonim</td><td>render</td></tr>
+<tr><td>Kebocoran teks literal (character./mcq.)</td><td>0</td></tr>
+</tbody>
+</table>
+<h2>Pelajaran untuk skill</h2>
+<ul>
+<li><strong>Halaman bisa rusak tanpa pesan error</strong>: hitung widget yang ter-render (insert-mcq, pause-container, code-container) terhadap inventaris sumber, jangan hanya grep string error.</li>
+<li><strong>Node MCQ bisa berupa placeholder</strong>: sebelum memakai internal_name yang sudah ada, cek isi <code>field_question_value</code> dan paragraf responsnya, bukan hanya keberadaan node.</li>
+<li><strong>Apostrof mentah di baris kode</strong>: <code>'</code> di dalam blok kode mengalami dobel-escape dan tampil literal; tulis <code>'</code> mentah (khusus baris kode/MCQ, bukan prosa).</li>
+</ul>
+<p>Semua temuan sudah dipindai ke skill <code>skilling-lesson-update</code>.</p> ]]>
+    </content>
+  </entry>
 </feed>

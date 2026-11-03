@@ -149,5 +149,12 @@
       <guid>https://localhost/mysite/laporan-perbaikan-periksa-harga-daging</guid>
       <pubDate>Tue, 03 Nov 2026 06:23:33 GMT</pubDate>
     </item>
+    <item>
+      <title>Laporan Perbaikan Lesson Latihan: while</title>
+      <link>https://localhost/mysite/laporan-perbaikan-latihan-while</link>
+      <description>Ringkasan Lesson Latihan: while (node 474, alias /lesson/latihan-while ) di python.pesanweb.my.id telah diperbaiki dari sumber https://python.skilling.us/lesson/practice-while . Halaman kini render bersih dengan 4 MCQ, 3 pause, dan 0 error parser. Gejala sebelum perbaikan Halaman tidak memunculkan string error apa pun, tetapi isinya praktis hilang: hanya muncul widget &quot;Lesson contents&quot; (toc) dan dua baris teks literal: character.\n internal_name=character_adela character.\n internal_name=char...</description>
+      <guid>https://localhost/mysite/laporan-perbaikan-latihan-while</guid>
+      <pubDate>Tue, 03 Nov 2026 07:24:12 GMT</pubDate>
+    </item>
   </channel>
 </rss>
