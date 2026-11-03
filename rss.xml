@@ -135,5 +135,12 @@
       <guid>https://localhost/mysite/laporan-sesi-perbaikan-lesson-cleaning-data-types-1</guid>
       <pubDate>Mon, 02 Nov 2026 03:54:51 GMT</pubDate>
     </item>
+    <item>
+      <title>Laporan: Perbaikan Lesson Latihan Ekspresi String</title>
+      <link>https://localhost/mysite/laporan-perbaikan-latihan-ekspresi-string</link>
+      <description>Ringkasan Lesson Latihan: ekspresi string (node 456, /lesson/latihan-ekspresi-string ) di python.pesanweb.my.id diperbaiki menyeluruh dari sumber https://python.skilling.us/lesson/practice-string-expressions . Sebelum perbaikan halaman praktis kosong: body memicu parser error dan hampir semua konten tidak muncul. Kondisi sebelum perbaikan Body hanya 6.261 byte dan terpotong: MCQ ke-5 (quarkbeast/len), karakter Georgina, dan reflect kedua tidak ada. Dua tag character. ditulis tanpa internal_na...</description>
+      <guid>https://localhost/mysite/laporan-perbaikan-latihan-ekspresi-string</guid>
+      <pubDate>Tue, 03 Nov 2026 02:57:06 GMT</pubDate>
+    </item>
   </channel>
 </rss>
