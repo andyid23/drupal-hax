@@ -1141,4 +1141,70 @@ git push origin HEAD
 <p>Catatan: skrip di <code>/tmp</code> host berjalan di host, bukan di container, sehingga <code>curl 127.0.0.1:81</code> dari host gagal (000). Pipe lewat <code>docker exec -i ... sh -s</code>.</p> ]]>
     </content>
   </entry>
+  <entry>
+    <title>Laporan Perbaikan Lesson Periksa Harga Daging (Validasi Input)</title>
+    <id>item-5c8cec28-b28f-4cbf-a856-20d7f8da034d</id>
+    <updated>2026-11-03T06:23:33.000Z</updated>
+    <published>2026-11-03T06:23:33.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/laporan-perbaikan-periksa-harga-daging"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Ringkasan</h2>
+<p>Lesson <strong>Periksa Harga Daging</strong> (node 471, alias <code>/lesson/periksa-harga-daging</code>) di <code>python.pesanweb.my.id</code> telah diperbaiki total dari sumber <code>https://python.skilling.us/lesson/check-meal-cost</code>. Sebelumnya halaman dipenuhi error parser Skilling; sekarang render bersih dengan 0 error.</p>
+<h2>Gejala sebelum perbaikan</h2>
+<ul>
+<li><code>Character tag needs internal_name option.</code> — 5 kali</li>
+<li><code>Tag parameter parse error in: meal_cost = float(input('Meal cost? '))…</code> — 1 kali</li>
+<li><code>Missing/invalid close tag? Missing . at end? Tag: character</code> — 1 kali</li>
+<li>Dialog karakter terpotong (mis. "Apa itu" saja, sisanya bocor jadi teks liar di luar blok)</li>
+<li>MCQ lama masih memakai format inline <code>title=</code> yang tidak render widget</li>
+</ul>
+<h2>Akar masalah (3 lapis)</h2>
+<h3>1. Artefak dump body: CR + literal backslash-n</h3>
+<p>Saat body node di-dump lewat <code>drush sql:query</code> melalui pipeline SSH/terminal, akhiran baris CRLF terekam sebagai CR + teks literal <code>\n</code> (bukan LF asli). Akibatnya setelah parser mengubah <code>&lt;br /&gt;</code> menjadi LF, baris kosong tidak pernah membentuk <code>\n\n</code> — dan opsi tag diekstrak sampai <code>\n\n</code> pertama, jadi opsi "menelan" seluruh section sampai masuk ke blok karakter berikutnya. Ini penyebab utama seluruh keluarga error di atas.</p>
+<p><strong>Fix:</strong> normalisasi sebelum rebuild:</p>
+<pre><code>$body = str_replace(chr(13) . chr(92) . 'n', chr(10), $body); // CR + literal \n -&gt; LF
+$body = str_replace(chr(13), '', $body);                     // CR telanjang</code></pre>
+<h3>2. Escape ganda pada &amp;amp;</h3>
+<p>Langkah escape body sempat menjalankan <code>str_replace('&amp;', '&amp;amp;', $body)</code>. Padahal body yang sudah di-decode tidak mengandung <code>&amp;</code> mentah, tapi string pengganti tag mengandung entitas <code>&amp;nbsp;</code>. Hasilnya <code>&amp;nbsp;</code> jadi <code>&amp;amp;nbsp;</code>, parser tidak lagi mengenali <code>&amp;nbsp;</code> → spasi, dan baris <code>internal_name=…</code> gagal di-<code>parse_ini_string</code>. Escape yang benar hanya NBSP → <code>&amp;nbsp;</code> dan apostrof → <code>&amp;#039;</code>.</p>
+<h3>3. Regex dialog karakter berhenti di tag dalam</h3>
+<p>Pola tangkap dialog memakai lookahead yang memasukkan <code>&lt;code&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h3&gt;</code>. Dialog apa pun yang memuat <code>&lt;code&gt;</code> inline terpotong (mis. "Apa itu <code>ValueError</code> di <code>except ValueError:</code>?" jadi "Apa itu"), menyisakan teks yatim setelah <code>/character.</code> yang merusak parsing tag berikutnya. Pola yang benar menangkap sampai pemisah paragraf <code>&lt;br /&gt;\n&lt;br /&gt;</code> plus opsional blok <code>skilling-code-container</code> susulan (untuk dialog yang sumbernya menyertakan contoh kode).</p>
+<h2>Yang dilakukan</h2>
+<ul>
+<li>Normalisasi akhiran baris body (fix artefak #1)</li>
+<li>Hapus blok <code>toc.</code> (sumber tidak punya) — blok <code>annotation.</code> (catatan login untuk anonim) dipertahankan</li>
+<li>Konversi 3 blok MCQ inline lama → tag <code>mcq.</code> + <code>internal_name=</code>; buat 3 node MCQ baru: <code>mcq_float_conversion_validation</code> (nid 1009), <code>mcq_simple_if_numeric_2</code> (nid 1010), <code>sys_exit</code> (nid 1011) lengkap dengan paragraf respons benar/salah</li>
+<li>Koreksi tag <code>pattern.</code>: internal_name salah <code>pattern_one_time_numeric_validation</code> → <code>pattern_one_time_numeric_input_validation</code> (node 963); buang konten inline dan penutup yang tidak perlu</li>
+<li>Tag <code>exercise.</code> → <code>internal_name=exercise_parade_length</code> (node 981), konten inline dibuang (node exercise sudah memuat tugas)</li>
+<li>Heading <code>&lt;h2&gt;</code> → <code>&lt;h3&gt;</code> (6 section: Bukan angka, Apakah pengguna mengetik angka?, Pemeriksaan rentang, Pola lain, Ringkasan, Latihan)</li>
+<li>Konversi 13 dialog <code>&lt;em&gt;Nama&lt;/em&gt;: …</code> → tag <code>character.</code> dengan pemetaan Adela→Izza, Ray→Hafidz, Georgina→Fina, Ethan→Hafidz (sesuai skill <code>skilling-lesson-update</code>)</li>
+<li>Hapus seluruh penutup <code>/mcq.</code>, <code>/pattern.</code>, <code>/exercise.</code> (tag-tag itu tidak berpenutup di Skilling) dan tag <code>pattern.</code> yatim di ekor body</li>
+</ul>
+<h2>Verifikasi (render HTTP 200)</h2>
+<table>
+<tbody>
+<tr><th>Item</th><th>Hasil</th></tr>
+<tr><td>skilling-parsing-error</td><td>0</td></tr>
+<tr><td>skilling-custom-tag-option-parse-error</td><td>0</td></tr>
+<tr><td>Character tag needs internal_name</td><td>0</td></tr>
+<tr><td>Missing/invalid close tag</td><td>0</td></tr>
+<tr><td>Character container ter-render</td><td>13 (Izza, Hafidz, Fina — foto tampil)</td></tr>
+<tr><td>MCQ widget ter-render</td><td>3 (mcq_float_conversion_validation, mcq_simple_if_numeric_2, sys_exit)</td></tr>
+<tr><td>Exercise ter-render</td><td>1 (Panjang parade)</td></tr>
+<tr><td>Pattern ter-render</td><td>1 (One-time numeric input validation)</td></tr>
+<tr><td>Pause (More...) ter-render</td><td>8</td></tr>
+<tr><td>Code container ter-render</td><td>15</td></tr>
+<tr><td>Heading section ter-render</td><td>6 (h4 hasil offset heading)</td></tr>
+</tbody>
+</table>
+<h2>Catatan</h2>
+<ul>
+<li>Node <code>mcq_float_conversion</code> lama (nid 906) sengaja TIDAK diubah: isinya dipakai lesson 888 (Kumpulan Data). Karena internal_name tidak boleh ganda, MCQ sumber dibuat sebagai node baru dengan nama akhiran <code>_validation</code>.</li>
+<li>Kutip tunggal di dalam <code>&lt;code&gt;</code> tampil sebagai <code>&amp;#039;</code> literal — ini perilaku yang sama dengan lesson rujukan 871 (more-functions), bukan regression.</li>
+<li>Dialog adela_smile5 ("Oh, I see! The float()…") tidak ada di versi Bahasa Indonesia situs, sehingga tidak ditambahkan.</li>
+<li>Semua temuan sudah dipindai ke skill <code>skilling-lesson-update</code> (section "Rebuilding from a dumped body: normalize first" + pitfall parser internals + internal_name collision).</li>
+</ul> ]]>
+    </content>
+  </entry>
 </feed>

@@ -142,5 +142,12 @@
       <guid>https://localhost/mysite/laporan-perbaikan-latihan-ekspresi-string</guid>
       <pubDate>Tue, 03 Nov 2026 02:57:06 GMT</pubDate>
     </item>
+    <item>
+      <title>Laporan Perbaikan Lesson Periksa Harga Daging (Validasi Input)</title>
+      <link>https://localhost/mysite/laporan-perbaikan-periksa-harga-daging</link>
+      <description>Ringkasan Lesson Periksa Harga Daging (node 471, alias /lesson/periksa-harga-daging ) di python.pesanweb.my.id telah diperbaiki total dari sumber https://python.skilling.us/lesson/check-meal-cost . Sebelumnya halaman dipenuhi error parser Skilling; sekarang render bersih dengan 0 error. Gejala sebelum perbaikan Character tag needs internal_name option. — 5 kali Tag parameter parse error in: meal_cost = float(input(&apos;Meal cost? &apos;))… — 1 kali Missing/invalid close tag? Missing . at end? Tag: cha...</description>
+      <guid>https://localhost/mysite/laporan-perbaikan-periksa-harga-daging</guid>
+      <pubDate>Tue, 03 Nov 2026 06:23:33 GMT</pubDate>
+    </item>
   </channel>
 </rss>
