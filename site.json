@@ -344,6 +344,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-e7e0ed66-6a2a-4dee-be4b-f2443c317667",
+      "indent": 0,
+      "location": "pages/item-e7e0ed66-6a2a-4dee-be4b-f2443c317667/index.html",
+      "slug": "laporan-perbaikan-latihan-ekspresi-string",
+      "order": 0,
+      "parent": null,
+      "title": "Laporan: Perbaikan Lesson Latihan Ekspresi String",
+      "description": "",
+      "metadata": {
+        "created": 1793674626,
+        "updated": 1793674626,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }

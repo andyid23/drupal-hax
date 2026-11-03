@@ -150,4 +150,159 @@ bottom-text="...probably"
 <p><strong>Peringatan:</strong> jangan import ke DB <code>belajarweb</code> yang ada di home.pesanweb.my.id — itu DB konteks lain. Tujuan benar adalah DB <code>belajarweb</code> di MariaDB mesin 192.168.2.57. Versi Drupal sama (8.9.20) dan path sama, jadi dump+import valid; D8→D11 nanti butuh migrasi penuh, bukan sekadar dump.</p> ]]>
     </content>
   </entry>
+  <entry>
+    <title>Cara Cek Container Aktif, vhost nginx &amp; Arti /data/compose</title>
+    <id>item-f2adf3de-27b3-491f-98ae-31a8767f62ce</id>
+    <updated>2026-10-26T22:43:29.000Z</updated>
+    <published>2026-10-26T22:43:29.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/cara-cek-container-vhost-nginx"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Pertanyaan</h2>
+<p>Bagaimana cara melihat container yang aktif dan vhost nginx apa saja yang disajikannya? Apa isi <code>ls /data/compose/</code> (10 12 14 16 19 23 30 32 33 34 drupal drupal-darinfs drupal8 drupal8a)? Apa arti tabel Volumes container <code>drupal_web_server</code>?</p>
+
+<h2>1. Cara cek container aktif &amp; vhost-nya (home.pesanweb.my.id)</h2>
+<pre><code># Project compose mana yang aktif
+ssh home.pesanweb.my.id "docker compose ls -a"
+#  → drupal811  running(6)  /data/compose/34/docker-compose.yml
+#  → root       running(1)  /root/portainer-compose.yaml
+
+# Container + project + dir kerja masing-masing
+docker ps --format '{{.Names}}\t{{.Label "com.docker.compose.project"}}\t{{.Label "com.docker.compose.project.working_dir"}}'
+
+# Port mapping container nginx
+docker port drupal_web_server
+#  → 80/tcp -&gt; 0.0.0.0:8086   81/tcp -&gt; 0.0.0.0:8087
+
+# Mount apa saja yang dipakai container (bind vs volume)
+docker inspect drupal_web_server --format '{{json .Mounts}}'
+
+# CARA PALING LENGKAP: dump seluruh config nginx yang benar-benar aktif
+docker exec drupal_web_server nginx -T | grep -E 'listen|server_name|root |fastcgi_pass'</code></pre>
+<p>Di mesin swarm (192.168.2.57) namanya service, bukan compose: <code>docker service ls</code>, <code>docker service ps &lt;nama&gt;</code>, <code>docker service inspect --format '{{json .Spec.TaskTemplate.ContainerSpec.Mounts}}' &lt;nama&gt;</code>.</p>
+
+<h2>2. Hasil <code>nginx -T</code> — vhost aktif <code>drupal_web_server</code></h2>
+<table>
+<thead><tr><th>listen</th><th>server_name</th><th>root</th><th>fastcgi_pass</th></tr></thead>
+<tbody>
+<tr><td>80 (host 8086)</td><td>localhost</td><td>/var/www/html/drupal11/web</td><td>drupal_fpm:9000 (Drupal 11)</td></tr>
+<tr><td>81 (host 8087)</td><td>localhost</td><td>/var/www/html2/drupal8/web</td><td>drupal_fpm7:9000 (Drupal 8)</td></tr>
+</tbody>
+</table>
+<p><strong>Poin penting:</strong> nginx di sini <em>bukan</em> memilih berdasarkan domain — <code>server_name localhost</code> artinya catch-all. Yang membedakan domain adalah <strong>port</strong> (80 vs 81), dan pembeda domain di dalam Drupal 8 dilakukan oleh <strong>multisite</strong> lewat Host header (<code>sites/web.pesanweb.my.id/</code>, <code>sites/belajarweb.pesanweb.my.id/</code>). Jadi "vhost" sesungguhnya di mesin ini = 2 blok server berbasis port.</p>
+
+<h2>3. Penjelasan isi <code>/data/compose/</code></h2>
+<p>Bukti: <code>docker compose ls</code> hanya menampilkan <strong>drupal811</strong> (dari <code>/data/compose/34/</code>) + portainer. Sisanya bukan project aktif:</p>
+<table>
+<thead><tr><th>Folder</th><th>Status</th><th>Isi / fungsi</th></tr></thead>
+<tbody>
+<tr><td><code>34</code></td><td><strong>AKTIF</strong></td><td>Project <code>drupal811</code> yang berjalan sekarang (drupal8-src, drupal11-src, nginx-conf, db-backup, drupal-data)</td></tr>
+<tr><td><code>10 12 14 16 19 23 30 32 33</code></td><td>inaktif</td><td>Snapshot deployment lama (Des 2025), struktur serupa (drupal8-src, nginx-conf, db-backup…). Arsip/rollback — <strong>jangan</strong> dihapus asal</td></tr>
+<tr><td><code>drupal-darinfs</code></td><td>inaktif</td><td>Snapshot paling lengkap (ada drupal8_data, drupal8_files, dump, images, import, private, snippets, template). Owner <code>nobody:nogroup</code> → hasil copy/rsync (kemungkinan dari NFS)</td></tr>
+<tr><td><code>drupal</code>, <code>drupal8</code>, <code>drupal8a</code></td><td>—</td><td>Folder kosong</td></tr>
+</tbody>
+</table>
+<p>Pola penomoran = urutan deployment; tiap kali deploy baru dibuat folder nomor baru, folder lama ditinggalkan (bukan dihapus). Hanya folder yang ada di <code>docker compose ls</code> + <code>docker ps</code> label <code>working_dir</code>-nya yang benar-benar jalan.</p>
+
+<h2>4. Penjelasan tabel Volumes <code>drupal_web_server</code></h2>
+<table>
+<thead><tr><th>Host/volume</th><th>Path di container</th><th>Jenis &amp; guna</th></tr></thead>
+<tbody>
+<tr><td><code>/data/compose/34/nginx-conf</code></td><td>/etc/nginx/conf.d</td><td><strong>bind</strong> — config vhost. Edit di host, reload nginx, langsung berlaku</td></tr>
+<tr><td><code>/data/compose/34/drupal11-src</code></td><td>/var/www/html/drupal11</td><td><strong>bind</strong> — kode Drupal 11</td></tr>
+<tr><td><code>/data/compose/34/drupal8-src</code></td><td>/var/www/html2/drupal8</td><td><strong>bind</strong> — kode Drupal 8 + semua folder multisite (<code>web/sites/*</code>)</td></tr>
+<tr><td><code>drupal811_drupal11_files_volume</code></td><td>/var/www/html/drupal11/web/sites/default/files</td><td><strong>named volume</strong> — upload D11. Terpisah dari kode → aman saat ganti/update source</td></tr>
+<tr><td><code>drupal811_drupal8_files_volume</code></td><td>/var/www/html2/drupal8/web/sites/default/files</td><td><strong>named volume</strong> — upload D8 situs default</td></tr>
+</tbody>
+</table>
+<p>Volume named lengkap di mesin ini: <code>drupal811_drupal8_files_volume</code>, <code>drupal811_drupal11_files_volume</code>, <code>drupal811_drupal11_config_sync_volume</code> (sync config D11), <code>drupal811_drupal_db_data</code> (data MariaDB).</p>
+<p><strong>Catatan penting:</strong> files untuk situs multisite (<code>web.pesanweb.my.id</code>, <code>belajarweb.pesanweb.my.id</code>) <em>bukan</em> di named volume — ikut bind mount <code>drupal8-src</code> di host: <code>/data/compose/34/drupal8-src/web/sites/&lt;domain&gt;/files/</code>. Hanya situs <code>default</code> yang files-nya pakai named volume.</p>
+
+<h2>5. Ringkasan ekosistem dua mesin</h2>
+<table>
+<thead><tr><th></th><th>home.pesanweb.my.id</th><th>192.168.2.57</th></tr></thead>
+<tbody>
+<tr><td>Orkestrator</td><td>docker compose (project <code>drupal811</code>, dir <code>/data/compose/34</code>)</td><td>docker swarm (stack <code>drupal-nfs</code>, dir <code>/data/compose/98</code>)</td></tr>
+<tr><td>Routing domain</td><td>Port host 8086/8087 + multisite Drupal</td><td>Nginx Proxy Manager (tabel <code>proxy_host</code>) → 8087 → container :81</td></tr>
+<tr><td>Situs D8</td><td>web.pesanweb.my.id (DB drupal8)</td><td>belajarweb.pesanweb.my.id (DB belajarweb)</td></tr>
+</tbody>
+</table> ]]>
+    </content>
+  </entry>
+  <entry>
+    <title>Cloning DB web ke belajarweb (2.57) — Status &amp; Penjelasan Backup/Bind/vhost</title>
+    <id>item-a7a3b998-ade4-46bf-8176-8938465f7b21</id>
+    <updated>2026-10-26T23:10:55.000Z</updated>
+    <published>2026-10-26T23:10:55.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/cloning-db-web-belajarweb-2-57"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Status: CLONING BELUM DIJALANKAN — menunggu konfirmasi</h2>
+<p>Langkah destruktif (DROP DATABASE + import) dihentikan sistem karena butuh persetujuan eksplisit. <strong>Belum ada data yang diubah.</strong> Semua backup sudah dibuat lebih dulu (lihat §3). Penjelasan diminta pengguna dicatat di §4–§7.</p>
+
+<h2>1. Folder /data/compose di 192.168.2.57 (sebelumnya belum diketahui)</h2>
+<p>Isinya: <code>84 88 92 94 98 104 111</code> — pola sama dengan home (penomoran urut deployment). Yang aktif hanya <strong><code>98</code></strong> (stack swarm <code>drupal-nfs</code>, dibuktikan via label container <code>com.docker.compose.project.working_dir</code> untuk container non-swarm dan nama volume <code>drupal-nfs_*</code>). Sisanya snapshot deployment lama (Jul–Des 2025) yang inaktif — arsip/rollback.</p>
+<table>
+<thead><tr><th>Mesin</th><th>Folder aktif</th><th>Orkestrator</th><th>Project</th></tr></thead>
+<tbody>
+<tr><td>home.pesanweb.my.id (192.168.2.40)</td><td>/data/compose/34</td><td>docker compose</td><td>drupal811 (6 container)</td></tr>
+<tr><td>192.168.2.57 (armbian-master)</td><td>/data/compose/98</td><td>docker swarm</td><td>drupal-nfs</td></tr>
+</tbody>
+</table>
+
+<h2>2. Bind mount vs edit di terminal root (nginx-conf)</h2>
+<p>Container <code>drupal_web_server</code> mem-bind <code>/data/compose/34/nginx-conf</code> (host) → <code>/etc/nginx/conf.d</code> (container). Karena bind mount, <strong>file di host dan di container adalah file yang sama</strong> (inode sama). Dua cara edit, hasilnya identik:</p>
+<ul>
+<li><strong>Edit di host (direkomendasikan)</strong>: <code>vi /data/compose/34/nginx-conf/drupal.conf</code> lalu reload: <code>docker exec drupal_web_server nginx -s reload</code></li>
+<li><strong>Edit dari terminal root di dalam container</strong>: <code>docker exec -it drupal_web_server sh</code> → edit <code>/etc/nginx/conf.d/drupal.conf</code>. Editor di container sering tak lengkap (busybox), tapi perubahannya tetap terlihat di host karena bind mount</li>
+</ul>
+<p>Perbedaan krusial hanya untuk path yang <em>bukan</em> bind mount: perubahan di dalam container (misal <code>/etc/nginx/nginx.conf</code> bawaan image) akan <strong>hilang saat container di-recreate</strong>, sedangkan file di bind mount dan named volume tetap ada. Untuk vhost, selalu edit lewat bind <code>nginx-conf</code> di host.</p>
+
+<h2>3. Cara kerja container backup (<code>drupal_backup</code> / fradelg/mysql-cron-backup)</h2>
+<p><strong>Dibuat via docker compose</strong> — bukan <code>docker run</code> manual. Buktinya label container: <code>com.docker.compose.project=drupal811</code>, <code>com.docker.compose.service=mysql-cron-backup</code>, <code>com.docker.compose.project.config_files=/data/compose/34/docker-compose.yml</code>, <code>com.docker.compose.depends_on=drupal_db:service_started</code>.</p>
+<p>Mekanisme (dari ENV + CMD):</p>
+<ul>
+<li>CMD: <code>dockerize -wait tcp://${MYSQL_HOST}:${MYSQL_PORT} -timeout ${TIMEOUT} /run.sh</code> → tunggu DB (service <code>drupal_db</code>, port 3306) benar-benar hidup sebelum mulai</li>
+<li><code>/run.sh</code> loop: tidur sampai <code>CRON_TIME=0 3 * * *</code> (setiap hari pukul 03:00 waktu container), lalu <code>mysqldump</code> dengan <code>MYSQLDUMP_OPTS=--no-tablespaces</code></li>
+<li><code>MYSQL_DATABASE</code> tidak di-set → <strong>dump SEMUA database</strong>, satu file per DB: <code>&lt;timestamp&gt;.&lt;nama-db&gt;.sql.gz</code></li>
+<li><code>GZIP_LEVEL=9</code>, <code>MAX_BACKUPS=15</code> (rotasi: hapus yang lebih lama dari 15), <code>INIT_BACKUP=1</code> (langsung backup sekali saat container start)</li>
+<li>Output ke <code>/backup</code> = bind mount host <code>/data/compose/34/db-backup/</code>. Ada juga symlink <code>latest.&lt;db&gt;.sql.gz</code></li>
+</ul>
+<p>Bukti nyata (Oct 26 03:00): <code>202610260300.web.sql.gz</code> (964K), <code>202610260300.drupal8.sql.gz</code> (4.2M), <code>202610260300.drupaldb.sql.gz</code> (480 byte — DB nyaris kosong), <code>latest.belajarweb.sql.gz</code>, dst.</p>
+
+<h2>4. Persiapan cloning web → belajarweb (SUDAH DILAKUKAN, non-destruktif)</h2>
+<table>
+<thead><tr><th>Item</th><th>Lokasi</th><th>Ukuran</th></tr></thead>
+<tbody>
+<tr><td>Backup DB belajarweb (2.57) sebelum ditimpa</td><td>/data/compose/98/db-backup/belajarweb-pre-clone-20261026.sql.gz</td><td>3.0M</td></tr>
+<tr><td>Backup files belajarweb (2.57)</td><td>/data/compose/98/drupal8-src/web/sites/belajarweb.pesanweb.my.id/files.bak-pre-clone-20261026</td><td>49M</td></tr>
+<tr><td>Dump clean DB drupal8 sumber (home) — tanpa CREATE/USE DATABASE agar tidak nyasar</td><td>/data/compose/34/db-backup/drupal8-web-clone-clean-20261026.sql.gz</td><td>4.3M</td></tr>
+</tbody>
+</table>
+<p>Catatan teknis: dump pertama memakai <code>--databases</code> (mengandung <code>CREATE/USE DATABASE drupal8</code>) — kalau diimpor apa adanya ke target, datanya masuk ke DB <code>drupal8</code> target (bukan <code>belajarweb</code>). Maka dibuat dump <em>clean</em> tanpa flag tersebut.</p>
+
+<h2>5. Rencana eksekusi cloning (DESTRUKTIF — butuh konfirmasi)</h2>
+<ol>
+<li>scp dump clean home → 192.168.2.57:/tmp (via SSH hop, key sudah terpasang)</li>
+<li>Di 2.57: <code>DROP DATABASE belajarweb; CREATE DATABASE belajarweb;</code> di container <code>drupal-nfs_drupal_db.1.*</code> (menghapus 244 tabel lama — sudah dibackup di §4)</li>
+<li>Import: <code>zcat dump.sql.gz | docker exec -i &lt;db&gt; mariadb -uroot -p... belajarweb</code></li>
+<li>Sync files: <code>rsync -a --delete</code> dari <code>sites/web.pesanweb.my.id/files/</code> (home) ke <code>sites/belajarweb.pesanweb.my.id/files/</code> (2.57) — target sudah dibackup</li>
+<li><code>drush cr</code> via container <code>drupal-nfs_drupal_fpm7.*</code> (drush ada di <code>/var/www/html2/drupal8/vendor/bin/drush</code>, docroot <code>/var/www/html2/drupal8/web</code>, URI <code>-l belajarweb.pesanweb.my.id</code>)</li>
+<li>Verifikasi: jumlah tabel, <code>curl -H 'Host: belajarweb.pesanweb.my.id' http://192.168.2.57:8087</code> bandingkan dengan homepage web.pesanweb.my.id</li>
+</ol>
+<p><strong>Efek:</strong> belajarweb.pesanweb.my.id berubah menjadi salinan persis konten web.pesanweb.my.id (artikel/user/config web). Backup §4 bisa dipakai untuk rollback: import ulang <code>belajarweb-pre-clone-20261026.sql.gz</code> + restore <code>files.bak-pre-clone-20261026</code>.</p>
+
+<h2>6. Temuan keamanan (penting)</h2>
+<p>Di kedua mesin, <code>MYSQL_ROOT_PASSWORD</code> pada compose/env dan password di <code>settings.php</code> <strong>masih berisi placeholder default</strong> (string <em>your_drupal_db_password</em> — belum pernah diganti). DB home membuka port 3306 ke host. Segera ganti password root DB dan password user situs, lalu update settings.php + compose env + restart container. Nilai aslinya sengaja tidak ditulis di halaman ini.</p>
+
+<h2>7. Ringkasan jawaban pertanyaan awal</h2>
+<ul>
+<li><strong>Folder 2.57</strong>: 84, 88, 92, 94, 98, 104, 111 — hanya 98 aktif (swarm drupal-nfs), sisanya snapshot lama</li>
+<li><strong>Bind vs terminal root</strong>: bind mount = file host &amp; container sama; edit di host + <code>nginx -s reload</code> adalah cara benar; edit dalam container hanya untuk path non-mount yang akan hilang saat recreate</li>
+<li><strong>drupal_backup</strong>: service compose <code>mysql-cron-backup</code> (image fradelg), cron harian 03:00, dump semua DB, gzip -9, rotasi 15 file, output ke /data/compose/34/db-backup via bind /backup</li>
+</ul> ]]>
+    </content>
+  </entry>
 </feed>
