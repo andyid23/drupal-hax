@@ -156,5 +156,12 @@
       <guid>https://localhost/mysite/laporan-perbaikan-latihan-while</guid>
       <pubDate>Tue, 03 Nov 2026 07:24:12 GMT</pubDate>
     </item>
+    <item>
+      <title>Akses Admin Drupal 8 python.pesanweb.my.id via SSH + Drush</title>
+      <link>https://localhost/mysite/akses-admin-drupal8-python-pesanweb</link>
+      <description>Ringkasan Situs python.pesanweb.my.id adalah Drupal 8 multisite yang berjalan di container d8_fpm + nginx drupal_web_server pada host home.pesanweb.my.id . Akses publik hostname tersebut saat ini NXDOMAIN, tetapi admin dan render dapat diakses dari dalam host melalui SSH + Drush/curl. Lingkungan Host: home.pesanweb.my.id (SSH port 2222 via Cloudflare Tunnel). Container PHP/Drush: d8_fpm , root Drupal /var/www/html2/drupal8/web . Container web server: drupal_web_server , nginx mendengarkan por...</description>
+      <guid>https://localhost/mysite/akses-admin-drupal8-python-pesanweb</guid>
+      <pubDate>Mon, 09 Nov 2026 05:10:00 GMT</pubDate>
+    </item>
   </channel>
 </rss>
