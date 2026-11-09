@@ -392,6 +392,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-5d585c23-239b-494f-af15-e7dd56ba5988",
+      "indent": 0,
+      "location": "pages/item-5d585c23-239b-494f-af15-e7dd56ba5988/index.html",
+      "slug": "akses-admin-drupal8-python-pesanweb",
+      "order": 0,
+      "parent": null,
+      "title": "Akses Admin Drupal 8 python.pesanweb.my.id via SSH + Drush",
+      "description": "",
+      "metadata": {
+        "created": 1794201000,
+        "updated": 1794201000,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }

@@ -296,6 +296,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-7f734a5b-96a3-4136-be0f-2a7f3332f277",
+      "indent": 0,
+      "location": "pages/item-7f734a5b-96a3-4136-be0f-2a7f3332f277/index.html",
+      "slug": "ds-cli-cmc-provider-cmc",
+      "order": 0,
+      "parent": null,
+      "title": "Integration ds CLI + Commandcode.ai (cmc) — Panduan",
+      "description": "",
+      "metadata": {
+        "created": 1793429767,
+        "updated": 1793429767,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
