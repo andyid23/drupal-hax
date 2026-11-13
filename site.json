@@ -408,6 +408,22 @@
         "images": [],
         "videos": []
       }
+    },
+    {
+      "id": "item-d4e5f6a7",
+      "indent": 0,
+      "location": "pages/item-d4e5f6a7/index.html",
+      "slug": "clone-lesson-first-program-vba",
+      "order": 1,
+      "parent": null,
+      "title": "Clone Lesson first-program ke vba.pesanweb.my.id",
+      "description": "Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.",
+      "metadata": {
+        "created": 1794605039,
+        "updated": 1794605039,
+        "images": [],
+        "videos": []
+      }
     }
   ]
 }
