@@ -1,0 +1,112 @@
+id: item-5d585c23-239b-494f-af15-e7dd56ba5988
+indent: 0
+location: pages/item-5d585c23-239b-494f-af15-e7dd56ba5988/index.yaml
+slug: akses-admin-drupal8-python-pesanweb
+order: 0
+parent: null
+title: Akses Admin Drupal 8 python.pesanweb.my.id via SSH + Drush
+description: ''
+metadata:
+  created: 1794201000
+  updated: 1794201000
+  images: []
+  videos: []
+content: >-
+  <h2>Ringkasan</h2>
+
+  <p>Situs <code>python.pesanweb.my.id</code> adalah Drupal 8 multisite yang
+  berjalan di container <code>d8_fpm</code> + nginx
+  <code>drupal_web_server</code> pada host <code>home.pesanweb.my.id</code>.
+  Akses publik hostname tersebut saat ini NXDOMAIN, tetapi admin dan render
+  dapat diakses dari dalam host melalui SSH + Drush/curl.</p>
+
+
+  <h2>Lingkungan</h2>
+
+  <ul>
+
+  <li>Host: <code>home.pesanweb.my.id</code> (SSH port 2222 via Cloudflare
+  Tunnel).</li>
+
+  <li>Container PHP/Drush: <code>d8_fpm</code>, root Drupal
+  <code>/var/www/html2/drupal8/web</code>.</li>
+
+  <li>Container web server: <code>drupal_web_server</code>, nginx mendengarkan
+  port 81 (mapping host 8087).</li>
+
+  <li>Database: MariaDB <code>drupal_database</code>, database
+  <code>python</code>.</li>
+
+  <li>Drush versi 10.6.2, Drupal 8.9.20.</li>
+
+  </ul>
+
+
+  <h2>Akses SSH ke host</h2>
+
+  <p>SSH ke host menggunakan konfigurasi client:</p>
+
+  <pre><code>ssh -o StrictHostKeyChecking=no -p 2222
+  root@home.pesanweb.my.id</code></pre>
+
+  <p>Koneksi Cloudflare Tunnel bersifat intermittent (kadang <code>websocket:
+  bad handshake</code>). Jika gagal, ulangi beberapa kali sampai berhasil.</p>
+
+
+  <h2>Akses admin (one-time login link)</h2>
+
+  <p>Gunakan Drush dari container <code>d8_fpm</code> dengan URI lokal agar
+  tautan login dapat dibuka via tunnel port 8087:</p>
+
+  <pre><code>docker exec d8_fpm /var/www/html2/drupal8/vendor/bin/drush \
+    --root=/var/www/html2/drupal8/web \
+    --uri=http://localhost:8087 uli</code></pre>
+  <p>Contoh hasil:</p>
+
+  <pre><code>http://localhost:8087/user/reset/1/&lt;timestamp&gt;/&lt;token&gt;/login</code></pre>
+
+  <p>Untuk membuka di browser lokal, buat SSH tunnel:</p>
+
+  <pre><code>ssh -L 8087:localhost:8087 -p 2222
+  root@home.pesanweb.my.id</code></pre>
+
+  <p>Lalu buka tautan <code>http://localhost:8087/user/reset/.../login</code>.
+  Tautan hanya berlaku sekali dan kedaluwarsa sesuai token Drush.</p>
+
+
+  <h2>Verifikasi render halaman (curl dari container web server)</h2>
+
+  <p>Port 81 digunakan di dalam container; port 8087 hanya ada di host. Contoh
+  verifikasi halaman login:</p>
+
+  <pre><code>docker exec drupal_web_server curl -s -o /dev/null -w
+  "%{http_code}" \
+    -H "Host: python.pesanweb.my.id" http://127.0.0.1:81/user/login</code></pre>
+  <p>Hasil terverifikasi: HTTP 200, title <code>Log in | Python dengan Hewan
+  Peliharaan</code>.</p>
+
+
+  <h2>Catatan DNS publik</h2>
+
+  <p>Hostname <code>python.pesanweb.my.id</code>,
+  <code>vba.pesanweb.my.id</code>, dan <code>webapps.pesanweb.my.id</code> saat
+  ini NXDOMAIN di DNS publik. Konten dan database sudah benar di server; yang
+  perlu ditambahkan adalah route DNS + public hostname tunnel di Cloudflare
+  untuk <code>python.pesanweb.my.id</code>.</p>
+
+
+  <h2>Verifikasi yang dilakukan</h2>
+
+  <ul>
+
+  <li>SSH ke host berhasil (hostname <code>portainer</code>).</li>
+
+  <li>Drush status untuk site python berhasil (DB <code>python</code>, bootstrap
+  sukses).</li>
+
+  <li>Drush <code>uli</code> berhasil menghasilkan one-time login link.</li>
+
+  <li>Curl ke <code>http://127.0.0.1:81/user/login</code> dari container web
+  server mengembalikan HTTP 200.</li>
+
+  </ul>
