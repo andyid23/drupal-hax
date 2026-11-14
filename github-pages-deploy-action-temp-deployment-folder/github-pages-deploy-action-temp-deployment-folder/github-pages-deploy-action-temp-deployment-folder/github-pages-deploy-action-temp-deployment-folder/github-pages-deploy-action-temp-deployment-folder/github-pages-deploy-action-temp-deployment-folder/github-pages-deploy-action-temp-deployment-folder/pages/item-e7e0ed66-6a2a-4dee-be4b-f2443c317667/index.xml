@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-e7e0ed66-6a2a-4dee-be4b-f2443c317667</id>
+<indent>0</indent>
+<location>pages/item-e7e0ed66-6a2a-4dee-be4b-f2443c317667/index.xml</location>
+<slug>laporan-perbaikan-latihan-ekspresi-string</slug>
+<order>0</order>
+<parent></parent>
+<title>Laporan: Perbaikan Lesson Latihan Ekspresi String</title>
+<description></description>
+<metadata>
+<created>1793674626</created>
+<updated>1793674626</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Ringkasan</h2>
+<p>Lesson <strong>Latihan: ekspresi string</strong> (node 456, <code>/lesson/latihan-ekspresi-string</code>) di <code>python.pesanweb.my.id</code> diperbaiki menyeluruh dari sumber <code>https://python.skilling.us/lesson/practice-string-expressions</code>. Sebelum perbaikan halaman praktis kosong: body memicu <em>parser error</em> dan hampir semua konten tidak muncul.</p>
+
+<h2>Kondisi sebelum perbaikan</h2>
+<ul>
+<li>Body hanya 6.261 byte dan terpotong: MCQ ke-5 (quarkbeast/len), karakter Georgina, dan reflect kedua tidak ada.</li>
+<li>Dua tag <code>character.</code> ditulis tanpa <code>internal_name=</code> (memakai <code>character_adela</code> / <code>character_georgina</code> yang tidak ada di DB) sehingga parser berhenti dengan <em>Missing/invalid close tag? Tag: character</em>.</li>
+<li>Judul section ditulis sebagai <code>&amp;lt;h2&amp;gt;</code> ter-escape.</li>
+<li>MCQ ditulis inline (<code>* Salah</code> / <code>* Benar</code>) — format ini <strong>tidak</strong> menghasilkan widget MCQ di situs ini (render: 0 <code>skilling-insert-mcq</code>).</li>
+<li>Jawaban MCQ inline yang ada juga salah: untuk soal Bonnie/Zero, jawaban yang ditandai "Benar" adalah <code>Bonnie and Zero sitting in a tree.</code>, padahal output sebenarnya <code>Bonnie  and Zero , sitting in a tree.</code> (dijalankan dan diverifikasi dengan Python).</li>
+</ul>
+
+<h2>Inventaris sumber (python.skilling.us)</h2>
+<ul>
+<li>3 blok kode di body lesson + 5 blok kode di dalam MCQ</li>
+<li>5 MCQ: <code>string_expression_1</code> … <code>string_expression_5</code></li>
+<li>6 penanda pause (tombol More...)</li>
+<li>2 karakter: Adela (smile) dan Georgina (talking)</li>
+<li>2 blok Reflect</li>
+</ul>
+
+<h2>Yang dilakukan</h2>
+<h3>1. Body node 456 ditulis ulang</h3>
+<ul>
+<li>Format sesuai parser Skilling: setiap baris logis dipisah <code>&amp;lt;br /&amp;gt;</code> + newline; tag dan baris option-nya <strong>harus berdampingan</strong> (tanpa baris kosong di antaranya). Baris kosong memicu error <em>MCQ tag needs internal_name option.</em></li>
+<li><code>&amp;lt;div class="skilling-parse-unit-decrease-heading-offset"&amp;gt;&amp;lt;/div&amp;gt;</code> ditempel langsung di depan <code>&amp;lt;h3&amp;gt;</code> supaya heading tetap h3. Offset div kedua di awal body justru menurunkan heading menjadi h2.</li>
+<li>Karakter dipetakan: Adela → Izza (<code>character_izza_senang</code>), Georgina → Fina (<code>character_fina_masuk</code>). Kedua node karakter sudah punya foto (fid 594 dan 376), URL gambar mengembalikan HTTP 200.</li>
+<li>Naratif, dialog, I/O, catatan, dan pertanyaan reflect diterjemahkan ke Indonesia; kode dan output program tetap Inggris.</li>
+</ul>
+
+<h3>2. MCQ</h3>
+<ul>
+<li>Sudah ada di situs dan dipakai ulang: node 492 <code>mcq_string_concat_quote</code>, node 493 <code>mcq_string_repeat_concat</code>.</li>
+<li>Dibuat baru: node 956 <code>mcq_string_concat_order</code>, node 957 <code>mcq_string_variable_concat</code>, node 958 <code>mcq_string_len_repeat</code> (masing-masing 1 jawaban benar + penjelasan Indonesia).</li>
+<li>Node 492 dikoreksi: jawaban benar sebelumnya salah (<code>Dwayne 'The Rock' Johnson</code>). Output sebenarnya <code>Dwayne'The Rock'Johnson</code> tanpa spasi; flag <code>field_correct</code> dan teks respons diperbaiki.</li>
+<li>Pada MCQ anjing (Burt/Pax) opsi B dan C di sumber identik byte-per-byte; opsi C yang duplikat dibuang agar tidak ada dua jawaban sama.</li>
+<li>Teks pertanyaan node 492 dan 493 diterjemahkan: "What's this output?" / "What does this output?" → "Apa output ini?".</li>
+</ul>
+
+<h2>Verifikasi (render halaman asli)</h2>
+<ul>
+<li><code>skilling-code-container</code>: 3 (sesuai body lesson)</li>
+<li><code>skilling-insert-mcq-question</code>: 5 (956, 492, 957, 493, 958) — 21 respons tampil</li>
+<li><code>skilling-insert-character-container</code>: 2 (Izza, Fina)</li>
+<li><code>skilling-pause-container</code>: 6</li>
+<li><code>skilling-reflect-container</code>: 2</li>
+<li><code>skilling-parsing-error</code>: 0, "Missing/invalid close tag": 0, "not found": 0</li>
+<li>Heading section render sebagai <code>&amp;lt;h3&amp;gt;</code></li>
+</ul>
+
+<h2>Temuan infrastruktur</h2>
+<h3>1. Node lesson duplikat</h3>
+<p>Node <strong>459</strong> ("Latihan: ekspresi string") duplikat dari node 456: judul sama, <code>changed</code> sama, dan satu induk buku yang sama (book 372, parent 451, depth 3). Node 456 memegang alias kanonik <code>/lesson/latihan-ekspresi-string</code>; node 459 punya alias <code>/lesson/latihan-ekspresi-string-0</code>. Keduanya publish, jadi outline buku menampilkan dua entri sama. Perbaikan hanya diterapkan ke node 456 (URL yang diminta).</p>
+
+<h3>2. DNS publik tiga hostname mati</h3>
+<p>Dari host <code>home.pesanweb.my.id</code>, query ke 1.1.1.1 dan 8.8.8.8:</p>
+<ul>
+<li><code>python.pesanweb.my.id</code> → NXDOMAIN</li>
+<li><code>vba.pesanweb.my.id</code> → NXDOMAIN</li>
+<li><code>webapps.pesanweb.my.id</code> → NXDOMAIN</li>
+<li><code>web.pesanweb.my.id</code>, <code>belajarweb.pesanweb.my.id</code>, <code>home.pesanweb.my.id</code> → resolve normal</li>
+</ul>
+<p>Servis <code>cloudflared</code> aktif dan sudah meregistrasi koneksi tunnel, jadi kemungkinan besar record DNS untuk tiga hostname itu hilang/dihapus di dashboard Cloudflare. Konten lesson sudah benar di server; yang perlu ditambahkan adalah route DNS + public hostname tunnel untuk <code>python.pesanweb.my.id</code>.</p>
+
+<h2>Cara verifikasi render</h2>
+<p>Port pemetaan di host berubah menjadi berbasis port (bukan server_name): container <code>drupal_web_server</code> memetakan 8086→80 (Drupal 11) dan 8087→81 (Drupal 8). Verifikasi render D8 dilakukan dari dalam container web server:</p>
+<pre><code>cat verify.sh | ssh -p 2222 root@home.pesanweb.my.id \
+  "docker exec -i drupal_web_server sh -s"
+# isi verify.sh:
+# curl -s -H 'Host: python.pesanweb.my.id' http://127.0.0.1:81/lesson/&amp;lt;slug&amp;gt;</code></pre>
+<p>Catatan: skrip di <code>/tmp</code> host berjalan di host, bukan di container, sehingga <code>curl 127.0.0.1:81</code> dari host gagal (000). Pipe lewat <code>docker exec -i ... sh -s</code>.</p>]]></content>
+</item>
