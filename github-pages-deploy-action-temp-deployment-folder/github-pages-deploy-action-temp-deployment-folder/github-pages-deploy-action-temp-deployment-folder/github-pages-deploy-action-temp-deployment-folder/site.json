@@ -474,6 +474,38 @@
       }
     },
     {
+      "id": "item-dfb512c9-6f92-409a-a721-d1e51a4c9d23",
+      "indent": 0,
+      "location": "pages/item-dfb512c9-6f92-409a-a721-d1e51a4c9d23/index.html",
+      "slug": "kloning-lesson-logical-operators-vba",
+      "order": 0,
+      "parent": null,
+      "title": "Kloning lesson logical-operators ke VBA",
+      "description": "",
+      "metadata": {
+        "created": 1794648706,
+        "updated": 1794648706,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
+      "id": "item-4ba75d04-6fb2-4641-8a58-f03d5d9c1996",
+      "indent": 0,
+      "location": "pages/item-4ba75d04-6fb2-4641-8a58-f03d5d9c1996/index.html",
+      "slug": "kloning-lesson-guard-pattern-ke-vba",
+      "order": 0,
+      "parent": null,
+      "title": "Kloning lesson guard-pattern ke VBA",
+      "description": "",
+      "metadata": {
+        "created": 1794649687,
+        "updated": 1794649687,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

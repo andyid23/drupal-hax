@@ -1,0 +1,73 @@
+<h2>Ringkasan</h2>
+<p>Hasil cek langsung ke mesin <strong>192.168.2.57</strong> (hostname <code>armbian-master</code>) via SSH hop dari <code>home.pesanweb.my.id</code>. Konfirmasi: <strong>belajarweb.pesanweb.my.id live di 192.168.2.57</strong>, bukan di home.pesanweb.my.id. Sumber kebenaran routing ada di tabel <code>proxy_host</code> Nginx Proxy Manager (NPM) yang berjalan di mesin ini.</p>
+
+<h2>1. Routing NPM (otoritatif)</h2>
+<p>Query langsung ke DB NPM (<code>npm_db</code>, database <code>npm</code>, tabel <code>proxy_host</code>):</p>
+<table>
+<thead><tr><th>id</th><th>domain</th><th>forward</th><th>enabled</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>belajarweb.pesanweb.my.id</td><td>http://192.168.2.57:8087</td><td>ya</td></tr>
+<tr><td>2</td><td>tty.drupal.lokal</td><td>http://192.168.2.52:2222</td><td>ya</td></tr>
+<tr><td>3</td><td>curhatmu.my.id</td><td>http://192.168.2.52:81</td><td>ya</td></tr>
+</tbody>
+</table>
+<p><strong>web.pesanweb.my.id TIDAK ada di NPM ini</strong> — domain itu disajikan oleh nginx di home.pesanweb.my.id (port 8087 host → vhost :81 container → Drupal 8). Dua situs dengan nama mirip, dua mesin berbeda.</p>
+
+<h2>2. Docker stack <code>drupal-nfs</code> di 192.168.2.57</h2>
+<table>
+<thead><tr><th>Container (swarm service)</th><th>Image</th><th>Fungsi</th></tr></thead>
+<tbody>
+<tr><td><code>drupal-nfs_drupal_nginx.1.*</code></td><td>nginx:1.29-alpine</td><td>Web server, 2 vhost (lihat §3)</td></tr>
+<tr><td><code>drupal-nfs_drupal_fpm7.1/2.*</code></td><td>drupal:8.9.20-php7.4-fpm-alpine3.13</td><td>PHP-FPM Drupal 8 (2 replica)</td></tr>
+<tr><td><code>drupal-nfs_drupal_fpm.1/2/3.*</code></td><td>drupal:11.2.2-php8.4-fpm-alpine3.21</td><td>PHP-FPM Drupal 11 (3 replica)</td></tr>
+<tr><td><code>drupal-nfs_drupal_db.1.*</code></td><td>mariadb:latest</td><td>DB server, volume <code>drupal-nfs_drupal_db_data</code></td></tr>
+<tr><td><code>drupal-nfs_phpmyadmin.1.*</code></td><td>linuxserver/phpmyadmin:5.2.2</td><td>phpMyAdmin</td></tr>
+<tr><td><code>drupal-nfs_mysql-cron-backup.1.*</code></td><td>fradelg/mysql-cron-backup</td><td>Auto-backup DB harian (healthy, jalan 2 minggu)</td></tr>
+<tr><td><code>npm_app.1.*</code> / <code>npm_db.1.*</code></td><td>jc21/nginx-proxy-manager / mariadb-aria</td><td>Reverse proxy + DB konfigurasinya</td></tr>
+</tbody>
+</table>
+<p>Compose project root: <code>/data/compose/98/</code> (isi: <code>drupal8-src</code>, <code>drupal11-src</code>, <code>drupal8_files</code>, <code>drupal8_data</code>, <code>nginx-conf</code>, <code>db-backup</code>, <code>dump</code>, <code>import</code>, <code>images</code>, <code>snippets</code>, <code>template</code>, <code>private</code>).</p>
+
+<h2>3. vhost nginx di mesin ini (<code>/data/compose/98/nginx-conf/drupal.conf</code>)</h2>
+<table>
+<thead><tr><th>listen</th><th>server_name</th><th>root</th><th>fastcgi_pass</th></tr></thead>
+<tbody>
+<tr><td>80</td><td>drupal11.lokal</td><td>/var/www/html/drupal11/web</td><td>drupal_fpm:9000 (D11)</td></tr>
+<tr><td>81</td><td>_ (default)</td><td>/var/www/html2/drupal8/web</td><td>drupal_fpm7:9000 (D8)</td></tr>
+</tbody>
+</table>
+<p>Komentar di file conf sendiri menulis: port 81 container di-map ke <strong>8087 di host</strong> — itulah port yang dituju NPM. Situs D8 pakai multisite: Host header <code>belajarweb.pesanweb.my.id</code> → folder <code>sites/belajarweb.pesanweb.my.id/</code>.</p>
+
+<h2>4. Database (MariaDB <code>drupal-nfs_drupal_db.1.*</code>)</h2>
+<table>
+<thead><tr><th>Database</th><th>Jumlah tabel</th><th>Keterangan</th></tr></thead>
+<tbody>
+<tr><td>belajarweb</td><td>244</td><td><strong>Pakai belajarweb.pesanweb.my.id</strong> (user <code>belajarweb</code>, host <code>drupal_db</code>)</td></tr>
+<tr><td>drupal8</td><td>244</td><td>Fallback <code>sites/default</code></td></tr>
+<tr><td>drupal11</td><td>74</td><td>Situs Drupal 11 (vhost :80)</td></tr>
+<tr><td>drupal8db</td><td>22</td><td>Tidak dipakai multisite aktif</td></tr>
+</tbody>
+</table>
+
+<h2>5. Multi-site &amp; settings.php</h2>
+<ul>
+<li><code>sites/belajarweb.pesanweb.my.id/</code> — <strong>satu-satunya situs aktif</strong>, DB <code>belajarweb</code></li>
+<li><code>sites/default/</code> — fallback multisite; DB <code>drupal8</code> (file settings-nya masih menyisakan placeholder contoh <code>databasename</code> di bagian komentar — hati-hati saat baca)</li>
+<li><strong>Tidak ada</strong> folder <code>sites/web.pesanweb.my.id/</code> di mesin ini — membuktikan web.pesanweb.my.id bukan situs mesin ini</li>
+</ul>
+
+<h2>6. Verifikasi HTTP dari home.pesanweb.my.id</h2>
+<ul>
+<li><code>curl -H 'Host: belajarweb.pesanweb.my.id' http://192.168.2.57:8087</code> → <strong>HTTP 200</strong>, title <em>"Selamat datang | Belajar Membuat Website"</em> (tema skilling: 33 lesson, 12 exercise, 12 project, 1 quiz)</li>
+<li>Host lain (misal <code>web.pesanweb.my.id</code>) juga dapat 200 karena mengenai vhost default (<code>server_name _</code>) — tapi di produksi NPM tidak pernah mengarahkan domain itu ke sini</li>
+</ul>
+
+<h2>7. Rencana ekspor DB web → belajarweb (antar mesin)</h2>
+<ol>
+<li>Backup DB <code>belajarweb</code> di 192.168.2.57 dulu (wajib — import menimpa total)</li>
+<li>Dump DB <code>drupal8</code> (punya web.pesanweb.my.id) dari container <code>drupal_database</code> di home.pesanweb.my.id</li>
+<li>Pindahkan file dump ke 192.168.2.57 (scp via hop) lalu import ke DB <code>belajarweb</code> di container <code>drupal-nfs_drupal_db.*</code></li>
+<li>Sync <code>files/</code>: dari <code>sites/web.pesanweb.my.id/files/</code> (home) ke <code>sites/belajarweb.pesanweb.my.id/files/</code> (192.168.2.57)</li>
+<li>Rebuild cache: <code>drush cr</code> di <code>drupal-nfs_drupal_fpm7.*</code> untuk domain belajarweb</li>
+</ol>
+<p><strong>Peringatan:</strong> jangan import ke DB <code>belajarweb</code> yang ada di home.pesanweb.my.id — itu DB konteks lain. Tujuan benar adalah DB <code>belajarweb</code> di MariaDB mesin 192.168.2.57. Versi Drupal sama (8.9.20) dan path sama, jadi dump+import valid; D8→D11 nanti butuh migrasi penuh, bukan sekadar dump.</p>

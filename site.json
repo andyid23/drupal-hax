@@ -522,6 +522,22 @@
       }
     },
     {
+      "id": "item-fe5f483a-3fc2-4aee-8e72-be22a7418528",
+      "indent": 0,
+      "location": "pages/item-fe5f483a-3fc2-4aee-8e72-be22a7418528/index.html",
+      "slug": "kloning-lesson-vladidation-c-vba",
+      "order": 0,
+      "parent": null,
+      "title": "Clone lesson vladidation-c ke VBA",
+      "description": "",
+      "metadata": {
+        "created": 1794657465,
+        "updated": 1794657465,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

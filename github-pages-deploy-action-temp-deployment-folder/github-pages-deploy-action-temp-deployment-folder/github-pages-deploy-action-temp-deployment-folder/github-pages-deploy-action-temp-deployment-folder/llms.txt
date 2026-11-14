@@ -38,6 +38,8 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Kloning lesson easy-good ke vba.pesanweb.my.id (node 373)](https://localhost/mysite/pages/item-327979c9-a37a-46d7-a9ae-30dc72d74ad5/index.md)
 - [Kloning lesson more-debugging ke vba.pesanweb.my.id (node 381)](https://localhost/mysite/pages/item-043910f3-fc3e-44f3-b1bc-63e019b67259/index.md)
 - [Kloning lesson exercises-0 (halaman daftar latihan) ke vba](https://localhost/mysite/pages/item-ac6de040-edc7-40fe-9f6e-f14924b782df/index.md)
+- [Kloning lesson logical-operators ke VBA](https://localhost/mysite/pages/item-dfb512c9-6f92-409a-a721-d1e51a4c9d23/index.md)
+- [Kloning lesson guard-pattern ke VBA](https://localhost/mysite/pages/item-4ba75d04-6fb2-4641-8a58-f03d5d9c1996/index.md)
 - [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional
