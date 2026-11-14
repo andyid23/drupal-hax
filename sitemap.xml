@@ -198,4 +198,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/node-karakter-duplikat</loc>
+    <lastmod>2026-11-14T16:15:31.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
