@@ -90,3 +90,26 @@ book nav prev               -> Simple Programs (/lesson/simple-programs)</code><
 <li><code>/opt/data/cache/scratch/fix_book_fp2.php</code> — rebuild book outline</li>
 <li><code>/opt/data/cache/scratch/source_first_program.html</code> — sumber mentah</li>
 </ul>
+
+<h2>10. Koreksi: tag <code>reflect.</code> didukung</h2>
+<p>Versi pertama halaman ini mengganti refleksi dengan paragraf statis karena dianggap butuh content type
+<code>reflect_note</code>. Itu salah. Modul Skilling merender <code>skilling-reflect-container</code>
+tanpa node tujuan sama sekali — bukti: node 345 (<code>contoh-refleksi</code>) dan node 344 memakai tag
+yang sama.</p>
+<pre><code>reflect.<br />
+&nbsp;&nbsp;internal_name=reflect_kode_1<br />
+<br />
+&nbsp;&nbsp;Apa yang dilakukan kode ini?<br />
+/reflect.<br /></code></pre>
+<ul>
+<li>Baris pembuka <code>reflect.</code> wajib. Menulis hanya <code>internal_name=...</code> lalu
+<code>/reflect.</code> tidak merender apa pun.</li>
+<li>Judul "Reflect" dan baris bantuan bahasa Inggris dicetak otomatis oleh widget.</li>
+<li>Verifikasi: <code>grep -c skilling-reflect-container</code> pada halaman = jumlah blok
+(node 344 → 4, id <code>344-reflect_kode_1..4</code>).</li>
+<li>Blok tidak boleh disisipkan ke HTML hasil render dengan offset string: percobaan itu mendarat di dalam
+<code>&lt;div class="skilling-insert-character"&gt;</code> dan merusak tata letak. Bangun ulang body dari
+builder lalu simpan node.</li>
+</ul>
+<p>Setelah perbaikan: <code>/lesson/program-pertama</code> 200, h3=10, h4=4, pause=23, character=18,
+reflect=4, code=22, error parser=0, alias duplikat dibersihkan.</p>
