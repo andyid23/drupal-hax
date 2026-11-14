@@ -162,4 +162,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/kloning-lesson-logical-operators-vba</loc>
+    <lastmod>2026-11-14T09:31:46.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
