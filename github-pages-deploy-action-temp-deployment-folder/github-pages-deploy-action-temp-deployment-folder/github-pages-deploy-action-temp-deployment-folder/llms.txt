@@ -34,6 +34,9 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Laporan Perbaikan Lesson Periksa Harga Daging (Validasi Input)](https://localhost/mysite/pages/item-5c8cec28-b28f-4cbf-a856-20d7f8da034d/index.md)
 - [Laporan Perbaikan Lesson Latihan: while](https://localhost/mysite/pages/item-7e0202d9-3153-4e70-9920-b89eda532ffe/index.md)
 - [Akses Admin Drupal 8 python.pesanweb.my.id via SSH + Drush](https://localhost/mysite/pages/item-5d585c23-239b-494f-af15-e7dd56ba5988/index.md)
+- [Kloning lesson Adelas turn ke vba](https://localhost/mysite/pages/item-3f785eb8-ea4c-4a84-9a32-5ea58d9a88de/index.md)
+- [Kloning lesson easy-good ke vba.pesanweb.my.id (node 373)](https://localhost/mysite/pages/item-327979c9-a37a-46d7-a9ae-30dc72d74ad5/index.md)
+- [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.

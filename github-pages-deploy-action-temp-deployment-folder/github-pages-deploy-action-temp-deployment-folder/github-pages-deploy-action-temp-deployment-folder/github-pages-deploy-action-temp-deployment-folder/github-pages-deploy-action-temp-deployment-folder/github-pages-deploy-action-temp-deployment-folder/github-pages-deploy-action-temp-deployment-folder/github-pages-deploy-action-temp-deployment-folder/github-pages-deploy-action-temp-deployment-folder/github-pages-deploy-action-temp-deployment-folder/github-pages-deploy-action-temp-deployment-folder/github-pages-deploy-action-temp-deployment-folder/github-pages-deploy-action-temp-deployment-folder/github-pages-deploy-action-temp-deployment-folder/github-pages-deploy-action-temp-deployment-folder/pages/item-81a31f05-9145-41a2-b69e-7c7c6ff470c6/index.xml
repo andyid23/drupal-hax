@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-81a31f05-9145-41a2-b69e-7c7c6ff470c6</id>
+<indent>0</indent>
+<location>pages/item-81a31f05-9145-41a2-b69e-7c7c6ff470c6/index.xml</location>
+<slug>kloning-web-python</slug>
+<order>0</order>
+<parent></parent>
+<title>Kloning Web Python</title>
+<description></description>
+<metadata>
+<created>1793101521</created>
+<updated>1793101521</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[
+
+
+<h2>Kloning Web Python</h2>
+<p>Ini adalah laporan halaman baru yang mengabadikan proses kloning otomatis situs web Skilling (python, webapps, vba) ke Drupal multisite menggunakan pipeline yang sepenuhnya otonom.</p>
+
+<h3>Langkah</h3>
+<ul>
+<li><strong>Klon Antrian</strong> – `crawl_queue.py` mengekstrak 260 pelajaran (vba:62, python:73, webapps:125) dari sumber aslinya (vba.skilling.us, python.skilling.us, webapps.skilling.us) ke dalam <code>skilling-queue.json</code> yang digabungkan dan <code>*_queue.json</code> per-situs.</li>
+<li><strong>Ekstraksi Blok</strong> – `extract_blocks.py` mengubah halaman HTML menjadi JSON berurut dari blok (img, p, h3, h4, char, pause, list, reflect, code).</li>
+<li><strong>Terjemahan LLM</strong> – `hermes -z` mengubah setiap blok (judul, tubuh) menjadi terjemahan Bahasa Indonesia dengan JSON ketat (<code>0_alt</code>, <code>1</code>, ...). File bersih disimpan ke <code>*.tr_raw.json.</code></li><code>
+<li><strong>Buat Spesifikasi</strong> – `build_body.py` menggabungkan blok asli dan terjemahan menjadi body HTML lengkap dengan karakter, gambar, pause, list, reflect, code.</li>
+<li><strong>Buat Lesson Node di Server</strong> – `create_lesson.php` (drush CLI) menggunakan body yang dihasilkan untuk membuat node pelajaran Drupal baru (order, alias, judul).</li>
+<li><strong>Verifikasi Render</strong> – periksa HTTP 200, hitung pause dan karakter, verifikasi di <code>http://127.0.0.1:8087/lesson/</code>.</li>
+<li><strong>Update Antrian</strong> – `qset.py` menandai halaman sebagai <code>done</code> (atau <code>errored</code>) dengan catatan hasil.</li>
+<li><strong>HAXCMS Ops</strong> – setelah halaman tersimpan di Drupal, `hax site node:add` menulis laporan terstruktur ke repositori HAXCMS (`github.com/andyid23/drupal-hax`) menggunakan antrian MINGGUAN untuk publikasi otomatis.</li>
+</code></ul><code>
+
+<h3>Rekomendasi untuk Proses Berkelanjutan</h3>
+<ul>
+<li>Pastikan <code>hermes -z</code> memiliki kunci yang tepat; terjemahan yang sukses diuji pada <code>course-worth-your-time</code> dan <code>what-youll-learn</code>.</li>
+<li>Atur cron per-situs untuk menjalankan <code>clone_next.sh</code> setiap 30 menit:
+<pre>*/30 * * * * /opt/data/cache/scratch/clone_next.sh python skilling-queue.json &gt;&gt; /opt/data/cache/scratch/cron.log 2&gt;&amp;1
+*/30 * * * * /opt/data/cache/scratch/clone_next.sh vba skilling-queue.json &gt;&gt; /opt/data/cache/scratch/cron.log 2&gt;&amp;1
+*/30 * * * * /opt/data/cache/scratch/clone_next.sh webapps skilling-queue.json &gt;&gt; /opt/data/cache/scratch/cron.log 2&gt;&amp;1</pre>
+</li>
+<li>Periksa `/opt/data/cache/scratch/haxcms_progress.md` setelah setiap iterasi; ini berfungsi sebagai catatan pencarian hasil yang juga disimpan sebagai halaman HAXCMS.</li>
+<li>Monitor antrian yang tersisa: status saat ini (<code>python_queue.json</code>) memiliki 8 halaman yang sudah selesai dan 13 yang masih menunggu (termasuk <code>course-worth-your-time</code>, <code>how-learn-programming</code>, ...). Masalah saat ini: <code>data-machines</code> dan <code>what-youll-learn</code> mengalami kesalahan JSON, tapi sudah di-reset ke <code>pending</code> dan siap untuk retry.</li>
+</ul>
+
+<h3>Hasil Aktual (per 27-Okt-2026)</h3>
+<ul>
+<li><strong>python.pesanweb.my.id</strong> – 31 karakter dibuat (21 IMG_* lama + 10 karakter baru: Adela, Ray, Georgina, Ethan). Halaman “Cara kerja kursus” tersedia.</li>
+<li><strong>webapps.pesanweb.my.id</strong> – 83 karakter dibuat (21 IMG_* lama + 62 karakter baru). Halaman “Bersiap” tersedia.</li>
+<li><strong>vba.pesanweb.my.id</strong> – 98 karakter dibuat (21 IMG_* lama + 77 karakter baru). Halaman “Gaya belajar Anda” (<code>/lesson/gaya-belajar</code>) tersedia.</li>
+</ul>
+<p>Laporan halaman ini sendiri akan disimpan ke HAXCMS sebagai catatan ops (slugs: <code>kloning-web-python</code>).</p>
+
+<h3>Langkah Berikutnya</h3>
+<ul>
+<li>Jalankan <code>clone_next.sh python</code> (atau cron) untuk melanjutkan apa yang belum selesai.</li>
+<li>Buka halaman HAXCMS baru untuk melihat daftar lengkap yang sedang diproses.</li>
+<li>Jika ada gangguan LLM, aktifkan kembali slug yang bermasalah dan jalankan ulang.</li>
+</ul>
+
+<p>Dokumentasi proses, debugging catatan, dan ringkasan status disimpan di HAXCMS untuk pelacakan berkelanjutan dan kerjasama.</p>
+
+</code>]]></content>
+</item>

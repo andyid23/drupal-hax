@@ -19,6 +19,8 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Cloning DB web ke belajarweb (2.57) — Status & Penjelasan Backup/Bind/vhost](https://localhost/mysite/pages/item-a7a3b998-ade4-46bf-8176-8938465f7b21/index.md)
 - [Hasil Cloning DB web → belajarweb (2.57) — BERHASIL](https://localhost/mysite/pages/item-3f2195b3-b41e-41a9-a124-ee36f867ddc4/index.md)
 - [Keamanan phpMyAdmin :8083, Runbook Ganti Password DB, & Rollback Cloning](https://localhost/mysite/pages/item-94565818-94c8-43c6-9b9e-fce1eb71ee24/index.md)
+- [Inventaris DB & Situs, Kondisi Password, Cara Akses DB — home & 2.57](https://localhost/mysite/pages/item-9d0a24b9-cf36-44c1-b8dd-1262cc433400/index.md)
+- [Sinkronisasi File & Perbaikan Referensi Silang web ↔ belajarweb](https://localhost/mysite/pages/item-4f27a17d-c569-4ed7-b13d-06177d941b7d/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
