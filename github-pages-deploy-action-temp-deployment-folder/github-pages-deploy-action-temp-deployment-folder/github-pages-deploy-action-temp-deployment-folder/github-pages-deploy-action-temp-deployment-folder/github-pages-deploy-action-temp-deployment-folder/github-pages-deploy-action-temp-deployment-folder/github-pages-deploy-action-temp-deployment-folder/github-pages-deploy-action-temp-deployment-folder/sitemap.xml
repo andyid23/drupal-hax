@@ -150,4 +150,16 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/kloning-lesson-more-debugging-vba</loc>
+    <lastmod>2026-11-14T08:57:56.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://localhost/mysite/kloning-lesson-exercises-0-vba</loc>
+    <lastmod>2026-11-14T09:12:41.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>

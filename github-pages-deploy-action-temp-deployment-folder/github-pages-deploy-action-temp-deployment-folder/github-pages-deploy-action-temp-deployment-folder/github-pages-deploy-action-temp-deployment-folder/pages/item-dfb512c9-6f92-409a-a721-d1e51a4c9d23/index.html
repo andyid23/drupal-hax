@@ -59,5 +59,20 @@
 <li>Spesifikasi JSON yang sudah ter-decode tidak boleh di-<code>base64_decode()</code> lagi di PHP (menghasilkan JSON rusak).</li>
 </ul>
 
+<h3>Lampiran (14 Nov sore): alias 404 setelah cron</h3>
+<p>Beberapa jam setelah kloning, <code>/lesson/logical-operators</code> kembali 404 — tanpa ada save dari sesi kloning. Akar masalah ditemukan di modul Skilling itu sendiri:</p>
+<ul>
+<li><code>BookUpdateTracker::scheduleBookOrderUpdate()</code> menulis daftar bid ke settings skilling setiap ada operasi buku (termasuk penambahan lesson baru seperti Multiway nid 415 dan Guard pattern nid 414).</li>
+<li>Saat <strong>cron</strong> berikutnya, <code>runScheduledBookOrderUpdates()</code> &rarr; <code>updatePagesBookOrder()</code> menyimpan ulang <strong>semua</strong> node buku untuk mengisi <code>field_order_in_book</code>. Setiap save itu membuat pathauto meregenerasi <code>/lesson/&lt;slug-judul&gt;</code> dan menghapus alias manual <code>/lesson/&lt;slug-sumber&gt;</code>.</li>
+<li>Sweep DB memastikan: hampir semua lesson kloningan kehilangan slug manualnya; hanya node yang alias-nya masih ada (344 first-programs, 355 dialogs, 409 nested-ifs, 405) yang selamat.</li>
+</ul>
+<p><strong>Perbaikan tahan-lama:</strong> alias dipasang di field <code>path</code> milik node dengan <code>pathauto=0</code> — save ulang cron tidak lagi meregenerasi atau menghapusnya:</p>
+<ul>
+<li><code>$n-&gt;set('path', ['alias' =&gt; '/lesson/logical-operators', 'pathauto' =&gt; 0])</code> + save dalam render context.</li>
+<li>Baris pathauto <code>/lesson/operator-logika</code> tidak dihapus oleh save itu — kedua alias tetap 200.</li>
+<li>Dedupe baris duplikat yang muncul, lalu <code>cache:rebuild</code>; baca balik <code>path.alias</code> dan <code>path.pathauto</code> dari node untuk memastikan terpasang.</li>
+<li>Verifikasi akhir: /lesson/logical-operators 200, /lesson/operator-logika 200, /node/405 200; konten utuh (17 pause, 5 karakter, 0 parser error); field path terbaca <code>alias=/lesson/logical-operators pathauto=0</code>.</li>
+<li>Prosedur ini dicatat ke <code>references/clone-runbook.md</code> bagian 8b (drupal-lesson-authoring).</li>
+</ul>
 <h3>Status</h3>
 <p>Selesai dan terverifikasi penuh. Tidak ada MCQ di sumber; FIB, 2 pattern, dan exercise dibuat sebagai node dependensi sebelum lesson.</p>

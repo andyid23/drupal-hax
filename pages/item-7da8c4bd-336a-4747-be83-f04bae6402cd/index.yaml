@@ -1,0 +1,65 @@
+id: item-7da8c4bd-336a-4747-be83-f04bae6402cd
+indent: 0
+location: pages/item-7da8c4bd-336a-4747-be83-f04bae6402cd/index.yaml
+slug: kloning-lesson-blank-data-vba
+order: 0
+parent: null
+title: Clone lesson when-ranges-have-blank-data ke VBA
+description: ''
+metadata:
+  created: 1794665681
+  updated: 1794665681
+  images: []
+  videos: []
+content: >-
+  <h2>Clone lesson when-ranges-have-blank-data ke vba.pesanweb.my.id</h2>
+
+  <p>Tanggal: 14 November 2026. Sumber:
+  <code>https://vba.skilling.us/lesson/when-ranges-have-blank-data</code> →
+  target node <strong>465</strong>, alias
+  <code>/lesson/when-ranges-have-blank-data</code>, judul <em>Ketika Range punya
+  data kosong</em>, bab <em>Analisis Data</em> (pid 452, weight 2, antara
+  <em>Range</em> dan <em>Processing a Range</em> yang belum di-clone).</p>
+
+
+  <h3>Inventaris vs render</h3>
+
+  <ul>
+
+  <li>Lesson kecil tanpa widget: 0 h3 / 3 pause / 5 blok kode / 1 gambar —
+  render sama persis.</li>
+
+  <li>Tidak ada MCQ/FIB/pattern/exercise/karakter di sumber, jadi tidak ada yang
+  dibuat di target.</li>
+
+  <li>Komentar kode dan baris pseudocode diterjemahkan; string literal VBA ("Are
+  goattos good?", "Last data row:") tetap Inggris.</li>
+
+  <li>HTTP 200 (cek dua kali); <code>errors=0</code>; tidak ada tag mentah
+  bocor; gambar blank-cells.png probe 200.</li>
+
+  <li>Book nav benar: prev = <code>/lesson/ranges</code> (Range), Up =
+  <code>/lesson/data-analysis</code> (Analisis Data), next = Tips (chapter
+  berikutnya di target; di sumber next-nya processing-range yang belum
+  di-clone).</li>
+
+  <li>Baris book terverifikasi dari awal: <code>depth=3, p1=330, p2=452,
+  p3=465</code> — pelajaran dari nid 464 (pid stale) langsung diterapkan: cek
+  chapter nid aktif dulu (dari judul chapter), delete row lama, insert,
+  verifikasi p1..p3.</li>
+
+  </ul>
+
+
+  <h3>Catatan</h3>
+
+  <ul>
+
+  <li>Outline + pin alias + dedupe dilakukan dalam SATU script idempoten (create
+  skip jika alias ada, delete baris book lama sebelum insert) — cukup sekali
+  jalan tanpa deadlock.</li>
+
+  <li>Runbook <code>drupal-lesson-authoring</code> diperbarui dengan pola
+  create+outline+pin satu script idempoten.</li>
+
+  </ul>
