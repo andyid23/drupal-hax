@@ -538,6 +538,22 @@
       }
     },
     {
+      "id": "item-70e61eb6-d1a8-4737-9d94-ac71f4457c68",
+      "indent": 0,
+      "location": "pages/item-70e61eb6-d1a8-4737-9d94-ac71f4457c68/index.html",
+      "slug": "kloning-lesson-ranges-vba",
+      "order": 0,
+      "parent": null,
+      "title": "Clone lesson ranges ke VBA",
+      "description": "",
+      "metadata": {
+        "created": 1794663963,
+        "updated": 1794663963,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

@@ -42,6 +42,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Kloning lesson guard-pattern ke VBA](https://localhost/mysite/pages/item-4ba75d04-6fb2-4641-8a58-f03d5d9c1996/index.md)
 - [Clone lesson better-validation ke VBA](https://localhost/mysite/pages/item-720ac584-89f0-487a-9dd1-55173b8028de/index.md)
 - [Clone lesson vladidation-c ke VBA](https://localhost/mysite/pages/item-fe5f483a-3fc2-4aee-8e72-be22a7418528/index.md)
+- [Clone lesson ranges ke VBA](https://localhost/mysite/pages/item-70e61eb6-d1a8-4737-9d94-ac71f4457c68/index.md)
 - [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional
