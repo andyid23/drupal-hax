@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>mysite</title>
+    <link>https://localhost/mysite/</link>
+    <description>own course</description>
+    <copyright>Copyright (C) 2026 https://localhost/mysite</copyright>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 Sep 2026 00:36:42 GMT</lastBuildDate>
+    <generator>HAXcms NodeJS</generator>
+    <atom:link href="https://localhost/mysite/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Welcome to mysite</title>
+      <link>https://localhost/mysite/welcome</link>
+      <description>Welcome to your new HAX site! Click edit on the top bar to get started What can I do? We&apos;ve got a ton of blocks that are easy to use and get a lot done with little effort, so much in fact we made a little video exploring some of them! Here&apos;s a list of just a few things to get started, or if your a pro, delete this content and have fun! Edit this content by hitting &quot;Edit page&quot; above Hit enter in a paragraph of text to add another one Click &quot;Merlin&quot; to see a list of all the things you can do Tr...</description>
+      <guid>https://localhost/mysite/welcome</guid>
+      <pubDate>Sat, 19 Sep 2026 00:36:42 GMT</pubDate>
+    </item>
+    <item>
+      <title>Hasil Cek Config Server Drupal</title>
+      <link>https://localhost/mysite/hasil-cek-config</link>
+      <description>Ringkasan Infrastruktur Hasil pemeriksaan konfigurasi server Drupal dan mapping situs web.pesanweb.my.id / belajarweb.pesanweb.my.id. 1. Server home.pesanweb.my.id (192.168.2.40) Docker stack drupal811 : nginx (drupal_web_server, publish 8086:80 dan 8087:81), d11_fpm (Drupal 11, PHP 8.4), d8_fpm (Drupal 8, PHP 7.4), drupal_database (MariaDB), phpmyadmin, mysql-cron-backup harian ke /data/compose/34/db-backup/ DB: drupal8, belajarweb, web, drupaldb, appdb 2. Server belajarweb (192.168.2.57, ho...</description>
+      <guid>https://localhost/mysite/hasil-cek-config</guid>
+      <pubDate>Mon, 26 Oct 2026 17:51:26 GMT</pubDate>
+    </item>
+    <item>
+      <title>Hasil Cek Config Server 192.168.2.57 (belajarweb)</title>
+      <link>https://localhost/mysite/hasil-cek-belajarweb-192-168-2-57</link>
+      <description>Ringkasan Hasil cek langsung ke mesin 192.168.2.57 (hostname armbian-master ) via SSH hop dari home.pesanweb.my.id . Konfirmasi: belajarweb.pesanweb.my.id live di 192.168.2.57 , bukan di home.pesanweb.my.id. Sumber kebenaran routing ada di tabel proxy_host Nginx Proxy Manager (NPM) yang berjalan di mesin ini. 1. Routing NPM (otoritatif) Query langsung ke DB NPM ( npm_db , database npm , tabel proxy_host ): id domain forward enabled 1 belajarweb.pesanweb.my.id http://192.168.2.57:8087 ya 2 tty...</description>
+      <guid>https://localhost/mysite/hasil-cek-belajarweb-192-168-2-57</guid>
+      <pubDate>Mon, 26 Oct 2026 22:32:57 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
