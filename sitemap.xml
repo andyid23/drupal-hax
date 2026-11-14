@@ -174,4 +174,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/kloning-lesson-better-validation-vba</loc>
+    <lastmod>2026-11-14T11:53:43.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
