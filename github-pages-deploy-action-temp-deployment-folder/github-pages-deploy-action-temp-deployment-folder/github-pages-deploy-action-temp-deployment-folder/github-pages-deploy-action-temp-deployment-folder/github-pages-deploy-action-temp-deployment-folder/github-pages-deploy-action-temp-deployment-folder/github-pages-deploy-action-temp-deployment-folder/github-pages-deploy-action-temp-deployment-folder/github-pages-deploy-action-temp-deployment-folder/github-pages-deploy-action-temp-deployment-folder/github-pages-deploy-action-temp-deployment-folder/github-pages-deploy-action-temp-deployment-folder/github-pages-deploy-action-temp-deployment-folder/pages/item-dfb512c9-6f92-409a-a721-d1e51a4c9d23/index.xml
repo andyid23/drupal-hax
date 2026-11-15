@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-dfb512c9-6f92-409a-a721-d1e51a4c9d23</id>
+<indent>0</indent>
+<location>pages/item-dfb512c9-6f92-409a-a721-d1e51a4c9d23/index.xml</location>
+<slug>kloning-lesson-logical-operators-vba</slug>
+<order>0</order>
+<parent></parent>
+<title>Kloning lesson logical-operators ke VBA</title>
+<description></description>
+<metadata>
+<created>1794648706</created>
+<updated>1794648706</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Kloning lesson: Operator logika (logical-operators) ke vba.pesanweb.my.id</h2>
+<p>Tanggal: 14 November 2026. Sumber: <a href="https://vba.skilling.us/lesson/logical-operators">vba.skilling.us/lesson/logical-operators</a> → target: <a href="https://vba.pesanweb.my.id/lesson/logical-operators">vba.pesanweb.my.id/lesson/logical-operators</a> (node 405).</p>
+
+<h3>Hasil</h3>
+<ul>
+<li>Node <code>lesson</code> nid <strong>405</strong> "Operator logika", terbit, format body <code>skilling</code>, masuk book outline sebagai anak <strong>Keputusan</strong> (nid 392, bid 330, weight 1) — urutan: If-then-else (400) → Operator logika (405).</li>
+<li>Alias: <code>/lesson/logical-operators</code> (manual, langcode en) + <code>/lesson/operator-logika</code> (pathauto). HTTP 200 keduanya, plus tetangga /lesson/if-then-else dan /lesson/keputusan tetap 200.</li>
+</ul>
+
+<h3>Node dependensi yang dibuat lebih dulu</h3>
+<table class="table">
+<tbody><tr><th>Jenis</th><th>internal_name</th><th>nid</th><th>Catatan</th></tr>
+<tr><td>fill_in_the_blank</td><td><code>fib_expression_value</code></td><td>401</td><td>Soal "Apa nilai sX setelah kode ini berjalan? sX = 2 + 3 * 4". Jawaban <strong>14</strong> diturunkan sendiri dari presedensi operator (source HTML tidak memuat kunci jawaban), tipe text, menerima "14".</td></tr>
+<tr><td>pattern</td><td><code>pattern_range_check</code></td><td>402</td><td>Terjemahan penuh field situation/needs/action/summary/provides dari /pattern/range-check; alias /pattern/pemeriksaan-rentang (200).</td></tr>
+<tr><td>pattern</td><td><code>pattern_normalize_variable</code></td><td>403</td><td>Dari /pattern/normalize-variable; alias /pattern/normalisasi-variabel (200).</td></tr>
+<tr><td>exercise</td><td><code>exercise_is_tmnt</code></td><td>404</td><td>Task diterjemahkan, 4 gambar URL absolut vba.skilling.us (leo, leo-output, jeremy, donnie-output); field_challenge=0.</td></tr>
+</tbody></table>
+
+<h3>Cek FIB dan MCQ</h3>
+<ul>
+<li><strong>FIB: ada 1</strong> widget di source (<code>fib_expression_value</code>, data-nid 307). Counting regex kasar memberi 8 karena div pertanyaan/jawaban bersarang membagi substring yang sama — hitung dengan xpath exact-class.</li>
+<li><strong>MCQ: 0</strong> di source lesson ini. Tidak ada node MCQ yang dibuat — tidak dipalsukan.</li>
+<li>Jawaban FIB tidak pernah muncul di HTML sumber (hanya di DB situs sumber), jadi dihitung dari isi pelajaran dan dicatat di <code>field_notes</code> node FIB.</li>
+</ul>
+
+<h3>Pemetaan karakter (Adela/Georgia → Fina/Izza)</h3>
+<table class="table">
+<tbody><tr><th>Source</th><th>Target internal_name</th></tr>
+<tr><td>adela_thinking1</td><td><code>character_fina_kenapa</code></td></tr>
+<tr><td>adela_sceptical2</td><td><code>character_fina_heran</code></td></tr>
+<tr><td>georgina_smile1</td><td><code>character_izza_senang</code></td></tr>
+<tr><td>ethan_neutral1</td><td><code>character_ethan_neutral1</code> (tetap)</td></tr>
+<tr><td>ray_thinking4</td><td><code>character_ray_thinking4</code> (tetap)</td></tr>
+</tbody></table>
+<p>Urutan kemunculan di halaman hasil identik dengan source; semua dialog diterjemahkan.</p>
+
+<h3>Tag textile / pause</h3>
+<ul>
+<li>Body dibangun dengan walk token lxml berurut (149 token), dipisah <code>&lt;br /&gt;\n&lt;br /&gt;\n</code> per blok.</li>
+<li><strong>pause.</strong> 17 blok, diposisikan persis di posisi container pause sumber (bukan ditumpuk di akhir).</li>
+<li>8 h3 (marker decrease-heading-offset sekali, sebelum h3 pertama), 5 character. + /character., 1 reflect. (dengan closer <code>/reflect.</code>), 1 fib., 2 pattern., 1 exercise., 22 code container, 2 tabel, 11 gambar top-level.</li>
+<li>Formulir JS interaktif + <code>&lt;script&gt;function shipping1()...&lt;/script&gt;</code> dari source lolos parser dan tetap hidup di halaman hasil.</li>
+</ul>
+
+<h3>Verifikasi halaman hasil (5 gate)</h3>
+<ul>
+<li>HTTP 200: /lesson/logical-operators, /lesson/operator-logika, /pattern/pemeriksaan-rentang, /pattern/normalisasi-variabel — semua 200.</li>
+<li>Widget counts == inventori source: h3 8/8, pause 17/17, character 5/5, reflect 1/1, fib 1/1, pattern 2/2, exercise 1/1, tabel 2/2; urutan widget sama dengan source.</li>
+<li>Parser errors = 0, tidak ada tag mentah yang bocor (<code>pause.</code>/<code>/character.</code>/<code>internal_name=</code> tidak muncul di HTML).</li>
+<li>17 URL gambar eksternal unik, semuanya HTTP 200 (probing dengan UA browser — curl telanjang dapat 404 dari vba.skilling.us).</li>
+<li>DB check path_alias /node/405: tepat 2 baris (manual + pathauto), tanpa duplikat. Book: nid 405, pid 392, weight 1, depth 3.</li>
+</ul>
+
+<h3>Kendala yang ditemui (catatan teknis)</h3>
+<ul>
+<li><strong>Blok reflect tanpa closer mengosongkan seluruh body.</strong> Versi pertama body menulis <code>reflect.</code> + internal_name + pertanyaan tanpa <code>/reflect.</code>; parser melempar <em>"Missing/invalid close tag? Missing . at end? Tag: reflect"</em> dan seluruh body dirender jadi satu pesan error itu. <code>reflect.</code> ternyata <em>has_close_tag = true</em> — berbeda dari mcq./fib./pattern./exercise. yang tanpa closer. Perbaikan: tambah <code>/reflect.</code> lalu simpan ulang body.</li>
+<li><strong>drush sqlq meng-escape newline jadi literal \n</strong> sehingga sempat terlihat seperti body rusak; verifikasi akhir harus lewat php:script (<code>substr_count($b,"\n")</code> = 643, benar).</li>
+<li>Setiap <code>save()</code> node (termasuk update body) menghapus alias manual lagi — alias dibuat ulang di skrip terakhir setelah semua save, baru cache:rebuild.</li>
+<li>Spesifikasi JSON yang sudah ter-decode tidak boleh di-<code>base64_decode()</code> lagi di PHP (menghasilkan JSON rusak).</li>
+</ul>
+
+<h3>Status</h3>
+<p>Selesai dan terverifikasi penuh. Tidak ada MCQ di sumber; FIB, 2 pattern, dan exercise dibuat sebagai node dependensi sebelum lesson.</p>]]></content>
+</item>
