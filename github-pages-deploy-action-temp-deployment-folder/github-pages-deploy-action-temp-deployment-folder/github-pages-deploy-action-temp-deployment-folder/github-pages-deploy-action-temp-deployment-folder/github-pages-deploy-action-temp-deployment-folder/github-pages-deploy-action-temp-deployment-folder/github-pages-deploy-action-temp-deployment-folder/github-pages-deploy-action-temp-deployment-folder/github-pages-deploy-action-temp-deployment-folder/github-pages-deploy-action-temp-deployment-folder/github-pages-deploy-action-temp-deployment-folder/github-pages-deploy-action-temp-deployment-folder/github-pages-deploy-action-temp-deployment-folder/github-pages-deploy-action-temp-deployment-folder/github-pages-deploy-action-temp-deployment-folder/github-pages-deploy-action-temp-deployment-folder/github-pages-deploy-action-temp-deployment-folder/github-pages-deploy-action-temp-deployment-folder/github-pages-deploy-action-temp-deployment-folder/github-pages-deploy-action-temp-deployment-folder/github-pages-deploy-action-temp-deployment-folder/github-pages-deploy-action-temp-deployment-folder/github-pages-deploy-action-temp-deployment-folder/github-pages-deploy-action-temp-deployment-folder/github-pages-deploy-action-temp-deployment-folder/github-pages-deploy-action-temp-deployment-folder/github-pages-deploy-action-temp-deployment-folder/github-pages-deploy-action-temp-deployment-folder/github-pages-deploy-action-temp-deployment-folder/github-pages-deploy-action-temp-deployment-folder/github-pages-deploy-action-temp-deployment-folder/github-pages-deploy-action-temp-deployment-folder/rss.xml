@@ -72,5 +72,19 @@
       <guid>https://localhost/mysite/sync-file-web-belajarweb</guid>
       <pubDate>Tue, 27 Oct 2026 00:16:13 GMT</pubDate>
     </item>
+    <item>
+      <title>Inventory DB &amp; Rekomendasi Multisite (web + belajarweb)</title>
+      <link>https://localhost/mysite/inventaris-db-rekomendasi-multisite</link>
+      <description>Pertanyaan yang Dijawab Dari inventaris DB: di home.pesanweb.my.id ada database untuk web.pesanweb.my.id dan belajarweb.pesanweb.my.id . Apa bedanya, bisakah multi-host dilayani lewat Nginx Proxy Manager (NPM), dan apa rekomendasi multisite-nya. 1. Isi Database (verifikasi langsung, bukan dari catatan lama) home/drupal8 — 246 tabel, 236 node, 12 user. LIVE untuk web.pesanweb.my.id. home/belajarweb — 245 tabel, 117 node, 12 user. Konfigurasi multisite ada, tetapi tidak dilayani ; ini salinan l...</description>
+      <guid>https://localhost/mysite/inventaris-db-rekomendasi-multisite</guid>
+      <pubDate>Tue, 27 Oct 2026 01:12:54 GMT</pubDate>
+    </item>
+    <item>
+      <title>Sync DB &amp; Files + Penamaan Site per DB (home &amp; 2.57)</title>
+      <link>https://localhost/mysite/sync-db-files-penamaan-site</link>
+      <description>Keputusan yang Dipakai Penamaan vhost non-breaking — domain lama tetap dilayani direktori aslinya; nama-DB ditambahkan sebagai alias. Tidak ada URL publik yang berubah. Sumber tunggal — DB drupal8 dan direktori sites/web.pesanweb.my.id/files di home adalah sumber sync. NPM dan DNS tidak disentuh — entry proxy dan record DNS akan dibuat terpisah untuk pengujian lokal. Hasil Akhir: Enam DB Identik home/drupal8 246 tabel 236 node md5 94dd3460… home/belajarweb 246 tabel 236 node md5 94dd3460… hom...</description>
+      <guid>https://localhost/mysite/sync-db-files-penamaan-site</guid>
+      <pubDate>Tue, 27 Oct 2026 02:14:23 GMT</pubDate>
+    </item>
   </channel>
 </rss>
