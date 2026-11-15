@@ -1325,4 +1325,256 @@ $body = str_replace(chr(13), '', $body);                     // CR telanjang</co
 </ul> ]]>
     </content>
   </entry>
+  <entry>
+    <title>Clone Lesson first-program ke vba.pesanweb.my.id</title>
+    <id>item-d4e5f6a7</id>
+    <updated>2026-11-13T21:23:59.000Z</updated>
+    <published>2026-11-13T21:23:59.000Z</published>
+    <summary>Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.</summary>
+    <link href="https://localhost/mysite/clone-lesson-first-program-vba"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Clone Lesson: first-program → vba.pesanweb.my.id (selesai)</h2>
+
+<h2>1. Sumber dan target</h2>
+<ul>
+<li>Sumber: <code>https://vba.skilling.us/lesson/first-program</code> ("The first program")</li>
+<li>Target: <code>vba.pesanweb.my.id</code> (Drupal 8.9 multisite, container <code>d8_fpm</code>)</li>
+<li>Hasil: node <strong>344</strong>, judul <strong>Program pertama</strong>, alias <code>/lesson/first-program</code></li>
+<li>Skill/rujukan: <code>drupal-lesson-authoring</code> + <code>references/clone-runbook.md</code>, <code>skilling-lesson-update</code>, <code>drupal-docker-admin</code></li>
+</ul>
+
+<h2>2. Inventaris sumber (dihitung, bukan diasumsikan)</h2>
+<pre><code>h3            : 10
+h4            : 4
+pause         : 22 (marker "More...")
+character     : 18 kontainer (16 internal_name unik)
+mcq           : 0
+img           : 48 (36 eksternal vba.skilling.us, sisanya ikon tema)
+code container: 22
+reflect       : 4</code></pre>
+
+<h2>3. Pemetaan karakter</h2>
+<ul>
+<li>Adela → <strong>Fina</strong>: <code>character_fina_senang</code> (smile2/3/5/6/7), <code>character_fina_heran</code> (sceptical1/4), <code>character_fina_kenapa</code> (thinking1)</li>
+<li>Georgina → <strong>Izza</strong>: <code>character_izza_masuk</code> (neutral1), <code>character_izza_senang</code> (smile5)</li>
+<li>Ray &amp; Ethan dipertahankan: <code>character_ray_listening1</code>, <code>character_ray_neutral2</code>, <code>character_ray_thinking4</code>, <code>character_ethan_neutral1</code>, <code>character_ethan_neutral2</code>, <code>character_ethan_smile2</code></li>
+<li>Semua <code>internal_name</code> diverifikasi ada di tabel <code>node__field_internal_name</code> sebelum body disimpan.</li>
+</ul>
+
+<h2>4. Penyesuaian isi</h2>
+<ul>
+<li>Seluruh narasi, dialog karakter, heading, dan isi daftar diterjemahkan ke bahasa Indonesia; kode VBA tetap Inggris.</li>
+<li>Tombol demo JavaScript (<code>compTip()</code>) tidak disalin — diganti paragraf penjelas.</li>
+<li>Kolom <code>reflect.</code> tidak dipakai karena situs ini tidak punya tipe konten <code>reflect_note</code>; keempat refleksi dirender sebagai paragraf ajakan (tidak dinilai).</li>
+<li>Karakter <code>|</code> dihapus (Tools &#8250; Options) karena merusak parser Textile.</li>
+<li><code>code.</code> tags tidak dibuat; blok kode memakai <code>&lt;div class="skilling-code-container"&gt;</code> seperti sumber.</li>
+<li>Heading: <code>&lt;div class="skilling-parse-unit-decrease-heading-offset"&gt;&lt;/div&gt;</code> di awal body supaya <code>&lt;h3&gt;</code> tetap h3 (tidak naik jadi h4) dan <code>&lt;h4&gt;</code> sub-bagian tetap h4.</li>
+</ul>
+
+<h2>5. Perintah yang dieksekusi</h2>
+<pre><code class="language-bash"># 1. bangun body + spec (lokal)
+python3 build_fp.py            # -> body_fp.txt (27.120 char), spec_fp.json
+
+# 2. kirim ke container dan update node (pola piped sh -s, tanpa kutip bersarang)
+ssh -o StrictHostKeyChecking=no root@home.pesanweb.my.id -p 2222 \
+  "docker exec -i d8_fpm sh -s" &lt; run_update_fp.sh
+# UPDATED nid=344 len=27120
+
+# 3. perbaiki alias setelah save (pathauto menghapus alias manual)
+ssh ... "docker exec -i d8_fpm sh -s" &lt; run_fa2.sh
+
+# 4. book outline lewat book.manager (baris SQL mentah lama punya p1..p9 salah)
+ssh ... "docker exec -i d8_fpm sh -s" &lt; run_fb2.sh
+
+# 5. cache rebuild + verifikasi
+ssh ... "docker exec -i d8_fpm sh -s" &lt; run_fb2.sh   # diakhiri cache:rebuild</code></pre>
+
+<h2>6. Verifikasi lima gate (output nyata)</h2>
+<pre><code>GET /lesson/first-program   -> 200
+GET /lesson/first-programs  -> 200
+title                       -> "Program pertama | Pemrograman dengan Excel VBA"
+h3                          -> 10   (sumber 10)
+h4                          -> 4    (sumber 4)
+skilling-pause-container    -> 23   (sumber 22; +1 untuk tombol demo)
+skilling-insert-character   -> 18   (sumber 18)
+skilling-code-container     -> 22   (sumber 22)
+skilling-insert-mcq         -> 0    (sumber 0)
+parser / custom-tag error   -> 0
+markup mentah bocor         -> tidak
+gambar eksternal            -> 36 URL, 0 gagal (HTTP 200)
+caption karakter            -> Fina, Izza, Ray, Ethan
+book nav prev               -> Simple Programs (/lesson/simple-programs)</code></pre>
+
+<h2>7. Book outline akhir (bid 330, induk 334)</h2>
+<pre><code>332 w=-15 | 333 w=-14 | 335 w=-12 | 336 w=-11 | 337 w=-10
+340 w=0   | 342 w=1   | 341 w=2   | 343 w=3   | 344 w=4</code></pre>
+
+<h2>8. Pelajaran yang terbukti</h2>
+<ul>
+<li>Node harus disimpan dengan <code>status=1</code> <strong>dan</strong> alias <code>langcode=en</code>; kalau tidak, halaman 404 walau node ada.</li>
+<li><code>pathauto</code> menghapus alias manual <em>pada setiap save</em>, termasuk save dari <code>book.manager</code>. Alias harus dipasang ulang setelah semua save selesai.</li>
+<li>Baris <code>book</code> tidak boleh di-INSERT mentah: kolom <code>p1..p9</code> harus diisi lewat <code>book.manager-&gt;updateOutline()</code>, kalau tidak navigasi prev/next kosong. Kalau sudah terlanjur, hapus barisnya lalu rebuild lewat API.</li>
+<li>Drush hanya ada di <code>d8_fpm</code>; perintah harus dipipe ke <code>sh -s</code>, bukan dikutip bersarang di dalam <code>ssh "..."</code>.</li>
+</ul>
+
+<h2>9. Berkas kerja</h2>
+<ul>
+<li><code>/opt/data/cache/scratch/build_fp.py</code> — pembangun body + validasi</li>
+<li><code>/opt/data/cache/scratch/body_fp.txt</code> — body final (27.120 char)</li>
+<li><code>/opt/data/cache/scratch/update_fp.php</code> — update node + alias</li>
+<li><code>/opt/data/cache/scratch/fix_book_fp2.php</code> — rebuild book outline</li>
+<li><code>/opt/data/cache/scratch/source_first_program.html</code> — sumber mentah</li>
+</ul>
+
+<h2>10. Koreksi: tag <code>reflect.</code> didukung</h2>
+<p>Versi pertama halaman ini mengganti refleksi dengan paragraf statis karena dianggap butuh content type
+<code>reflect_note</code>. Itu salah. Modul Skilling merender <code>skilling-reflect-container</code>
+tanpa node tujuan sama sekali — bukti: node 345 (<code>contoh-refleksi</code>) dan node 344 memakai tag
+yang sama.</p>
+<pre><code>reflect.<br />
+&nbsp;&nbsp;internal_name=reflect_kode_1<br />
+<br />
+&nbsp;&nbsp;Apa yang dilakukan kode ini?<br />
+/reflect.<br /></code></pre>
+<ul>
+<li>Baris pembuka <code>reflect.</code> wajib. Menulis hanya <code>internal_name=...</code> lalu
+<code>/reflect.</code> tidak merender apa pun.</li>
+<li>Judul "Reflect" dan baris bantuan bahasa Inggris dicetak otomatis oleh widget.</li>
+<li>Verifikasi: <code>grep -c skilling-reflect-container</code> pada halaman = jumlah blok
+(node 344 → 4, id <code>344-reflect_kode_1..4</code>).</li>
+<li>Blok tidak boleh disisipkan ke HTML hasil render dengan offset string: percobaan itu mendarat di dalam
+<code>&lt;div class="skilling-insert-character"&gt;</code> dan merusak tata letak. Bangun ulang body dari
+builder lalu simpan node.</li>
+</ul>
+<p>Setelah perbaikan: <code>/lesson/program-pertama</code> 200, h3=10, h4=4, pause=23, character=18,
+reflect=4, code=22, error parser=0, alias duplikat dibersihkan.</p>
+ ]]>
+    </content>
+  </entry>
+  <entry>
+    <title>Kloning lesson Adelas turn ke vba</title>
+    <id>item-3f785eb8-ea4c-4a84-9a32-5ea58d9a88de</id>
+    <updated>2026-11-14T07:12:13.000Z</updated>
+    <published>2026-11-14T07:12:13.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/kloning-lesson-adelas-turn-vba"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Kloning lesson "Adela's turn" ke vba.pesanweb.my.id</h2>
+<p>Source: <code>https://vba.skilling.us/lesson/adelas-turn</code> → target <code>https://vba.pesanweb.my.id/lesson/adelas-turn</code> (node 349, judul "Giliran Izza"). Dibuat dengan runbook <code>references/clone-runbook.md</code> dari skill <code>drupal-lesson-authoring</code>.</p>
+
+<h3>Inventaris source &amp; hasil render</h3>
+<ul>
+<li>Pause: source 9, render 9</li>
+<li>h3: source 2 ("Debugging" → "Debugging", "Indenting" → "Indentasi"), h2 = 0</li>
+<li>Character container: source 16, render 16</li>
+<li>Note box (annotation.): source 4, render 4, judul "Catatan"</li>
+<li>Code block: source 11, render 11</li>
+<li>Parser error: 0; tidak ada markup mentah (pause./character.) yang bocor ke halaman</li>
+<li>Sequence widget (urutan pause/char/code/h3/note): identik dengan source</li>
+</ul>
+
+<h3>Pemetaan karakter (Adela/Georgia → Izza/Fina)</h3>
+<ul>
+<li>Adela smile1/2/5/8/yay1 → <code>character_izza_senang</code> (5 kontainer)</li>
+<li>Adela thinking1 → <code>character_izza_kenapa</code>; Adela stressed1 → <code>character_izza_sedih</code>; Adela oh_no1 → <code>character_izza_heran</code></li>
+<li>Georgina smile5/smile4 → <code>character_fina_senang</code> (2); Georgina neutral1 → <code>character_fina_masuk</code></li>
+<li>Ethan (talking5, smile14, smile17) dan Ray (neutral1, smiling2) dipertahankan sesuai source</li>
+</ul>
+
+<h3>Temuan infra 1: internal_name karakter "Izza sedih" ada leading space</h3>
+<p>Saat render pertama, container izza_sedih gagal (15/16) dengan error <code>Character with internal_name character_izza_sedih not found</code>, padahal nilainya ada di DB. Penyebab: nilai tersimpan <code>' character_izza_sedih'</code> (ada spasi di depan) pada <code>node__field_internal_name</code> nid 63. Dicek dengan <code>CONCAT('[',field_internal_name_value,']')</code> → <code>[ character_izza_sedih]</code>. Dibersihkan lewat <code>$node-&gt;set('field_internal_name', ...)</code> dalam render context, lalu 16/16 kontainer render.</p>
+
+<h3>Temuan infra 2: alias manual ikut terhapus oleh save node lain</h3>
+<p>Alias <code>/lesson/adelas-turn</code> dibuat terakhir sesuai urutan aman, tapi setelah perbaikan node karakter 63 + <code>cache:rebuild</code>, alias itu terhapus lagi oleh pathauto (halaman 404 "Page not found"). Perbaikan alias diulang setelah save gelombang terakhir apapun; pathauto juga meninggalkan dua baris duplikat untuk alias hasil generasinya (<code>/lesson/giliran-izza</code>), yang lalu dideduplikasi. Akhirnya kedua alias (manual dan hasil pathauto) masing-masing tepat satu baris dan keduanya HTTP 200.</p>
+
+<h3>Format body yang terbukti</h3>
+<ul>
+<li>Dialog karakter dan isi annotation menerima HTML mentah per baris logis: <code>&lt;p&gt;…&lt;/p&gt;</code> beruntun, <code>&lt;img class="skilling-parser-image figure"&gt;</code> dengan src absolut (alt dan title diterjemahkan), bahkan blok kode <code>&lt;div class="skilling-code-container"&gt;</code> utuh di dalam dialog (karakter menampilkan pseudo-kode).</li>
+<li>Hitungan keseimbangan tag harus per baris logis, bukan substring: <code>annotation.&lt;br /&gt;</code> ikut terhitung dobel karena <code>/annotation.&lt;br /&gt;</code> memuat substring yang sama (8 vs 4 saat pertama dicek).</li>
+<li>Path image source relatif (<code>/sites/default/files/.../write-first-program/*.png</code>) dijadikan absolut ke <code>https://vba.skilling.us</code>; seluruh 6 URL unik dicek HTTP 200 dengan UA browser (curl tanpa UA kena 404/406).</li>
+</ul>
+
+<h3>Verifikasi akhir</h3>
+<ul>
+<li><code>/lesson/adelas-turn</code> dan <code>/lesson/giliran-izza</code>: HTTP 200, judul "Giliran Izza | Pemrograman dengan Excel VBA"</li>
+<li>Book outline: nid 349, bid 330, pid 343 ("Simple Programs"), weight -13, depth 3; navigasi prev "Menulis Program Pertama" aktif (next "Generalize" memang belum dikloning)</li>
+<li>11 gambar eksternal di halaman: 0 error</li>
+</ul>
+<p>Temuan sudah dicatat ke skill <code>drupal-lesson-authoring</code> (SKILL.md + references/clone-runbook.md).</p> ]]>
+    </content>
+  </entry>
+  <entry>
+    <title>Kloning lesson easy-good ke vba.pesanweb.my.id (node 373)</title>
+    <id>item-327979c9-a37a-46d7-a9ae-30dc72d74ad5</id>
+    <updated>2026-11-14T08:44:22.000Z</updated>
+    <published>2026-11-14T08:44:22.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/kloning-lesson-easy-good-vba"/>
+    
+    <content type="html">
+      <![CDATA[ <h2>Ringkasan</h2>
+<p>Lesson <code>https://vba.skilling.us/lesson/easy-good</code> ("Easy is good") dikloning ke <code>vba.pesanweb.my.id</code> dan diterjemahkan ke Bahasa Indonesia. Semua gate verifikasi lulus.</p>
+<ul>
+<li>Node: <strong>nid 373</strong> — tipe <code>lesson</code>, status published</li>
+<li>Judul: <strong>Mudah itu bagus</strong></li>
+<li>Alias: <code>/lesson/easy-good</code> (manual) dan <code>/lesson/mudah-itu-bagus</code> (pathauto) — keduanya HTTP 200</li>
+<li>Book: bid 330 ("Pemrograman dengan Excel VBA"), pid 343 ("Simple Programs"), weight -8, depth 3</li>
+<li>Panjang body: 10.932 byte (UTF-8), format <code>skilling</code></li>
+</ul>
+
+<h2>Inventaris sumber vs hasil render</h2>
+<table class="table">
+<tbody><tr><th>Widget</th><th>Sumber (easy-good)</th><th>Hasil (nid 373)</th></tr>
+<tr><td><code>h3</code></td><td>8</td><td>8</td></tr>
+<tr><td><code>pause.</code></td><td>8</td><td>8</td></tr>
+<tr><td><code>character.</code></td><td>5</td><td>5</td></tr>
+<tr><td><code>reflect.</code></td><td>3</td><td>3</td></tr>
+<tr><td><code>pattern.</code></td><td>1</td><td>1</td></tr>
+<tr><td><code>principle.</code></td><td>1</td><td>1</td></tr>
+<tr><td><code>annotation.</code></td><td>1</td><td>1</td></tr>
+<tr><td>Blok kode</td><td>7 (6 di body + 1 di dalam dialog karakter)</td><td>7</td></tr>
+<tr><td>Gambar</td><td>6 inline + 5 foto karakter</td><td>6 inline (semua HTTP 200) + 5 foto dari node karakter</td></tr>
+<tr><td>Parser error</td><td>—</td><td>0</td></tr>
+</tbody></table>
+<p>Urutan widget (<em>sequence diff</em>, 27 token) identik dengan sumber; yang berbeda hanya teks hasil terjemahan dan nama karakter hasil recast.</p>
+
+<h2>Pemetaan karakter (Adela → Fina, Georgina → Izza)</h2>
+<table class="table">
+<tbody><tr><th>Sumber</th><th>Dipakai di Drupal</th><th>Dialog (Indonesia)</th></tr>
+<tr><td><code>adela_sceptical1</code></td><td><code>character_fina_heran</code></td><td>Siapa tahu? x36? y33a? Bisa berarti apa saja.</td></tr>
+<tr><td><code>ray_listening2</code></td><td><code>character_ray_listening2</code> (tetap)</td><td>Yah, bukan. Sepertinya tanda + yang kedua seharusnya *.</td></tr>
+<tr><td><code>adela_sceptical2</code></td><td><code>character_fina_heran</code></td><td>Akan lebih mudah kalau kita tahu rumus itu untuk apa.</td></tr>
+<tr><td><code>adela_smile6</code></td><td><code>character_fina_senang</code></td><td>Sekarang kita tahu apa yang harus dicari di Google…</td></tr>
+<tr><td><code>adela_smile7</code></td><td><code>character_fina_senang</code></td><td>Mengubah perilakunya?</td></tr>
+</tbody></table>
+<p>Lesson sumber tidak memuat Georgina, sehingga tidak ada pemetaan ke Izza. Hasil render: 0 kemunculan "Adela"/"Georgina".</p>
+
+<h2>Dependensi baru yang harus dibuat lebih dulu</h2>
+<p>Dua tag tidak bisa dirender sebelum node rujukannya ada. Keduanya dibuat baru pada run ini:</p>
+<ul>
+<li><code>principle_incremental_testing</code> → <strong>nid 371</strong>, tipe <code>principle</code>, judul "Pengujian bertahap", alias <code>/principle/pengujian-bertahap</code> (HTTP 200). Sebelumnya tipe <code>principle</code> ada di instalasi tetapi berisi 0 node.</li>
+<li><code>pattern_hungarian_naming</code> → <strong>nid 372</strong>, tipe <code>pattern</code>, judul "Nama variabel Hungarian", alias <code>/pattern/nama-variabel-hungarian</code> (HTTP 200). Field: summary, situation, needs, action (termasuk tabel tipe data).</li>
+</ul>
+<p>Tag <code>principle.</code> dan <code>pattern.</code> sama-sama <code>has_close_tag = false</code>: satu baris pembuka plus <code>&amp;nbsp;&amp;nbsp;internal_name=…</code>, tanpa penutup.</p>
+
+<h2>Temuan teknis (masuk ke skill)</h2>
+<ul>
+<li><strong>Marker heading-offset tidak boleh menempel pada baris tag.</strong> Bila <code>annotation.</code> adalah blok pertama body, menempelkan <code>&lt;div class="skilling-parse-unit-decrease-heading-offset"&gt;&lt;/div&gt;</code> di awal body menghasilkan satu baris logis <code>&lt;div …&gt;&lt;/div&gt;annotation.</code> dan tag tidak dikenali. Marker harus disisipkan tepat sebelum <code>&lt;h3&gt;</code> pertama (pola yang dipakai node 344), bukan di awal body.</li>
+<li><strong><code>principle.</code> butuh node dulu.</strong> Tanpa node bertipe <code>principle</code> dengan <code>field_internal_name</code> yang cocok, tag hanya menghasilkan error; tipe bundle-nya sendiri sudah ada di situs ini.</li>
+<li><strong>Judul gambar (<code>title=</code>) juga harus diterjemahkan</strong>, bukan hanya <code>alt=</code> — tema menampilkannya sebagai tooltip/caption (mis. "Kambing", "Ketik beberapa karakter pertama").</li>
+<li><strong>Komentar VBA di dalam blok kode ikut diterjemahkan</strong> (<code>' Compute volume of a cone.</code> → <code>' Hitung volume kerucut.</code>) karena dibaca siswa; kode itu sendiri tidak diubah.</li>
+<li>String sistem tetap Inggris dan bukan cacat terjemahan: "More…", "Show all", "Toggle Dropdown", serta baris bantuan widget reflect.</li>
+</ul>
+
+<h2>Verifikasi</h2>
+<ul>
+<li><code>/lesson/easy-good</code> → 200, <code>/lesson/mudah-itu-bagus</code> → 200, <code>/node/373</code> → 200</li>
+<li>Parser error 0, tidak ada markup mentah bocor (<code>pause.</code>/<code>internal_name</code>)</li>
+<li>Pager: prev "Cells yang terpisah" (200), Up "Simple Programs" (200); next kosong karena lesson "Debugging" belum ada di buku target</li>
+<li>Seluruh gambar eksternal (goat4, goat8, 4 PNG Ctrl+Space, foto Ray) → HTTP 200</li>
+</ul> ]]>
+    </content>
+  </entry>
 </feed>
