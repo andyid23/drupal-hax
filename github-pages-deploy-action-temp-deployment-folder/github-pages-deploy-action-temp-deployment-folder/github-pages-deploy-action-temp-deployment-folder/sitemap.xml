@@ -210,4 +210,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/laporan-t1-kloning-3-pelajaran-hilang</loc>
+    <lastmod>2026-11-15T11:48:12.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
