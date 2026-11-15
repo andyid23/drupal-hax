@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-70e61eb6-d1a8-4737-9d94-ac71f4457c68</id>
+<indent>0</indent>
+<location>pages/item-70e61eb6-d1a8-4737-9d94-ac71f4457c68/index.xml</location>
+<slug>kloning-lesson-ranges-vba</slug>
+<order>0</order>
+<parent></parent>
+<title>Clone lesson ranges ke VBA</title>
+<description></description>
+<metadata>
+<created>1794663963</created>
+<updated>1794663963</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Clone lesson ranges ke vba.pesanweb.my.id</h2>
+<p>Tanggal: 14 November 2026. Sumber: <code>https://vba.skilling.us/lesson/ranges</code> → target node <strong>464</strong>, alias <code>/lesson/ranges</code>, judul <em>Range</em>, bab <em>Analisis Data</em> (pid 452, weight 1, setelah <em>Tabel data</em>).</p>
+
+<h3>Inventaris sumber vs render</h3>
+<ul>
+<li>H3: 10 / Pause: 20 / Karakter: 4 / Kode: 26 — semua sama dengan sumber, urutan widget identik.</li>
+<li>MCQ: 0. FIB: 1 (<code>fib_value_in_range</code>) — node nid 462 dibuat; jawaban <strong>10</strong> bukan ditebak: diambil dari workbook asli <code>messing-with-a-range.xlsm</code> (terlampir di halaman sumber) lewat openpyxl — baris 5 range = Shayla, kolom 3 = Coolness = 10.</li>
+<li>Pattern: 1 (<code>pattern_create_range</code>, nid 460, judul "Membuat Range").</li>
+<li>Exercise: 1 (<code>exercise_fave_leaf</code> "Daun favorit", nid 461) — kolom <em>Pesan</em> tabel output sengaja tetap Inggris (string literal yang harus di-output kode siswa).</li>
+<li>Reflect: 1 (<code>reflect_remove_row</code>) — tag <code>reflect.</code> dengan penutup <code>/reflect.</code>.</li>
+<li>Annotation: 2 di sumber — "Log in" dilewati (chrome modul untuk anonim), "Note" diterjemahkan jadi blok <code>annotation. title=Catatan</code>.</li>
+<li>Karakter: 3 Ray tetap (yay3, listening1, smiling2 — semua ada di target); Georgina aha1 → <code>character_izza_heran</code>.</li>
+<li>Gambar: 32 tag render, semua external <code>vba.skilling.us</code> + probe HEAD 200; dua lampiran .xlsm juga 200.</li>
+</ul>
+
+<h3>Verifikasi lima gerbang</h3>
+<ul>
+<li>HTTP 200: <code>/lesson/ranges</code>, <code>/lesson/range</code> (pathauto), <code>/pattern/membuat-range</code>, <code>/exercise/daun-favorit</code>; 403 di <code>/fib/nilai-di-dalam-range</code> (wajar, akses anonim ditolak — sama seperti /mcq).</li>
+<li>errors=0, tidak ada markup mentah bocor, alias lain tetap 200 (better-validation, how-succeed, dkk.).</li>
+<li>Book nav benar: prev = Tabel data, Up = Analisis Data, next = Tips.</li>
+</ul>
+
+<h3>Temuan teknis baru</h3>
+<ul>
+<li><strong>Jawaban FIB bisa diambil dari workbook terlampir</strong>: halaman sumber memuat <code>field--name-field-attachments</code> (.xlsm). Unduh, baca dengan openpyxl — data tabel diperoleh persis, tanpa OCR. (OCR RapidOCR dipakai dulu untuk memverifikasi konsistensi: kolom Coolness baris Shayla terbaca "10" — cocok.)</li>
+<li><strong>Baris book rusak saat insert dengan pid yang node-nya tidak ada</strong>: karena sesi paralel menghapus node chapter lama (447) dan membuat ulang sebagai node 452, insert dengan pid 447 menghasilkan baris rusak (<code>p1=464, depth=1</code>) — navigasi prev/next hilang diam-diam. Gejala = persis peringatan runbook tentang raw insert. Perbaikan: hapus baris, insert ulang dengan pid yang VALID (cek ulang tabel book + node chapter sebelum insert).</li>
+<li><strong>Sesi paralel bisa mengganti node chapter</strong>: re-query pohon buku (<code>SELECT nid,bid,pid,weight,title FROM book</code> + alias) tepat sebelum menentukan pid — jangan percaya hasil query awal sesi.</li>
+<li>Deadlock <code>cache_entity</code> saat create node (transien, sesi paralel + cron): create ulang — create_lesson.php idempoten karena SKIP jika alias sudah ada.</li>
+<li><code>BookManager::addToOutline()</code> tidak ada di D8 — pola <code>$n-&gt;book = [...]; $n-&gt;save(); updateOutline($n);</code> tetap yang benar, asalkan pid-nya valid.</li>
+</ul>
+
+<h3>Artifak</h3>
+<ul>
+<li>Builder: <code>/opt/data/cache/scratch/build_ranges.py</code>; deps: <code>deps_ranges.json</code> + <code>create_deps_ranges.php</code> (pattern/exercise/fib); <code>messing.xlsm</code> untuk verifikasi jawaban FIB.</li>
+<li>Runbook <code>drupal-lesson-authoring</code> diperbarui dengan temuan di atas.</li>
+</ul>]]></content>
+</item>
