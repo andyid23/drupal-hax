@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-89cf8101-0341-4659-bf10-319e0039c173</id>
+<indent>0</indent>
+<location>pages/item-89cf8101-0341-4659-bf10-319e0039c173/index.xml</location>
+<slug>sync-db-files-penamaan-site</slug>
+<order>0</order>
+<parent></parent>
+<title>Sync DB &amp; Files + Penamaan Site per DB (home &amp; 2.57)</title>
+<description></description>
+<metadata>
+<created>1793067263</created>
+<updated>1793067263</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Keputusan yang Dipakai</h2>
+<ul>
+  <li><strong>Penamaan vhost non-breaking</strong> — domain lama tetap dilayani direktori aslinya; nama-DB ditambahkan sebagai alias. Tidak ada URL publik yang berubah.</li>
+  <li><strong>Sumber tunggal</strong> — DB <code>drupal8</code> dan direktori <code>sites/web.pesanweb.my.id/files</code> di home adalah sumber sync.</li>
+  <li><strong>NPM dan DNS tidak disentuh</strong> — entry proxy dan record DNS akan dibuat terpisah untuk pengujian lokal.</li>
+</ul>
+
+<h2>Hasil Akhir: Enam DB Identik</h2>
+<pre><code>home/drupal8     246 tabel  236 node  md5 94dd3460…
+home/belajarweb  246 tabel  236 node  md5 94dd3460…
+home/web         246 tabel  236 node  md5 94dd3460…
+2.57/belajarweb  246 tabel  236 node  md5 94dd3460…
+2.57/drupal8     246 tabel  236 node  md5 94dd3460…
+2.57/web         246 tabel  236 node  md5 94dd3460…</code></pre>
+<p>Sebelum sync: home/belajarweb 117 node (basi), home/web 47 node (legacy), 2.57/drupal8 47 node (orphan), 2.57/web belum ada. Semua target dibackup lebih dulu ke <code>db-backup/*-pre-sync-*.sql.gz</code>.</p>
+
+<h2>Pemetaan Nama</h2>
+<h3>home.pesanweb.my.id (2.40)</h3>
+<ul>
+  <li><code>sites/web.pesanweb.my.id/</code> — direktori asli, DB <code>drupal8</code> (sumber)</li>
+  <li><code>sites/drupal8</code> — symlink ke <code>web.pesanweb.my.id</code></li>
+  <li><code>sites/belajarweb</code> — symlink ke <code>belajarweb.pesanweb.my.id</code></li>
+  <li><code>sites/web/</code> — direktori baru, DB <code>web</code>, files hasil sync</li>
+  <li><code>sites.php</code>: <code>drupal8.pesanweb.my.id → drupal8</code>, <code>web-legacy.pesanweb.my.id → web</code>, domain lama tetap ke direktorinya masing-masing</li>
+</ul>
+<h3>192.168.2.57</h3>
+<ul>
+  <li><code>sites/belajarweb.pesanweb.my.id/</code> — direktori asli, DB <code>belajarweb</code></li>
+  <li><code>sites/drupal8/</code> — direktori baru, DB <code>drupal8</code></li>
+  <li><code>sites/web/</code> — direktori baru, DB <code>web</code></li>
+  <li><code>sites/web.pesanweb.my.id</code> — symlink ke <code>drupal8</code>, supaya referensi file lama tetap resolve</li>
+  <li><code>sites.php</code>: <code>drupal8.pesanweb.my.id → drupal8</code>, <code>web.pesanweb.my.id → drupal8</code>, <code>web-legacy.pesanweb.my.id → web</code></li>
+</ul>
+
+<h2>Verifikasi</h2>
+<ul>
+  <li>Keempat Host header di home:8087 dan 2.57:8087 mengembalikan judul situs yang benar, dan aset contoh <code>manja-vitolic-gKXKBY-C-Dk-unsplash.jpg</code> HTTP 200.</li>
+  <li><code>drush cr</code> sukses untuk <code>web.pesanweb.my.id</code>, <code>drupal8.pesanweb.my.id</code>, <code>belajarweb.pesanweb.my.id</code>, <code>web-legacy.pesanweb.my.id</code> di kedua host.</li>
+  <li>Direktori files tiap situs berisi 310 file <code>gambar</code> setelah sync.</li>
+</ul>
+
+<h2>Otomasi</h2>
+<ul>
+  <li><strong>File (terjadwal)</strong>: <code>/root/sync-haxcms-files.sh</code> di home, cron <code>/etc/cron.d/haxcms-files-sync</code> harian 02:30. Fan-out ke 5 target (2 lokal + 3 di 2.57), hanya direktori konten; <code>css/</code>, <code>js/</code>, <code>php/</code>, <code>config_*</code> dikecualikan karena aggregate per-situs.</li>
+  <li><strong>DB (manual, destruktif)</strong>: <code>/root/sync-db-from-drupal8.sh --force</code>. Men-dump <code>drupal8</code>, membackup tiap target, lalu DROP+CREATE+import ke <code>belajarweb</code> dan <code>web</code> di home, serta ke tiga DB di 2.57. Sengaja tidak dijadwalkan: import ulang menghapus perubahan lokal di target dan memutus koneksi sesaat.</li>
+</ul>
+
+<h2>Catatan Penting</h2>
+<ul>
+  <li>Sync file bersifat aditif (tanpa <code>--delete</code>) supaya unggahan yang dibuat langsung di salah satu situs tidak hilang.</li>
+  <li>Aggregate <code>css/js/php</code> boleh dihapus kapan saja; Drupal membuatnya ulang saat halaman diminta. Ini alasan direktori <code>belajarweb</code> di home sempat terlihat lebih besar (489 file aggregate lama) padahal kontennya hanya 59 gambar.</li>
+  <li>Karena semua DB kini identik, isi keenam situs sama. Kalau salah satu akan dipakai berbeda, hentikan sync file untuk situs itu lebih dulu, lalu cabut targetnya dari skrip.</li>
+  <li>Domain <code>drupal8.pesanweb.my.id</code> belum ada di DNS; pengujian saat ini hanya lewat Host header internal.</li>
+</ul>]]></content>
+</item>
