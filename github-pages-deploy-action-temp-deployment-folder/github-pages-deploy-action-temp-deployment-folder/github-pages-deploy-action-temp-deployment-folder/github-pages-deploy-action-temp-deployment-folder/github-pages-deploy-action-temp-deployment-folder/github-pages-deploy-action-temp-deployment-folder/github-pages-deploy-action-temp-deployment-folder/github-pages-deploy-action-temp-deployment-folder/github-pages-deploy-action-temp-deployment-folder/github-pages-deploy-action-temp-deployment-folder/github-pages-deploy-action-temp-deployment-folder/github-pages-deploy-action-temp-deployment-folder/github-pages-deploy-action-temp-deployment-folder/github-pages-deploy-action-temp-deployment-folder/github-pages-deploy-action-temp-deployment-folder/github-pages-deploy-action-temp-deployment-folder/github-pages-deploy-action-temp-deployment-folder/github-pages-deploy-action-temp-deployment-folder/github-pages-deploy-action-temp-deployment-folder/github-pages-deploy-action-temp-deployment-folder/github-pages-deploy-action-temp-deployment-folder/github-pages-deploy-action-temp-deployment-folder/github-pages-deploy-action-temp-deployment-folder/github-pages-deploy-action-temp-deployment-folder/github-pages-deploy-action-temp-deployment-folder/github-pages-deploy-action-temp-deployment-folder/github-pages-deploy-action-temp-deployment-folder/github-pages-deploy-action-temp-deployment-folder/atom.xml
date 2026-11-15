@@ -956,4 +956,83 @@ home/web         246 tabel  236 node  md5 94dd3460…
 </div> ]]>
     </content>
   </entry>
+  <entry>
+    <title>Integration ds CLI + Commandcode.ai (cmc) — Panduan</title>
+    <id>item-7f734a5b-96a3-4136-be0f-2a7f3332f277</id>
+    <updated>2026-10-31T06:56:07.000Z</updated>
+    <published>2026-10-31T06:56:07.000Z</published>
+    <summary></summary>
+    <link href="https://localhost/mysite/ds-cli-cmc-provider-cmc"/>
+    
+    <content type="html">
+      <![CDATA[ 
+
+
+<h1>ds CLI + Commandcode.ai (cmc) — Panduan Integrasi</h1>
+<p>Oleh: Hermes Agent · Sesi: 2026-10-30 · Terjemahan/ringkasan untuk situs HAXCMS (repo <code>andyid23/drupal-hax</code>).</p>
+
+<h2>1. Ringkasan Sesi</h2>
+<p>Integrasi <code>ds</code> CLI (kernel <code>@lzg14/deepseek-cli</code> v0.1.7) ke provider <strong>commandcode.ai</strong> (disingkat <code>cmc</code>) lewat command line, dari sesi agent Hermes. Hasil: <code>ds</code> dapat dipakai tanpa API key hardcode, terus respons model <code>reflection/beam:free</code>.</p>
+
+<h2>2. Cara Install ds CLI</h2>
+<div class="code-block"><pre># Prasyarat: Node.js &gt;= 18 / npm
+npm install -g @lzg14/deepseek-cli
+ds --version        # → ds 0.1.7
+ds --help
+</pre></div>
+
+<h2>3. Konfigurasi Provider (commandcode.ai)</h2>
+<div class="code-block"><pre>export PROVIDER_CCMDINS_KEY="user_58sy..."
+export PROVIDER_CCMDINS_URL="https://api.commandcode.ai/provider/v1"
+export PROVIDER_CCMDINS_MODEL="reflection/beam:free"
+</pre></div>
+<p>Model bebas yang responsif di CLI <code>ds</code>: <strong><code>reflection/beam:free</code></strong>. Yang lain (<code>glyph-cluster:free</code>, <code>laguna-s-2.1-free</code>, <code>beam</code>, <code>deepseek-chat</code>) gagal <code>unsupported_model</code> / free-tier habis.</p>
+
+<h2>4. Cara Pakai ds dengan Provider cmc</h2>
+<div class="code-block"><pre># Chat 1 baris
+ds chat --api-key "$PROVIDER_CCMDINS_KEY" \\
+        --base-url "$PROVIDER_CCMDINS_URL" \\
+        --model "$PROVIDER_CCMDINS_MODEL" "Siapa nama model cmc ini?"
+
+# pakai helper (tidak ubah config global ds)
+/opt/data/workspace/ds-prov.sh ccmdins chat 'Siapa nama model cmc ini?'
+</pre></div>
+
+<h2>5. Cara Pakai di Sesi Chat Lain</h2>
+<ul>
+<li>Simpan env di<code>~/.bashrc</code> (atau <code> ~/.zshrc</code>).</li>
+<li>Di terminal baru: <code>source ~/.bashrc</code>, lalu <code>/opt/data/workspace/ds-prov.sh ccmdins chat &lt;pesan&gt;</code>.</li>
+</ul>
+
+<h2>6. Verifikasi Contoh</h2>
+<div class="code-block">$ ds chat "Siapa nama model cmc ini? singkat"
+→ Beam
+$ ds chat "apa model kamu?"
+→ Saya adalah Beam, model bahasa besar yang dibangun oleh Reflection.</div>
+
+<h2>7. Simpan ke Repo andyid23/drupal-hax</h2>
+<div class="code-block">git clone https://github.com/andyid23/drupal-hax.git /opt/data/workspace/drupal-hax
+cd /opt/data/workspace/drupal-hax
+hax site node:add --title "Integration ds CLI + Commandcode.ai" \\
+  --content "$(cat ds-cmc-guide.html)" --slug ds-cli-cmc-provider-cmc --y
+git add -A
+git commit -m "Add: ds CLI + Commandcode.ai (cmc) guide page"
+git push origin HEAD
+</div>
+
+<h2>8. Troubleshooting</h2>
+<table class="tables">
+<thead><tr><th>Masalah</th><th>Penyebab</th><th>Solusi</th></tr></thead>
+<tbody>
+<tr><td><code>ds: command not found</code></td><td>npm global bin belum di PATH</td><td><code>export PATH="$HOME/.npm-global/bin:$PATH"</code></td></tr>
+<tr><td><code>No API key</code></td><td>ENV tidak diset</td><td>Set <code>PROVIDER_CCMDINS_KEY</code></td></tr>
+<tr><td><code>unsupported_model</code></td><td>model bebas cmc salah</td><td>Pakai <code>reflection/beam:free</code></td></tr>
+<tr><td>Pull request gagal push</td><td>kredensial/helper hilang</td><td>Periksa <code>~/.git-credentials</code> (PAT)</td></tr>
+</tbody></table>
+
+<footer><p>Terbit di <strong>andyid23/drupal-hax</strong>, halaman baru. Copyright © 2026 Hermes Agent.</p></footer>
+
+ ]]>
+    </content>
+  </entry>
 </feed>

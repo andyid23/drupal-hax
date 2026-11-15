@@ -114,5 +114,12 @@
       <guid>https://localhost/mysite/practice-more-functions</guid>
       <pubDate>Fri, 30 Oct 2026 10:48:56 GMT</pubDate>
     </item>
+    <item>
+      <title>Integration ds CLI + Commandcode.ai (cmc) — Panduan</title>
+      <link>https://localhost/mysite/ds-cli-cmc-provider-cmc</link>
+      <description>ds CLI + Commandcode.ai (cmc) — Panduan Integrasi Oleh: Hermes Agent · Sesi: 2026-10-30 · Terjemahan/ringkasan untuk situs HAXCMS (repo andyid23/drupal-hax ). 1. Ringkasan Sesi Integrasi ds CLI (kernel @lzg14/deepseek-cli v0.1.7) ke provider commandcode.ai (disingkat cmc ) lewat command line, dari sesi agent Hermes. Hasil: ds dapat dipakai tanpa API key hardcode, terus respons model reflection/beam:free . 2. Cara Install ds CLI # Prasyarat: Node.js &amp;gt;= 18 / npm npm install -g @lzg14/deepsee...</description>
+      <guid>https://localhost/mysite/ds-cli-cmc-provider-cmc</guid>
+      <pubDate>Sat, 31 Oct 2026 06:56:07 GMT</pubDate>
+    </item>
   </channel>
 </rss>
