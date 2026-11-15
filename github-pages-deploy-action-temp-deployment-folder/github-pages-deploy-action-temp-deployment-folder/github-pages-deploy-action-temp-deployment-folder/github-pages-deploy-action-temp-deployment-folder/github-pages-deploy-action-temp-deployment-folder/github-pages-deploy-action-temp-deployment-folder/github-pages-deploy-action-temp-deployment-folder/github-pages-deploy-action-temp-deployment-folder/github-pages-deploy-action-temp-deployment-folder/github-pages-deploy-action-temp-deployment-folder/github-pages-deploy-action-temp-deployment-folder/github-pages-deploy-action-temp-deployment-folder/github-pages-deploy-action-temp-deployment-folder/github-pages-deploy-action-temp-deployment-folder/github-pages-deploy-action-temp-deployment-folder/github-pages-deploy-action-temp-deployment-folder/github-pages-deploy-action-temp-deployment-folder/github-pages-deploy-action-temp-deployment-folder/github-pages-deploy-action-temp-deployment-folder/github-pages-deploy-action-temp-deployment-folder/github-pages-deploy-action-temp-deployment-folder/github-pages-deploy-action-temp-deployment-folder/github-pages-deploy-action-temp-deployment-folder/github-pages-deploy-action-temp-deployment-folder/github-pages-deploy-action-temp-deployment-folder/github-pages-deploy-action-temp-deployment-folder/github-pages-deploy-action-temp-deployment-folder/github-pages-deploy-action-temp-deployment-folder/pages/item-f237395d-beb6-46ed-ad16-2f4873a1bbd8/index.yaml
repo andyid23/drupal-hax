@@ -1,0 +1,138 @@
+id: item-f237395d-beb6-46ed-ad16-2f4873a1bbd8
+indent: 0
+location: pages/item-f237395d-beb6-46ed-ad16-2f4873a1bbd8/index.yaml
+slug: install-scroll-top-button-sync-db-files-situs-python-webapps-vba
+order: 0
+parent: null
+title: Install scroll_top_button, Sync DB/Files & Situs Baru python/webapps/vba
+description: ''
+metadata:
+  created: 1793086637
+  updated: 1793086637
+  images: []
+  videos: []
+content: >-
+  <h1>Install scroll_top_button, Sync DB/Files &amp; Persiapan 3 Situs Baru
+  (python/webapps/vba)</h1><p>Laporan eksekusi 27 Oktober 2026 — stack
+  <code>drupal811</code> di home.pesanweb.my.id (192.168.2.40) dan stack
+  <code>drupal-nfs</code> di 192.168.2.57.</p><h2>1. Install module
+  scroll_top_button</h2><ul><li><strong>Versi:</strong>
+  <code>drupal/scroll_top_button</code> 2.1.1 — kompatibel Drupal <code>^8.8 ||
+  ^9 || ^10 || ^11</code> (terverifikasi dari drupal.org), aman untuk Drupal
+  8.9.20.</li><li><strong>home (d8_fpm):</strong> <code>composer require
+  drupal/scroll_top_button:^2.1</code> berhasil; module di-ENABLE di
+  <code>web.pesanweb.my.id</code> lewat <code>drush pm:enable scroll_top_button
+  -y</code> + <code>drush cr</code>.</li><li><strong>2.57 (fpm7):</strong>
+  container masih Composer <strong>1.10.23</strong> yang gagal dengan error
+  <em>“Illegal string offset 'versions'”</em>. Di-upgrade ke Composer 2.10.3
+  (<code>composer self-update --2</code>), lalu require
+  berhasil.</li><li>Catatan: alias <code>drush en</code> gagal (<em>“Too many
+  arguments”</em>) pada build Drusih ini — pakai
+  <code>pm:enable</code>.</li><li><code>composer audit</code> melaporkan
+  <strong>150 security advisory pada 15 package</strong> di codebase Drupal 8 —
+  PR usang, tinjau terpisah.</li></ul><h2>2. Sync DB + files ke belajarweb
+  (kedua host)</h2><p>Prosedur: backup target → dump source tanpa
+  <code>--databases</code> → DROP/CREATE (collation target sendiri) → import →
+  rewrite referensi file → <code>drush cr</code> scoped per domain → rsync files
+  additive (exclude <code>/css/ /js/ /php/</code> ter-anchor).</p><h3>home
+  (2.40): drupal8 → belajarweb</h3><ul><li>DB <code>belajarweb</code>: 246
+  tabel, 236 node, digest <strong>identik</strong> dengan <code>drupal8</code>
+  (<code>md5=94dd346050c38bbd6b6f6897465ff142</code>).</li><li>Referensi file
+  di-rewrite: <code>sites/web.pesanweb.my.id</code> →
+  <code>sites/belajarweb.pesanweb.my.id</code> (82 baris
+  <code>node__body</code>: 0 lama / 82 baru).</li><li>Files: rsync dari
+  <code>sites/web.pesanweb.my.id/files/</code>; verifikasi internal <code>curl
+  -H 'Host: belajarweb.pesanweb.my.id' 127.0.0.1:8087</code> →
+  <strong>200</strong>.</li></ul><h3>2.57: dump fresh dari home drupal8 →
+  belajarweb (LIVE via NPM)</h3><ul><li>DB <code>belajarweb</code>: 246 tabel,
+  236 node, digest identik; <code>scroll_top_button</code> hadir di
+  <code>core.extension</code> dan <code>drush pm:list</code> scoped
+  <code>belajarweb.pesanweb.my.id</code>.</li><li>Referensi di-rewrite (82 →
+  0/82), files rsync dari home (408 → 409 file, parity).</li><li>Verifikasi
+  publik: <code>https://belajarweb.pesanweb.my.id/</code> →
+  <strong>200</strong>, title “Selamat datang | Belajar Membuat Website”; gambar
+  konten <code>files/gambar/TE-2022-100000-depan.jpg</code> →
+  <strong>200</strong>.</li><li><code>web.pesanweb.my.id</code> publik tetap
+  <strong>200</strong> (tidak terganggu).</li></ul><h3>Backup
+  (rollback)</h3><ul><li>home:
+  <code>/data/compose/34/db-backup/belajarweb-pre-sync-2026-10-27-0713.sql.gz</code>
+  + <code>belajarweb-pre-refsync-2026-10-27-071736.sql.gz</code>; files:
+  <code>sites/belajarweb.pesanweb.my.id/files.bak-pre-sync-2026-10-27-0713</code>.</li><li>2.57:
+  <code>/data/compose/98/db-backup/belajarweb-pre-sync-2026-10-27-1418.sql.gz</code>
+  + <code>belajarweb-pre-refsync-2026-10-27-141957.sql.gz</code>; files:
+  <code>files.bak-pre-sync-2026-10-27-1418</code>.</li><li>Rollback: import
+  backup <em>dengan</em> <code>--databases</code>, restore files.bak, lalu
+  <code>drush -l &lt;domain&gt; cr</code>.</li></ul><h2>3. Tiga situs baru
+  (materi python/webapps/vba.skilling.us)</h2><p>Disiapkan di home (2.40)
+  sebagai clone konfigurasi <code>web.pesanweb.my.id</code> — DB, files, dan
+  seluruh config module (termasuk <code>scroll_top_button</code>) identik;
+  konten bisa langsung diganti/ditambah lewat
+  UI.</p><table><thead><tr><th>Domain</th><th>Database</th><th>Direktori
+  sites</th><th>Status</th></tr></thead><tbody><tr><td>python.pesanweb.my.id</td><td><code>python</code></td><td><code>sites/python.pesanweb.my.id/</code></td><td>200,
+  246 tabel, digest parity, media
+  200</td></tr><tr><td>webapps.pesanweb.my.id</td><td><code>webapps</code></td><td><code>sites/webapps.pesanweb.my.id/</code></td><td>200,
+  246 tabel, digest parity, media
+  200</td></tr><tr><td>vba.pesanweb.my.id</td><td><code>vba</code></td><td><code>sites/vba.pesanweb.my.id/</code></td><td>200,
+  246 tabel, digest parity, media 200</td></tr></tbody></table><h3>Rincian tiap
+  situs</h3><ul><li><strong>DB:</strong> dibuat dengan collation host target
+  (<code>utf8mb4_uca1400_ai_ci</code> di home), import dump clean
+  <code>drupal8</code> — 246 tabel, 236 node, digest identik dengan source; user
+  DB memakai <code>drupal8user</code> (lihat catatan
+  keamanan).</li><li><strong>settings.php:</strong> hasil sed dari
+  <code>sites/drupal8/settings.php</code> — <code>'database' =&gt;
+  '&lt;nama&gt;'</code> dan <code>config_sync_directory =&gt;
+  'sites/&lt;domain&gt;/sync'</code> (sync config terpisah per
+  situs).</li><li><strong>Files:</strong>
+  <code>sites/&lt;domain&gt;/files/</code> terisi konten dari
+  <code>sites/web.pesanweb.my.id/files/</code> (exclude agregat); referensi
+  di-rewrite ke dir sendiri (82 → 0/82) sehingga gambar tampil di domain
+  baru.</li><li><strong>sites.php:</strong> alias identitas ditambahkan
+  (<code>$sites['python.pesanweb.my.id'] = 'python.pesanweb.my.id'</code>, dst.)
+  — pola sama dengan entri lama, non-breaking.</li><li><strong>Cache:</strong>
+  <code>drush -l &lt;domain&gt; cr</code> per situs; title “Selamat datang |
+  Belajar Membuat Website” di ketiganya.</li></ul><h3>Nginx Proxy Manager (2.57)
+  — sudah disiapkan</h3><ul><li>3 baris <code>proxy_host</code> (id 4–6):
+  python/webapps/vba.pesanweb.my.id → <code>http://192.168.2.40:8087</code>,
+  enabled, cache + block-exploits aktif.</li><li>Karena NPM
+  <strong>tidak</strong> meregenerate nginx config dari insert SQL langsung
+  (hanya via API/UI), file conf ditulis meniru template
+  (<code>proxy_host/4.conf</code>–<code>6.conf</code> dari <code>1.conf</code>)
+  lalu <code>nginx -t &amp;&amp; nginx -s reload</code>. Baris DB tetap sumber
+  kebenaran; saat entri di-save lewat UI nanti, NPM akan regenerate semua conf
+  dengan resmi.</li><li>Verifikasi lewat NPM (Host header): ketiganya
+  <strong>200</strong> dengan title situs Drupal; <code>belajarweb</code> tetap
+  200 (tidak ada downtime berkelanjutan).</li></ul><h2>4. Langkah tersisa
+  (user)</h2><ol><li><strong>DNS:</strong> buat record A/CNAME untuk
+  <code>python.pesanweb.my.id</code>, <code>webapps.pesanweb.my.id</code>,
+  <code>vba.pesanweb.my.id</code> di Cloudflare → IP publik NPM
+  <strong>103.189.201.134</strong> (proxy orange-cloud sesuai pola
+  <code>belajarweb</code>). Domain baru saat ini belum
+  resolve.</li><li><strong>SSL:</strong> setelah DNS propagasi, minta Let's
+  Encrypt per domain di NPM (tab SSL) — HTTP sudah
+  jalan.</li><li><strong>Konten:</strong> login <code>/user/login</code> tiap
+  domain (kredensial user 1 ter-clone dari drupal8), ganti title/slogan lewat
+  <em>Configuration → System → Basic site settings</em>, lalu tambah materi baru
+  (modul <code>skilling</code>, <code>skilling_content_types</code>,
+  <code>webform</code>, <code>paragraphs</code> sudah
+  aktif).</li><li><strong>Ganti password user 1</strong> di tiap situs sebelum
+  dipublikasikan (kredensial ter-clone).</li></ol><h2>5. Catatan keamanan
+  (state, bukan nilai)</h2><ul><li>User DB app (<code>drupal8user</code>,
+  <code>belajarweb</code>) memakai <strong>password placeholder/lemah</strong>
+  dan punya grant <code>ALL *.* WITH GRANT</code>; <code>root@'%'</code> aktif
+  di kedua host; MariaDB 3306 terekspos. phpMyAdmin sudah di-stop (hardening
+  sebelumnya) — pertahankan.</li><li>Password <code>belajarweb</code> di home
+  dan 2.57 masih <strong>identik</strong> (satu password, dua mesin) — pisahkan
+  saat rotasi (runbook
+  <code>keamanan-phpmyadmin-runbook-password-db</code>).</li><li>Composer audit:
+  150 advisory pada 15 package (Drupal 8 EOL-ish stack) — jadwalkan migrasi
+  Drupal 11.</li></ul><h2>6. Ringkasan
+  verifikasi</h2><table><thead><tr><th>Pemeriksaan</th><th>Hasil</th></tr></thead><tbody><tr><td>scroll_top_button
+  enabled di web.pesanweb.my.id, belajarweb (2.57), python, webapps,
+  vba</td><td>✓ (core.extension + pm:list)</td></tr><tr><td>Digest
+  node_field_data drupal8 = belajarweb(home) = belajarweb(2.57) = python =
+  webapps = vba</td><td>✓ 236 node, md5 sama</td></tr><tr><td>Referensi file
+  setelah rewrite</td><td>✓ 0 ref domain lama, 82 ref domain sendiri (tiap DB
+  target)</td></tr><tr><td>HTTP 200 (internal &amp; publik/edge)</td><td>✓ web,
+  belajarweb, python, webapps, vba</td></tr><tr><td>Gambar konten (node/48,
+  files/gambar/…)</td><td>✓ 200 di semua domain</td></tr><tr><td>Backup pre-sync
+  tersimpan</td><td>✓ kedua host (DB + files)</td></tr></tbody></table>

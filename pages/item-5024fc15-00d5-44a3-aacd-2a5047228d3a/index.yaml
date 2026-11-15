@@ -1,0 +1,245 @@
+id: item-5024fc15-00d5-44a3-aacd-2a5047228d3a
+indent: 0
+location: pages/item-5024fc15-00d5-44a3-aacd-2a5047228d3a/index.yaml
+slug: plan-klon-validation-library-webapps
+order: 0
+parent: null
+title: Plan klon Validation library ke webapps
+description: ''
+metadata:
+  created: 1794737622
+  updated: 1794737622
+  images: []
+  videos: []
+content: >-
+  <h2>Plan agen: klon bab "Validation library" ke webapps.pesanweb.my.id</h2>
+
+  <p><em>Plan, bukan eksekusi. Referensi:
+  <code>references/clone-runbook.md</code> dari skill
+  <code>drupal-lesson-authoring</code> (bagian 0–11). Tanggal inventaris:
+  2026-11-15.</em></p>
+
+
+  <h3>1. Status terverifikasi</h3>
+
+  <ul>
+
+  <li>Sumber: <code>https://webapps.skilling.us/lesson/validation-library</code>
+  — 1 bab + 10 anak (validation-basics, lets-play-evil-php-validation,
+  multifield-validation, dont-cross-streams, validation-functions, code-library,
+  paths, functions-and-teams, project-mortgage-payments, fun-rps-cheater).</li>
+
+  <li>Target: <code>webapps.pesanweb.my.id</code> (multisite D8 di
+  home.pesanweb.my.id, container <code>d8_fpm</code> +
+  <code>drupal_web_server</code>, port 81). HTTP saat ini:
+  <code>/lesson/validation-library</code>,
+  <code>/lesson/validation-basics</code>, <code>/lesson/database-apps</code>,
+  <code>/lesson/capturing-data</code> semua <strong>404</strong> → jalur CREATE,
+  bukan UPDATE.</li>
+
+  <li>Target sudah berisi klon bab sebelumnya: Bersiap (nid 247), URL dan file
+  (nid 351), Membuat HTML (nid 409, 24 anak sampai "Komponen halaman" nid 433).
+  Book root bid=331, chapter depth 2.</li>
+
+  <li>Stok node target: character 83, exercise 17, fill_in_the_blank 16,
+  multiple_choice_question 19, pattern 7, <strong>principle 0</strong>.</li>
+
+  </ul>
+
+
+  <h3>2. Inventaris bab Validation library (exact-class, body region)</h3>
+
+  <table class="table" border="1">
+
+  <tbody><tr><th>Halaman</th><th>h3</th><th>pause</th><th>char</th><th>mcq</th><th>fib</th><th>pattern</th><th>principle</th><th>exercise</th><th>code</th><th>img</th></tr>
+
+  <tr><td>validation-library
+  (intro)</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+
+  <tr><td>validation-basics</td><td>8</td><td>22</td><td>12</td><td>3</td><td>0</td><td>3</td><td>1</td><td>0</td><td>41</td><td>22</td></tr>
+
+  <tr><td>lets-play-evil-php-validation</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+  <tr><td>multifield-validation</td><td>7</td><td>14</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>19</td><td>12</td></tr>
+
+  <tr><td>dont-cross-streams</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+  <tr><td>validation-functions</td><td>12</td><td>24</td><td>10</td><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>46</td><td>22</td></tr>
+
+  <tr><td>code-library</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td><td>1</td></tr>
+
+  <tr><td>paths</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+
+  <tr><td>functions-and-teams</td><td>0</td><td>1</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>4</td></tr>
+
+  <tr><td>project-mortgage-payments</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+
+  <tr><td>fun-rps-cheater</td><td>3</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td><td>2</td></tr>
+
+  <tr><td><strong>TOTAL</strong></td><td><strong>31</strong></td><td><strong>66</strong></td><td><strong>26</strong></td><td><strong>4</strong></td><td><strong>0</strong></td><td><strong>4</strong></td><td><strong>5</strong></td><td><strong>3</strong></td><td><strong>116</strong></td><td><strong>64</strong></td></tr>
+
+  </tbody></table>
+
+  <p>Aset eksternal: 30 <code>img</code> dari <code>webapps.skilling.us</code>
+  (URL absolut, biarkan), 3 iframe YouTube.</p>
+
+
+  <h3>3. Jawaban cek spesifik</h3>
+
+  <ul>
+
+  <li><strong>cek fib mcq</strong>: <code>fib.</code> = <strong>0</strong> di
+  seluruh bab (tidak ada node fill_in_the_blank yang perlu dibuat).
+  <code>mcq.</code> = <strong>4</strong>: validation-basics id sumber 1207,
+  1189, 1206; multifield-validation id 1191. Buat 4 node
+  <code>multiple_choice_question</code> baru (internal_name baru
+  <code>mcq_*</code>, jawaban benar tidak ditandai di HTML sumber — infer dari
+  konteks, catat di field_notes).</li>
+
+  <li><strong>cek karakter Adela/Georgina → Fina/Izza</strong>: 26 kontainer
+  karakter, 17 pose unik. Semua pose yang dibutuhkan sudah ada di target dengan
+  prefix <code>character_</code> (83 node karakter). Pemetaan sesuai aturan:
+  Adela <code>smile*</code> → <code>character_fina_senang</code>, Adela
+  <code>sceptical1/2</code> → <code>character_fina_heran</code>; Georgina
+  <code>smile1/4</code> → <code>character_izza_senang</code>. Ray (neutral1,
+  neutral3, smiling2) dan Ethan (smile1/2/5/12/15, talking5): node ada di target
+  → <strong>keep</strong> + terjemahkan dialog saja (sesuai aturan
+  keep-Ray/Ethan; opsi recast ke Hafidz/Wildan hanya jika diminta). Validasi
+  seluruh <code>internal_name=character_*</code> terhadap DB sebelum transport,
+  bukan setelah render.</li>
+
+  <li><strong>tag textile pause</strong>: 66 widget pause, kelas render sumber
+  <code>skilling-pause-container btn-group</code>. Di body ditulis
+  <code>pause.</code> satu baris, WAJIB dipisah blok dengan baris kosong
+  (<code>&lt;br /&gt;\n&lt;br /&gt;\n</code> join) — tanpa terminator
+  <code>\n\n</code> tag options memakan sisa body (kasus nid 467/470).</li>
+
+  <li><strong>selfie-holder</strong>: tidak ada di bab ini → jangan
+  ditambahkan.</li>
+
+  <li><strong>pattern/principle/exercise</strong>: pattern dibutuhkan
+  <code>pattern_simple_output</code> (sudah ada, nid 364),
+  <code>pattern_flag</code> (sudah ada, nid 366),
+  <code>pattern_validation_chain</code> (baru),
+  <code>pattern_multifield_validation</code> (baru). Principle:
+  <code>principle_reuse</code> ×4 + <code>principle_dont_trust_user_data</code>
+  ×1 — bundle principle di webapps <strong>0 node</strong>, wajib dibuat dulu
+  atau tag merah error. Exercise: <code>exercise_goat_fuel</code>,
+  <code>exercise_parade_length</code>, <code>exercise_mortgage_payments</code>
+  (semua baru).</li>
+
+  </ul>
+
+
+  <h3>4. Fase eksekusi agen (jika disetujui)</h3>
+
+  <ul>
+
+  <li><strong>F0 — Muat konteks</strong>: skill
+  <code>drupal-lesson-authoring</code> +
+  <code>references/clone-runbook.md</code> §0–§11; discovery environment (§1);
+  re-verify 404 (§2).</li>
+
+  <li><strong>F1 — Fetch + inventaris</strong>: 11 halaman sumber ke scratch;
+  inventory per halaman dengan exact-class match (bukan substring — nested
+  widget menggelembungkan hitungan); ekstrak urutan blok dengan lxml
+  <code>iterchildren()</code>.</li>
+
+  <li><strong>F2 — Dependency nodes dulu</strong> (§5, idempoten by
+  <code>field_internal_name</code>, save dalam
+  <code>executeInRenderContext</code>): 2 pattern, 2 principle, 3 exercise, 4
+  MCQ. MCQ: <code>field_question</code> + paragraphs bundle
+  <code>multiple_choice_question_respons</code> (field_response, field_correct,
+  field_explanation) — diterjemahkan lengkap (prosa Indonesia, angka kode
+  tetap).</li>
+
+  <li><strong>F3 — Build body</strong> per halaman (§6): join <code>&lt;br
+  /&gt;\n&lt;br /&gt;\n</code> antar blok; satu
+  <code>skilling-parse-unit-decrease-heading-offset</code> sebelum h3 pertama;
+  <code>pause.</code> 66×; blok <code>character.</code> bentuk
+  <code>&nbsp;&nbsp;internal_name=...</code> + dialog; terjemahan (§6l): prosa +
+  dialog + alt/title + judul node Indonesia, literal kode &amp; angka tabel
+  tetap; <code>&lt;pre&gt;&lt;code&gt;</code> disalin verbatim; tanpa karakter
+  <code>|</code> di body (ganti dengan <code>&amp;#8250;</code>).</li>
+
+  <li><strong>F4 — Create node</strong> (§7): batch via
+  <code>scripts/create_deps.php</code> lalu
+  <code>scripts/create_lessons.php</code> (LESSON_SPECS); abort bila ada
+  inventaris yang belum lengkap — jangan node ber-body kosong.</li>
+
+  <li><strong>F5 — Book outline</strong> (§9): parent dulu — chapter "Pustaka
+  validasi" bid=331, pid=331, depth 2, weight 4 (setelah 409 w=3); 10 anak depth
+  3, weight urut sidebar sumber; <code>$n-&gt;book = [...]</code> +
+  <code>updateOutline()</code> dengan nid+original_bid.</li>
+
+  <li><strong>F6 — Alias pin</strong> (§8/8b): pin <code>path</code> field
+  <code>pathauto=0</code> di SEMUA node baru termasuk dep nodes; dedupe global
+  <code>GROUP BY path, alias</code> tanpa filter status; baru
+  <code>cache:rebuild</code>.</li>
+
+  <li><strong>F7 — Verifikasi 5 gerbang</strong> (§11) per 11 halaman: HTTP 200
+  dengan <code>Host: webapps.pesanweb.my.id</code>; hitungan
+  h3/pause/char/mcq/pattern/principle/exercise/code/img == inventaris F1; 0
+  <code>parser-error</code>; semua <code>src</code> eksternal 200; urutan widget
+  == urutan sumber. Grep hasil dibatasi region body (judul pelajaran lain di
+  sidebar bisa memicu false positive "fina").</li>
+
+  <li><strong>F8 — Penerbitan hasil</strong>: catat outcome (nid, alias, weight,
+  dedupe) ke halaman HAXCMS baru dan push.</li>
+
+  </ul>
+
+
+  <h3>5. Risiko yang sudah diketahui</h3>
+
+  <ul>
+
+  <li>Cron BookUpdateTracker menghapus alias manual menit-menit setelah save →
+  pin + re-assert + cek DB (bukan cuma HTTP 200 cache).</li>
+
+  <li>Tunnel SSH flaky (websocket bad handshake) → retry 2–5 s.</li>
+
+  <li>Sesi klon paralel bisa menabrak weight/alias yang sama → re-query sibling
+  saat insert; jalankan dedupe di akhir setiap sesi.</li>
+
+  <li>Hitungan substring
+  <code>&lt;img</code>/<code>skilling-code-container</code> menggelembung oleh
+  internal widget → bandingkan per kelompok (body vs exercise-task vs
+  throbber).</li>
+
+  </ul>
+
+
+  <h3>6. Bab lanjutan: database-apps &amp; capturing-data (inventaris, belum
+  dieksekusi)</h3>
+
+  <ul>
+
+  <li><strong>database-apps</strong> (14 anak + intro): h3 78, pause 117, char
+  24 (20 pose unik — semua ada di target), mcq 0, fib 0, pattern 0, principle
+  <code>principle_reuse</code> ×2, exercise 6
+  (<code>exercise_id_from_get</code>,
+  <code>exercise_supernatural_accuracy</code>, <code>exercise_books_app</code>,
+  <code>exercise_1_n</code>, <code>exercise_wombat_queries</code>,
+  <code>exercise_wombat_list</code> — semua baru), code 140, img 155.</li>
+
+  <li><strong>capturing-data</strong> (15 anak + intro): h3 74, pause 107, char
+  24 (7 pose unik), mcq 0, fib 0, pattern 2
+  (<code>pattern_same_page_validation</code>,
+  <code>pattern_separate_input_from_processing</code> — baru), principle 5
+  (<code>principle_get_requirements_right</code>,
+  <code>principle_reduce_cognitive_complexity</code>,
+  <code>principle_confirm_destructive_action</code>,
+  <code>principle_reuse</code> ×2), exercise 6
+  (<code>exercise_add_wombat</code>, <code>exercise_pokemon_evolutions</code>,
+  <code>exercise_sales_tax_form</code>, <code>exercise_your_app</code>,
+  <code>exercise_pokemon_tickets</code>, <code>exercise_wombat_games</code> —
+  semua baru), code 170, img 156.</li>
+
+  <li>Kedua bab TANPA mcq/fib → tidak ada node kuis dibuat untuk keduanya; jejak
+  <code>fib</code>/mcq kosong adalah temuan nyata, bukan langkah terlewat.</li>
+
+  <li>Urutan disarankan bila lanjut: Validation library → database-apps →
+  capturing-data (urutan sidebar sumber).</li>
+
+  </ul>
