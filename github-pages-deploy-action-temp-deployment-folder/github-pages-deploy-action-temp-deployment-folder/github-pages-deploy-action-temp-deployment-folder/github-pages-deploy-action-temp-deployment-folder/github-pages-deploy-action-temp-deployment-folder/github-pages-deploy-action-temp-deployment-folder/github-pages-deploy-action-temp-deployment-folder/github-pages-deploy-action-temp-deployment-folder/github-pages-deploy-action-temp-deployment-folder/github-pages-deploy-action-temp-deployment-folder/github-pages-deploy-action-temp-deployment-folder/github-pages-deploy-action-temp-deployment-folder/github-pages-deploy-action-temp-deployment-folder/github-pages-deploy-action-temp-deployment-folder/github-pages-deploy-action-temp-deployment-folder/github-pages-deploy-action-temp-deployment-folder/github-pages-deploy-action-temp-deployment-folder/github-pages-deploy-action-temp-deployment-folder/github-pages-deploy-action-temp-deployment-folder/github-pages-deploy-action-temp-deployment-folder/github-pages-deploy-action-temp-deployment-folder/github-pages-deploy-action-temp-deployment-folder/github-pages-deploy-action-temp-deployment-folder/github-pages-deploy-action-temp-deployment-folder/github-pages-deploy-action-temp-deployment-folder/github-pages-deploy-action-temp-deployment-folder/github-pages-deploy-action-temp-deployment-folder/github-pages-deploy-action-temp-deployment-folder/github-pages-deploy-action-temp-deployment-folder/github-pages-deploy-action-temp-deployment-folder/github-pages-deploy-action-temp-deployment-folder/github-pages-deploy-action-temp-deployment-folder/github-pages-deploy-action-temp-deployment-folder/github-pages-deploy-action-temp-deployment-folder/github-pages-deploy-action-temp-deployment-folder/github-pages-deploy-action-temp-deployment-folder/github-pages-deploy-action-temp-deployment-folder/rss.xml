@@ -100,5 +100,19 @@
       <guid>https://localhost/mysite/install-scroll-top-button-sync-db-files-situs-python-webapps-vba</guid>
       <pubDate>Tue, 27 Oct 2026 07:37:17 GMT</pubDate>
     </item>
+    <item>
+      <title>Kloning Web Python</title>
+      <link>https://localhost/mysite/kloning-web-python</link>
+      <description>Kloning Web Python Ini adalah laporan halaman baru yang mengabadikan proses kloning otomatis situs web Skilling (python, webapps, vba) ke Drupal multisite menggunakan pipeline yang sepenuhnya otonom. Langkah Klon Antrian – `crawl_queue.py` mengekstrak 260 pelajaran (vba:62, python:73, webapps:125) dari sumber aslinya (vba.skilling.us, python.skilling.us, webapps.skilling.us) ke dalam skilling-queue.json yang digabungkan dan *_queue.json per-situs. Ekstraksi Blok – `extract_blocks.py` mengubah...</description>
+      <guid>https://localhost/mysite/kloning-web-python</guid>
+      <pubDate>Tue, 27 Oct 2026 11:45:21 GMT</pubDate>
+    </item>
+    <item>
+      <title>Practice: more functions</title>
+      <link>https://localhost/mysite/practice-more-functions</link>
+      <description>Practice: more functions Multiple choice What will the following output, if the user enters 2, 3, and 5? # Input laugh_rating1 = float(input(&apos;How funny was the first comedian? &apos;)) laugh_rating2 = float(input(&apos;How funny was the second comedian? &apos;)) laugh_rating3 = float(input(&apos;How funny was the third comedian? &apos;)) &amp;nbsp; # Processing average = compute_average(laugh_rating1, laugh_rating2, laugh_rating3) &amp;nbsp; # Output print(&apos;Average: &apos;+ str(average)) &amp;nbsp; def compute_average(value1, value2,...</description>
+      <guid>https://localhost/mysite/practice-more-functions</guid>
+      <pubDate>Fri, 30 Oct 2026 10:48:56 GMT</pubDate>
+    </item>
   </channel>
 </rss>
