@@ -51,6 +51,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Perbaikan lesson Templat halamannya (node 410 webapps)](https://localhost/mysite/pages/item-bd8f6810-cc71-4bb4-a2de-7025a644031c/index.md)
 - [Perbaikan kode kontainer webapps: decode sekali dan terjemahan kode](https://localhost/mysite/pages/item-adcaaf4c-5629-4148-8d44-01b5514a7c10/index.md)
 - [Mirror webexamples.skilling.us ke web.pesanweb.my.id/examples](https://localhost/mysite/pages/item-1119dd59-e764-4e6f-83c4-93cdcadc90b7/index.md)
+- [Audit web.pesanweb.my.id vs learnweb.skilling.us dan perbaikan](https://localhost/mysite/pages/item-a0a69e1d-28b2-4b1a-9679-bc9710dbc08c/index.md)
 - [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional
