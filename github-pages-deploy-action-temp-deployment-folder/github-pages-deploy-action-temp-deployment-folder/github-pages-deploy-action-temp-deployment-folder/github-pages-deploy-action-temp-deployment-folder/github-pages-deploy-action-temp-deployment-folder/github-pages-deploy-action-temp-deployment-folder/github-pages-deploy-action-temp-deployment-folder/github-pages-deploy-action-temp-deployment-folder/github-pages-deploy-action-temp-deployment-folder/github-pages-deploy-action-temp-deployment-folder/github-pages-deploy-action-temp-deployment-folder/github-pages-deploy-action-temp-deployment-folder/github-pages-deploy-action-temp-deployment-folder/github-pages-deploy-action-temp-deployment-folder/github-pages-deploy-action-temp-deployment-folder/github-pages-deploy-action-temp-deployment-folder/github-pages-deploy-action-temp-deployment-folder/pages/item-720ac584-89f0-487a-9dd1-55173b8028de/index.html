@@ -1,0 +1,40 @@
+<h2>Clone lesson better-validation ke vba.pesanweb.my.id</h2>
+<p>Tanggal: 14 November 2026. Sumber: <code>https://vba.skilling.us/lesson/better-validation</code> → target node <strong>420</strong>, alias <code>/lesson/better-validation</code>, judul <em>Validasi lebih baik</em>, bab <em>Keputusan</em> (pid 392, weight 5).</p>
+
+<h3>Inventaris sumber vs hasil render</h3>
+<ul>
+<li>MCQ: 1 (<code>mcq_what_is_flag_pattern</code>) — node dibuat nid 419, jawaban benar A (disimpulkan dari teks pelajaran, dicatat di <code>field_notes</code>).</li>
+<li>Pause: 11 — ditempatkan posisional, urutan widget render identik dengan sumber.</li>
+<li>H3: 6 (Penanganan error bisa lebih baik, Membersihkan output, Pesan error yang bertahan, Tampilkan semua error sekaligus, Gabungkan semuanya, Latihan).</li>
+<li>Karakter: 1 — <code>georgina_smile2</code> diganti <code>character_fina_senang</code> (Fina, dialog "Keren banget! Sederhana.").</li>
+<li>Pattern: 2 — <code>pattern_flag</code> (nid 416) dan <code>pattern_validation_better</code> (nid 417), keduanya belum ada di target, dibuat dari halaman <code>/pattern/flag</code> dan <code>/pattern/validation-better</code> sumber.</li>
+<li>Exercise: 1 — <code>exercise_more_dwarves</code> "Kurcaci lagi?" (nid 418), 6 gambar absolute URL.</li>
+<li>TOC: 1 (<code>toc. title=Daftar isi</code>).</li>
+<li>FIB: 0 di sumber — tidak ada tag <code>fib.</code> di target (sesuai aturan runbook).</li>
+<li>Gambar body: 13 tag, semua absolute <code>https://vba.skilling.us/...</code>, probe HEAD 200.</li>
+</ul>
+
+<h3>Verifikasi lima gerbang</h3>
+<ul>
+<li>HTTP 200: <code>/lesson/better-validation</code>, <code>/lesson/validasi-lebih-baik</code>, <code>/pattern/flag</code>, <code>/pattern/validasi-lebih-baik</code>, <code>/exercise/kurcaci-lagi</code>; 403 di <code>/mcq/apa-itu-pattern-flag</code> (wajar — akses ditolak untuk anonim).</li>
+<li>Hitungan render == inventaris sumber: 6 h3 / 11 pause / 1 karakter / 1 mcq / 2 pattern / 1 exercise / 1 toc.</li>
+<li><code>custom-tag-error</code>/<code>parser-error</code>: 0. Tidak ada markup mentah yang bocor.</li>
+<li>Urutan widget (MCQ→P→TOC→H3→CODE…EX) identik dengan sumber.</li>
+<li>Book nav: prev = Validasi dasar: string, Up = Keputusan, next = Validasi dalam C# — ketiganya 200.</li>
+</ul>
+
+<h3>Temuan teknis baru</h3>
+<ul>
+<li><strong>Format gambar skilling</strong>: blok <code>!(figure)&lt;img alt=".." src=".." title=".." /&gt;!</code> harus baris logika TELANJANG — membungkusnya dalam <code>&lt;p&gt;...&lt;/p&gt;</code> membuat gambar tidak dirender sama sekali (0 gambar body muncul, tanpa pesan error). Bentuk alternatif yang juga valid: <code>&lt;p class="figure-indent"&gt;&lt;img class="skilling-parser-image" ...&gt;&lt;/p&gt;</code> seperti yang dipakai node 405.</li>
+<li><strong>Cron book-order recompute benar-benar menghapus alias manual</strong> — terbukti langsung di watchdog: <code>BookUpdateTracker-&gt;updatePagesBookOrder()</code> (11:46) me-re-save semua node buku; alias manual yang baru dibuat hilang dan alias pathauto terduplikasi dua kali. Tidak cukup mem-pin node baru: SEMUA node lesson (dan node dependensi pattern/exercise/mcq!) harus di-pin <code>path = ['alias' =&gt; ..., 'pathauto' =&gt; 0]</code> lewat field <code>path</code> node sendiri.</li>
+<li><strong>Pin juga node dependensi</strong>: alias <code>/pattern/flag</code> hilang walaupun bukan anggota buku — sweep pathauto/pembersihan dari sesi paralel ikut menghapusnya. Pin 416–419 menyelesaikannya.</li>
+<li><strong>HTTP 500 transien</strong> saat cron dan sesi clone paralel berjalan bersamaan: deadlock <code>cache_entity</code>/<code>cache_menu</code> ("Record has changed since last read") di watchdog; halaman kembali 200 tanpa perubahan apa pun setelah rebuild. Jangan langsung debugging isi body ketika 500 muncul bersamaan dengan cron — cek watchdog dulu.</li>
+<li><strong>Parallel session</strong>: sesi lain sedang clone lesson di situs yang sama (nid 440 dst. muncul di tengah pekerjaan); dedupe alias global (GROUP BY path, alias TANPA filter status) harus dijalankan ulang di akhir.</li>
+<li><code>global $renderer</code> tidak berfungsi di <code>drush php:script</code> dalam fungsi — definisikan <code>$renderer = \Drupal::service('renderer')</code> di dalam tiap fungsi.</li>
+</ul>
+
+<h3>Artifak</h3>
+<ul>
+<li>Builder body: <code>/opt/data/cache/scratch/build_bv.py</code>; deps: <code>deps.json</code> + <code>create_deps_bv.php</code>; finalisasi: <code>finish_bv.php</code>.</li>
+<li>Runbook <code>drupal-lesson-authoring</code> diperbarui dengan temuan di atas.</li>
+</ul>

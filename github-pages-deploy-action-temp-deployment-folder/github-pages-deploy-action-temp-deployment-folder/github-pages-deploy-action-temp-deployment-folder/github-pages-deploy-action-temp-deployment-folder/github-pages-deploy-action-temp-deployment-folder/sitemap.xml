@@ -216,4 +216,16 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/audit-python-pesanweb</loc>
+    <lastmod>2026-11-15T15:12:21.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://localhost/mysite/perbaikan-lesson-templat-halaman-error-webapps</loc>
+    <lastmod>2026-11-15T16:12:43.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
