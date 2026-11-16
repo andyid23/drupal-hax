@@ -39,3 +39,22 @@
 
 <h3>Kondisi setelah T1</h3>
 <p>Book kini memuat 64 lesson (semua lesson sumber terpetakan kecuali yang masih jadi agenda T2: 3 node yatim 262/338/345). Sisa T3: rekonsiliasi urutan bab Keputusan, Analisis Data, dan Tips (bobot saat ini belum persis urutan sumber). Judul "Latihan" dipilih agar alias tidak bentrok dengan nid 391 (/lesson/latihan-latihan).</p>
+
+<h2>Hasil T2: node yatim &amp; duplikat konsep (update 2026-11)</h2>
+<h3>262 "Gaya belajar Anda" — ternyata lengkap, kini masuk outline</h3>
+<p>Investigasi menunjukkan node 262 adalah klon yang setia ke sumber <code>/lesson/your-learning-style</code>: 6 h3, 6 pause, 10 karakter (blok seimbang), 3 gambar body (benjamin, study-methods, benjamin). Selisih inventaris 13 vs 3 gambar hanyalah foto karakter yang dirender oleh widget. 262 memakai karakter asli (adela_sceptical*, georgina_neutral1, ray_*, ethan_neutral1) yang semuanya ada di DB dengan foto eksternal — dirender normal. Node kini di-outline di level root antara "Bersiap" dan "Simple Programs" (bobot -14), dengan alias tambahan terverifikasi <code>/lesson/your-learning-style</code> (200). Nav: prev = mari-kita-masuk-ke-dalamnya, next = simple-programs, sesuai sumber.</p>
+<h3>338 vs 448 "Menggunakan situs ini" — kanonik = 338</h3>
+<p>Bandingkan dua kandidat: 338 (3.812 byte; 3 h3 / 4 pause / 4 gambar; 2 kotak catatan diadaptasi menjadi paragraf <code>&lt;strong&gt;Catatan:&lt;/strong&gt;</code> inline lengkap dengan gambarnya) cocok hampir persis dengan sumber using-site (3 h3 / 4 pause / 4 img / 0 karakter). 448 (10.472 byte) justru versi eksperimen yang rusak: 18 tag HTML ter-escape (<code>&lt;h3&gt;</code> dirender literal), 11 pause / 2 karakter / toc yang tidak ada di sumber. Keputusan: 338 menggantikan 448 di outline (pid 334, bobot -7, alias source slug <code>/lesson/menggunakan-situs-ini</code> ter-pin), 448 dikeluarkan dari outline. Nav 338: prev = gathertown, next = exercises, sesuai sumber.</p>
+<h3>345 "contoh refleksi"</h3>
+<p>Node uji refleksi (163 karakter, bukan konten sumber) — dibiarkan apa adanya di luar book menunggu keputusan pemilik situs (unpublish/hapus/keep).</p>
+<h3>Re-space level root</h3>
+<p>Anak-anak root di-re-space sesuai urutan sumber: Bersiap(-16), Gaya belajar Anda(-14), Simple Programs(-12), Keputusan(-10), Analisis Data(-8), Tips(-6). Semua baris book terverifikasi depth/p1-p3 konsisten.</p>
+
+<h2>Hasil T3: rekonsiliasi urutan bab (update 2026-11)</h2>
+<p>Aktual bobot dicek ulang dari DB (bukan dari catatan audit): bab <strong>Keputusan</strong> (multiway sebelum nested-ifs; validasi string sebelum numerik) dan <strong>Analisis Data</strong> (12 anak) ternyata sudah persis urutan sumber — flag audit awal adalah false alarm. Hanya <strong>Tips</strong> yang rusak: "Excel di Mac" (509, bobot -9) dan "dokumentasi VBA" (510, bobot -2) nyasar dari posisi sumbernya. Diperbaiki dengan re-space 8 anak Tips sesuai sumber: blocked-macros, common-errors, excel-objects, excel-macs, rounding-numbers, shortcut-keys, vba-documentation, pseudents. Terverifikasi: nav 490 prev=tips/next=error-umum, 504 prev=dokumentasi-vba/next kosong (akhir book, sesuai sumber). 6 alias source slug yang terhapus oleh gelombang save di-pin ulang (<code>pathauto=0</code>), dedupe global dijalankan ulang, semua 8 URL Tips + 6 alias sumber 200.</p>
+
+<h3>Sisa agenda</h3>
+<ul>
+<li>448 (published, di luar book) dan 345 menunggu keputusan: unpublish, hapus, atau biarkan.</li>
+<li>Audit render 5-gerbang menyeluruh untuk seluruh 64 lesson (R1) — yang sudah lulus: 517, 518, 519.</li>
+</ul>
