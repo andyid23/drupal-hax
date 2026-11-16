@@ -1,0 +1,17 @@
+{
+  "id": "item-1119dd59-e764-4e6f-83c4-93cdcadc90b7",
+  "indent": 0,
+  "location": "pages/item-1119dd59-e764-4e6f-83c4-93cdcadc90b7/index.json",
+  "slug": "mirror-webexamples",
+  "order": 0,
+  "parent": null,
+  "title": "Mirror webexamples.skilling.us ke web.pesanweb.my.id/examples",
+  "description": "",
+  "metadata": {
+    "created": 1794798569,
+    "updated": 1794798569,
+    "images": [],
+    "videos": []
+  },
+  "content": "<h2>Mirror webexamples.skilling.us ke web.pesanweb.my.id/examples</h2>\n<p>Konteks: pelajaran learnweb di <code>web.pesanweb.my.id</code> menautkan contoh situs dari <code>webexamples.skilling.us</code>. Sumber ternyata bukan situs Skilling — melainkan indeks direktori file statis (Apache autoindex) berisi contoh situs: basic-sites, cryptid, professional-sites, pupperware, restaurant, twine-examples + zip. Ketergantungan target kecil: ±12 tautan di 6 lesson + 1 exercise node.</p>\n\n<h3>Temuan sumber</h3>\n<ul>\n<li><code>pupperware/final/</code> di server live <strong>rusak</strong>: index.html 200 tetapi semua aset lokal (library/bootstrap.min.css, top-menu.html, images/slideshow/*, footer.html) 404.</li>\n<li>Zip arsip di root (<code>webapps examples april 17 2021.zip</code>, 14 MB, 151 entri) berisi situs lengkap — termasuk semua aset yang hilang dari server live.</li>\n</ul>\n\n<h3>Yang dieksekusi</h3>\n<ul>\n<li><strong>Mirror 45 file</strong> (14 MB) ke <code>/var/www/html2/drupal8/web/examples/</code>: basic-sites/hiding-images, professional-sites/bootstrap-styles, pupperware/final (lengkap dengan library + images), restaurant — diekstrak dari zip (server live tidak lengkap), plus <code>index.html</code> daftar buatan sendiri untuk /examples/.</li>\n<li><strong>Rewrite tautan</strong>: body lesson 87, 186, 187, 158, 157, 104 + exercise node 88 \"Proyek: proyek akhir\". Tautan direktori diarahkan ke <code>index.html</code> persis (nginx melayani file, bukan listing). Tautan teks pelajaran subdomains (nid 104) diarahkan ke <code>https://web.pesanweb.my.id/examples/</code>.</li>\n<li>Alias ter-pin, dedupe global, cache page + dynamic page cache di-truncate (render basi tanpa itu).</li>\n</ul>\n\n<h3>Verifikasi</h3>\n<ul>\n<li><code>webexamples.skilling.us</code>: <strong>0 sisa</strong> di seluruh DB (lesson, exercise, pattern, principle, page) dan di render lesson yang diubah.</li>\n<li>7 path utama /examples/ semuanya 200 (index, hiding-images.html, basic-tags.html, moze.png, pupperware/final/index.html, restaurant/index.html, library/bootstrap.min.css).</li>\n<li>Semua 6 lesson + exercise 88 tetap 200.</li>\n</ul>\n\n<h3>Catatan</h3>\n<ul>\n<li>Sumber aslinya sendiri rusak untuk pupperware/final — mirror dari zip justru <em>lebih lengkap</em> daripada server live.</li>\n<li>canary.txt dihapus. File zip tidak ditaruh di docroot (hanya salinan kerja di scratch).</li>\n</ul>"
+}

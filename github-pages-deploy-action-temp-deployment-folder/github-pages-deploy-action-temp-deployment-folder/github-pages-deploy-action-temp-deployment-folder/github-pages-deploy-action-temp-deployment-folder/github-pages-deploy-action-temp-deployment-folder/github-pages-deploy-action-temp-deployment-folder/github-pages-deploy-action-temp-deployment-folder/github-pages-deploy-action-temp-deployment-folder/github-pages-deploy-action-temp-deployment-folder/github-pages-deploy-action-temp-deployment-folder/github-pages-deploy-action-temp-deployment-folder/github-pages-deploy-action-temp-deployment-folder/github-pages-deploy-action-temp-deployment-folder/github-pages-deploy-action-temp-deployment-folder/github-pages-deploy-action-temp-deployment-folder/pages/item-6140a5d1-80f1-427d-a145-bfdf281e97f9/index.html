@@ -1,0 +1,41 @@
+<h2>Laporan T1: Kloning 3 pelajaran yang hilang ke vba.pesanweb.my.id</h2>
+<p>Audit situs vba menemukan 3 pelajaran dari <code>vba.skilling.us</code> yang belum ada di target. Ketiganya sudah di-clone, diverifikasi penuh, dan diterbitkan pada 2026-11.</p>
+
+<h3>Node yang dibuat</h3>
+<table class="table">
+<tbody><tr><th>Sumber</th><th>Target (nid)</th><th>Alias</th><th>Bab</th></tr>
+<tr><td>/lesson/debugging</td><td>517 "Debugging"</td><td>/lesson/debugging</td><td>Simple programs (pid 343)</td></tr>
+<tr><td>/lesson/feedback</td><td>518 "Umpan balik"</td><td>/lesson/feedback</td><td>Getting ready (pid 334)</td></tr>
+<tr><td>/lesson/exercises</td><td>519 "Latihan"</td><td>/lesson/exercises</td><td>Getting ready (pid 334)</td></tr>
+</tbody></table>
+
+<h3>Dependency nodes yang dibuat lebih dulu</h3>
+<ul>
+<li><code>principle_read_code_actively</code> (nid 511) — "Baca kode secara aktif"</li>
+<li><code>exercise_circle_bug_hunt</code> (nid 512) — "Berburu bug lingkaran"</li>
+<li><code>exercise_joke_cute_animal</code> (nid 513) — "Lelucon, dan hewan lucu"</li>
+<li><code>mcq_missing_email</code> (nid 514), <code>mcq_wrong_initials</code> (nid 515), <code>mcq_changing_password</code> (nid 516) — jawaban benar disimpulkan dari konteks (C spam folder / B Account&gt;Edit / B reset password) dan dicatat di field_notes karena sumber tidak menandai jawaban benar di HTML</li>
+</ul>
+
+<h3>Pemetaan karakter</h3>
+<p>Ray dan Ethan dipertahankan (node-nya ada di DB). Adela aha1 &amp; smile2 → <code>character_fina_senang</code>; Georgina smile5 → <code>character_izza_senang</code>. Semua 9 variasi yang dipakai terverifikasi ada di <code>node__field_internal_name</code>.</p>
+
+<h3>Hasil verifikasi (5 gerbang)</h3>
+<ul>
+<li>HTTP 200 di semua alias (manual + pathauto + alias dependency): /lesson/debugging, /lesson/feedback, /lesson/exercises, /lesson/umpan-balik, /lesson/latihan, /principle/baca-kode-secara-aktif, 2 alias /exercise/</li>
+<li>Hitungan widget = inventaris sumber: debugging 6 h3 / 11 pause / 6 karakter / 4 reflect / 1 catatan / 1 principle / 1 latihan; feedback 3 h3 / 4 pause / 1 karakter / 2 catatan / 2 MCQ; exercises 5 h3 / 7 pause / 2 karakter / 1 MCQ / 1 latihan</li>
+<li><code>custom-tag-error</code>/<code>parser-error</code> = 0 di ketiga halaman; tidak ada tag mentah bocor</li>
+<li>Heading semua render sebagai h3 (0 h2/h1/h4); 33 URL eksternal + 2 GIF karakter lokal semuanya 200; ketiga MCQ merender pertanyaan + semua opsi (6 dan 3 respons)</li>
+<li>Nav book benar: Debugging prev=easy-good next=more-debugging; Umpan balik prev=Latihan next=ketika-anda-mengalami-kebuntuan; Latihan prev=menggunakan-situs-ini next=Umpan balik</li>
+</ul>
+
+<h3>Perbaikan ikutan yang ikut dikerjakan</h3>
+<ul>
+<li>Re-space bobot buku bab Simple programs sesuai urutan sumber (13 anak; sekaligus memperbaiki tabrakan bobot -13 antara nid 349 dan 362 yang membuat urutan String salah)</li>
+<li>Memperbaiki salah tempatnya "Profesormu" (nid 453, bobot -12 bertabrakan dengan "Bagaimana kursus berjalan" → dipindah ke bobot 3, urutan Getting ready kini benar)</li>
+<li>Dedupe global <code>path_alias</code>: 14 baris duplikat dihapus (termasuk /node/508 kunci-pintasan-vba dan 12 node karakter), tanpa filter status</li>
+<li>Alias manual ketiga lesson di-pin dengan <code>pathauto=0</code> agar tahan save/cron</li>
+</ul>
+
+<h3>Kondisi setelah T1</h3>
+<p>Book kini memuat 64 lesson (semua lesson sumber terpetakan kecuali yang masih jadi agenda T2: 3 node yatim 262/338/345). Sisa T3: rekonsiliasi urutan bab Keputusan, Analisis Data, dan Tips (bobot saat ini belum persis urutan sumber). Judul "Latihan" dipilih agar alias tidak bentrok dengan nid 391 (/lesson/latihan-latihan).</p>

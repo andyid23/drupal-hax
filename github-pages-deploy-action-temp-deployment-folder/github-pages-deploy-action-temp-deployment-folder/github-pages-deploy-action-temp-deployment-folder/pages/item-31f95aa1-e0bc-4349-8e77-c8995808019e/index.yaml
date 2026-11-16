@@ -1,0 +1,102 @@
+id: item-31f95aa1-e0bc-4349-8e77-c8995808019e
+indent: 0
+location: pages/item-31f95aa1-e0bc-4349-8e77-c8995808019e/index.yaml
+slug: audit-webapps-pesanweb
+order: 0
+parent: null
+title: Audit webapps.pesanweb.my.id vs webapps.skilling.us
+description: ''
+metadata:
+  created: 1794841452
+  updated: 1794841452
+  images: []
+  videos: []
+content: >-
+  <h2>Laporan: Audit webapps.pesanweb.my.id vs webapps.skilling.us</h2>
+
+  <p>Audit penuh situs keempat (kursus PHP/webapps): tree sumber 125 lesson
+  dalam 10 bab + 2 standalone, 126 node lesson target diambil render-nya, 125
+  halaman sumber diambil untuk census. Tanggal 2026-11.</p>
+
+
+  <h3>Hasil</h3>
+
+  <ul>
+
+  <li><strong>125/125 lesson sumber terpetakan</strong> — tidak ada node yang
+  hilang (satu-satunya situs tanpa gap).</li>
+
+  <li><strong>Urutan 10 bab 100% sesuai sumber</strong> (getting-ready 9,
+  urls-and-files 8, making-html 24, validation-library 10, database-apps 14,
+  capturing-data 15, front-end-magic 12, user-accounts 6, log-files 3,
+  tips-and-tricks 13, + what-now standalone) — semua anak di book dengan bobot
+  berurutan.</li>
+
+  <li><strong>Semua di book, semua published, 0 node di luar book, 0 baris book
+  yatim, 0 node uji</strong>.</li>
+
+  <li><strong>Render: 125 halaman, 0
+  custom-tag-error/parser-error</strong>.</li>
+
+  <li>Alias sehat: mayoritas node punya pasangan slug Indonesia + slug sumber
+  EN.</li>
+
+  </ul>
+
+
+  <h3>Temuan ringan (3)</h3>
+
+  <ul>
+
+  <li><strong>547 many-records</strong>: worksheet-column.png ada tapi tanpa
+  wrapper <code>figure-indent</code> (satu-satunya temuan gambar).</li>
+
+  <li><strong>Duplikat baris <code>path_alias</code></strong>: MCQ 381
+  (mcqcssptags ×6), MCQ 392 (mcqboldtext ×6), lesson 417, 427, 543, 546
+  (×2).</li>
+
+  <li><strong>Alias sampah</strong>: /lesson/templat-halaman-error (nid 410),
+  /lesson/id-get2 (nid 543).</li>
+
+  </ul>
+
+
+  <h3>Rencana (belum dieksekusi)</h3>
+
+  <ul>
+
+  <li><strong>T1</strong> — Bungkus worksheet-column.png di 547 dengan
+  <code>figure-indent</code>.</li>
+
+  <li><strong>M1</strong> — Dedupe 6 pasang baris alias.</li>
+
+  <li><strong>M2</strong> — Hapus 2 alias sampah, pin alias manual utama.</li>
+
+  <li><strong>R1</strong> — Publikasi laporan ini (halaman ini) — selesai
+  bersamaan dengan audit.</li>
+
+  </ul>
+
+
+  <h3>Perbandingan empat situs</h3>
+
+  <table>
+
+  <tbody><tr><th>Situs</th><th>Lesson hilang</th><th>Urutan bab</th><th>Render
+  error</th><th>Junk</th></tr>
+
+  <tr><td>vba</td><td>3 (sudah
+  di-clone)</td><td>diperbaiki</td><td>0</td><td>bersih</td></tr>
+
+  <tr><td>python</td><td>0 (dari
+  awal)</td><td>diperbaiki</td><td>0</td><td>907/1014 di-unpublish; 448
+  dibiarakan</td></tr>
+
+  <tr><td>web</td><td>1 (dibuat)</td><td>diperbaiki</td><td>0</td><td>node uji
+  dikeluarkan dari book; 187/212 di-unpublish</td></tr>
+
+  <tr><td><strong>webapps</strong></td><td><strong>0</strong></td><td><strong>sudah
+  benar</strong></td><td><strong>0</strong></td><td><strong>3 temuan ringan
+  saja</strong></td></tr>
+
+  </tbody></table>
