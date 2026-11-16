@@ -1,0 +1,17 @@
+{
+  "id": "item-3da379ff-c61a-41dd-8bd4-e811cff538e7",
+  "indent": 0,
+  "location": "pages/item-3da379ff-c61a-41dd-8bd4-e811cff538e7/index.json",
+  "slug": "node-karakter-duplikat",
+  "order": 0,
+  "parent": null,
+  "title": "Node karakter duplikat memutus render lesson",
+  "description": "",
+  "metadata": {
+    "created": 1794672931,
+    "updated": 1794672931,
+    "images": [],
+    "videos": []
+  },
+  "content": "<h2>Audit lesson program-fina: node karakter duplikat memutus render widget</h2>\n<p>Audit <code>/lesson/program-fina</code> di vba.pesanweb.my.id (klon sumber <code>https://vba.skilling.us/lesson/adela-programs</code>) menemukan 7 widget karakter yang hilang diam-diam: halaman HTTP 200, tanpa <code>parser-error</code>, tanpa <code>not found</code> — tetapi hanya 19 dari 26 kontainer karakter yang dirender.</p>\n\n<h3>Akar masalah</h3>\n<p>String error yang terlewat oleh grep verifikasi: <code>Unexpected number of characters with internal_name character_fina_masuk found.</code> — tercetak 14 kali (7 blok × 2 per render). Dua node karakter memuat <code>field_internal_name</code> yang sama:</p>\n<ul>\n<li>nid 77 \"Fina masuk\" (asli) + nid 496 \"Fina\" (stub) → <code>character_fina_masuk</code></li>\n<li>nid 65 \"Izza masuk\" (asli) + nid 497 \"Izza\" (stub) → <code>character_izza_masuk</code></li>\n<li>nid 317 \"Ray listening1\" (asli) + nid 498 \"Ray\" (stub) → <code>character_ray_listening1</code></li>\n<li>nid 290 \"Ethan smile7\" (asli) + nid 499 \"Ethan\" (stub) → <code>character_ethan_smile7</code></li>\n</ul>\n<p>Query dedupe:</p>\n<pre>SELECT field_internal_name_value, COUNT(entity_id) c, GROUP_CONCAT(entity_id)\nFROM node__field_internal_name WHERE bundle='character'\nGROUP BY field_internal_name_value HAVING c&gt;1</pre>\n<p>Stub 496–499 dibuat pada timestamp yang sama (1794672602) oleh sesi paralel, judul generik tanpa nomor pose. Node asli (65/77/290/317) dipertahankan; stub dihapus via <code>$node-&gt;delete()</code> dalam render context, lalu <code>TRUNCATE cache_entity</code> + <code>drush cache:rebuild</code>.</p>\n\n<h3>Hasil setelah perbaikan</h3>\n<ul>\n<li>Karakter: 26/26 (semua <code>fina_masuk</code> kini dirender)</li>\n<li>Pause: 1/1, kode: 14/14, annotation: 6/6, h3: 1/1</li>\n<li><code>parser-error</code>: 0, <code>Unexpected number</code>: 0, <code>not found</code>: 0, <code>Missing/invalid close tag</code>: 0</li>\n<li>Alias <code>/lesson/program-fina</code> utuh (path_alias id 738, status 1)</li>\n</ul>\n\n<h3>Pelajaran</h3>\n<ul>\n<li>Gate verifikasi halaman harus meng-grep <code>Unexpected number</code> selain <code>not found</code> — duplikat node internal_name tidak menghasilkan \"not found\", hanya \"Unexpected number of characters/patterns/exercises ... found\".</li>\n<li>Hilangnya widget bisa total diam: HTTP 200, 0 parser-error, tetapi jumlah kontainer kurang dari inventaris sumber. Selalu bandingkan jumlah widget per kelas dengan inventaris sumber sebelum menyatakan selesai.</li>\n<li>Untuk pembangunan ulang body skilling: gabungkan dengan <code>&lt;br /&gt;\\n</code>, opsi tag <code>character.</code>/<code>annotation.</code> diikuti baris kosong sebelum konten dan sebelum closer, dan cek keseimbangan dengan baris logika (bukan <code>substr_count</code> yang menghitung ganda closer).</li>\n</ul>"
+}

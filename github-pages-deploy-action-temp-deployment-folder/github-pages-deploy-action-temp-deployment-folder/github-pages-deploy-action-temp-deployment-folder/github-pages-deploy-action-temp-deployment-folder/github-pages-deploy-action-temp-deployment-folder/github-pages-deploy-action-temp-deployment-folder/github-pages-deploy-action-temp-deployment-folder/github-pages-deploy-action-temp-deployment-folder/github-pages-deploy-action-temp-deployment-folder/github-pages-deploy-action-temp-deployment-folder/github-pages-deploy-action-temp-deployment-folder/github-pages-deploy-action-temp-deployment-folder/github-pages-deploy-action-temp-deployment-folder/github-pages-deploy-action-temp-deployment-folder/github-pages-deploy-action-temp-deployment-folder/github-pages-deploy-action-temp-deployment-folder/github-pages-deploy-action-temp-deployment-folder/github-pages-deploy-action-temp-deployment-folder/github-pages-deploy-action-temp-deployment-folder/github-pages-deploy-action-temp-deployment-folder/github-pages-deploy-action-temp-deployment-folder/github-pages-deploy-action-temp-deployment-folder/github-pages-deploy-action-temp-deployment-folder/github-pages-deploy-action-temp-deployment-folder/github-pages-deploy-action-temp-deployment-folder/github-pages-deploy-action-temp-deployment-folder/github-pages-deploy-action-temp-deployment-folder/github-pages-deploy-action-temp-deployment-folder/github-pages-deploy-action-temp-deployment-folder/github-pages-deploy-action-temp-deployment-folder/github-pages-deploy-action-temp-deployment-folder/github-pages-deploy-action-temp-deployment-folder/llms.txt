@@ -31,6 +31,9 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types](https://localhost/mysite/pages/item-b65fafbf-b4b2-4b12-9c9a-b102b97eee1d/index.md)
 - [Laporan Sesi: Perbaikan Lesson Skilling Cleaning-0 dan Data Types](https://localhost/mysite/pages/item-ce1d27e3-998f-4634-9336-5e07fe6a2071/index.md)
 - [Laporan: Perbaikan Lesson Latihan Ekspresi String](https://localhost/mysite/pages/item-e7e0ed66-6a2a-4dee-be4b-f2443c317667/index.md)
+- [Laporan Perbaikan Lesson Periksa Harga Daging (Validasi Input)](https://localhost/mysite/pages/item-5c8cec28-b28f-4cbf-a856-20d7f8da034d/index.md)
+- [Laporan Perbaikan Lesson Latihan: while](https://localhost/mysite/pages/item-7e0202d9-3153-4e70-9920-b89eda532ffe/index.md)
+- [Akses Admin Drupal 8 python.pesanweb.my.id via SSH + Drush](https://localhost/mysite/pages/item-5d585c23-239b-494f-af15-e7dd56ba5988/index.md)
 
 ## Optional
 - [Search index](https://localhost/mysite/lunrSearchIndex.json): Lunr corpus for quick full-text retrieval.
