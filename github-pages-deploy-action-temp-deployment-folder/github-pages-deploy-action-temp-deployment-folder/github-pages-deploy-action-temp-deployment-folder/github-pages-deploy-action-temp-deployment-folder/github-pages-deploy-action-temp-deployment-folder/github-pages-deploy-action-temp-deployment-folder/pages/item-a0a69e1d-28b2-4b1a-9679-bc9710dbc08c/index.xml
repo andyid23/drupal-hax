@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-a0a69e1d-28b2-4b1a-9679-bc9710dbc08c</id>
+<indent>0</indent>
+<location>pages/item-a0a69e1d-28b2-4b1a-9679-bc9710dbc08c/index.xml</location>
+<slug>audit-web-pesanweb</slug>
+<order>0</order>
+<parent></parent>
+<title>Audit web.pesanweb.my.id vs learnweb.skilling.us dan perbaikan</title>
+<description></description>
+<metadata>
+<created>1794800862</created>
+<updated>1794800862</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Laporan: Audit web.pesanweb.my.id vs learnweb.skilling.us + perbaikan</h2>
+<p>Audit penuh sumber <code>learnweb.skilling.us</code> ("Learn the web", 76 lesson, 11 top-level) vs target, inventaris DB, audit render 81 halaman, census gambar wrapper, dan eksekusi rencana perbaikan. Tanggal 2026-11.</p>
+
+<h3>Temuan utama</h3>
+<ul>
+<li>Struktur sumber: Get ready (9 anak), Task sample, Your learning style, Start the final project (3), How the web works (8), Final project: skeleton, Basic hand-made sites (24), Final project: prototype, Professional sites (16 + cabang SEO depth-4: how-google-works, types-seo, keyword-research, writing-content-seo), Finish the final project, Tips (5).</li>
+<li>Target: 10/11 bab terpetakan dengan urutan anak benar (termasuk SEO depth-4); <code>parser-error</code> = 0 di 81 halaman.</li>
+<li><strong>Node yang belum ada: <code>domain-locked-verification</code></strong> — satu-satunya lesson sumber hilang.</li>
+<li>Duplikat: 187 "Menggunakan gaya BS" (published, di luar book) vs 186; 212 "Baris Navigasi" (unpublished) vs 213.</li>
+<li><strong>Node uji 31–36 ("Lesson 1/1.1/…") berada DI DALAM book utama (bid 30)</strong> pada bobot 0/10 — tampil di navigasi pembaca.</li>
+<li>Alias node 73 salah: <code>/buat-akun-hosting-go</code> tanpa prefix <code>/lesson/</code> → 404.</li>
+<li>Bab 50: using-ai(89) dan about-me(66) tabrakan bobot w=3, urutan tertukar.</li>
+<li>Konvensi gambar kursus ini: slot foto <code>student-image</code> di sumber → <code>selfie-holder</code> di target; screenshot/diagram memakai <code>figure-indent</code>.</li>
+</ul>
+
+<h3>Perbaikan yang dieksekusi</h3>
+<ul>
+<li><strong>domain-locked-verification dibuat</strong> (nid 247 "Domain terkunci untuk verifikasi", outline di Tips, bobot -14; nav terverifikasi: prev=domain-tambahan, next=penaksir-nilai; gambar suspended.png absolut).</li>
+<li><strong>Alias 73 diperbaiki</strong>: alias salah dihapus, <code>/lesson/lets-go</code> di-pin (200).</li>
+<li><strong>Node uji 31–36 dikeluarkan dari book</strong> (0 baris tersisa; node tetap unpublished).</li>
+<li><strong>Duplikat 187 dan 212 di-unpublish</strong> (kanonik 186, 213 tetap).</li>
+<li><strong>Bab 50 di-re-space</strong> urutan sumber (51:1 … 73:9), tabrakan w=3 hilang; alias di-pin ulang.</li>
+<li><strong>Wrapper gambar</strong>: 147 (student-image → selfie-holder, kittens.jpg), 104 (sub-kucing.jpg dibungkus), 124 (web-kucing.jpg dibungkus), 227 (3 gambar dibungkus figure-indent). Verifikasi render: semua gambar slot kini terbungkus kelas yang benar.</li>
+<li>Dedupe <code>path_alias</code> global + pin alias manual utama.</li>
+</ul>
+
+<h3>Verifikasi akhir</h3>
+<ul>
+<li>10 URL yang disentuh semuanya 200; <code>custom-tag-error</code>/<code>parser-error</code> = 0.</li>
+<li>Book root kini: Bersiap, Contoh tugas, Gaya Belajar, Mulai proyek, Cara kerja web, Kerangka, Situs buatan tangan, Prototipe, Situs profesional, Selesaikan proyek, Kiat-kiat — sesuai sumber, tanpa node uji.</li>
+</ul>
+
+<h3>Sisa (tidak dieksekusi / opsional)</h3>
+<ul>
+<li>design_page junk 45–47 dengan book tree sendiri (bid 45) — perlu konfirmasi pemilik situs.</li>
+<li>Audit perbandingan inventaris widget per-lesson penuh (render 0-error sudah lulus).</li>
+<li>Mirror webexamples sudah selesai terpisah — lihat halaman "mirror-webexamples".</li>
+</ul>]]></content>
+</item>
