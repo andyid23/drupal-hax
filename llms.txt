@@ -56,6 +56,7 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Audit tautan dan gambar eksternal skilling.us empat situs](https://localhost/mysite/pages/item-6a31d28f-9be1-4789-9cc4-4ef9c3a5433e/index.md)
 - [Migrasi aset skilling.us ke lokal selesai](https://localhost/mysite/pages/item-11c44abc-16eb-4a99-94c5-eaa50c913e93/index.md)
 - [Rencana books app MySQL dan tautan keluar](https://localhost/mysite/pages/item-f3a92a7f-7546-4d18-afcb-cbfb99292492/index.md)
+- [R1: hasil probe tautan eksternal](https://localhost/mysite/pages/item-035791a9-3153-4e35-864d-f343eeea27b8/index.md)
 - [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional
