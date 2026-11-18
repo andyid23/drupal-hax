@@ -778,6 +778,22 @@
       }
     },
     {
+      "id": "item-2584d326-ff78-4850-8928-be649a6bd4c2",
+      "indent": 0,
+      "location": "pages/item-2584d326-ff78-4850-8928-be649a6bd4c2/index.html",
+      "slug": "penjelasan-delink-rencana-setia-tautan",
+      "order": 0,
+      "parent": null,
+      "title": "Penjelasan de-link dan rencana setia-tautan",
+      "description": "",
+      "metadata": {
+        "created": 1795042715,
+        "updated": 1795042715,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",
