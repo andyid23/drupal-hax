@@ -45,3 +45,16 @@
 <li><strong>R — TRUNCATE cache (termasuk cache_render) + verifikasi render + publikasi laporan.</strong></li>
 </ul>
 <p>Semua perubahan body reversibel (backup per node). Kebijakan yang berlaku: tautan halaman luar <strong>boleh</strong> sesuai sumber; yang dimigrasi hanya gambar/media/lampiran.</p>
+
+<h2>Update: eksekusi selesai (2026-11)</h2>
+<table>
+<tr><th>Item</th><th>Hasil</th></tr>
+<tr><td><strong>H1</strong> — pulihkan tautan de-link sesuai sumber</td><td>✅ vba Range: twitter bersih (zero-width hilang, 200) · webapps Tentang saya: tautan maximumfun dipulihkan · webapps M:N: ejaan Numismatist + tautan (200) · web Berkomunikasi: gather jadi tautan sungguhan sesuai sumber · vba Profesormu: sudah utuh</td></tr>
+<tr><td><strong>H2</strong> — sisip paragraf tautan hilang</td><td>✅ 200 body terisi (vba 21+1, python 68, webapps 25+1, web 81+1) — paragraf sumber disalin verbatim dengan URL dilokalkan (/phpexamples/, /examples/) dan alias lokal; guard anti-dobel aktif</td></tr>
+<tr><td><strong>M1</strong> — alias EN</td><td>✅ 4 alias dibuat (vba set-excel, when-you-get-stuck, generalize, writing-first-program). 9 lainnya tidak dibuat: sumbernya sendiri 404/403 (submitting-exercises, loops-vba-vs-javascript, filtering-invalid-data, links-and-urls, receivables) — dibiarkan mengarah ke sumber</td></tr>
+<tr><td><strong>M2</strong> — footer CC</td><td>✅ termasuk dalam 200 body di atas (62 python + 79 web) + proyek-akhir</td></tr>
+<tr><td><strong>M3</strong> — proyek-akhir (exercise)</td><td>✅ bedah 229: 5 tautan dipulihkan (Pupperware ×3 → /examples/pupperware/final/, Bootswatch, blog Shopify) + footer CC</td></tr>
+<tr><td><strong>R</strong> — verifikasi</td><td>✅ cache penuh (termasuk <strong>cache_entity</strong> — penyebab render basi terakhir) di-rebuild; render sampel 7 halaman: 200 &amp; 0 error; proyek-akhir kini menampilkan shopify=1, pupperware=3, bootswatch=1, CC ✓; Range tanpa zero-width ✓; M:N Numismatist ✓; Tentang saya maximumfun ✓; Berkomunikasi gather-link ✓</td></tr>
+</table>
+<p><strong>Sisa yang disengaja</strong> (dokumentasi): 4 tautan ke halaman sumber yang mati (404/403) dibiarkan mengarah ke sumber; beberapa tautan luar 000/500 (tidak pasti mati) dibiarkan; 1 finding /exercise/id-get (latihan tak ada lokal) mengarah ke sumber.</p>
+<p><strong>Pelajaran teknis baru</strong>: update body via SQL level-row mem-bypass <code>cache_entity</code> — entity load &amp; render menyajikan body lama hingga <code>drush cr</code> penuh. Dump body harus base64 (SQL tab memotong body di karakter tab).</p>

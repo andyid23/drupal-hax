@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-fe44d6d5-7e6e-4f4b-b50e-3813fae14eb9</id>
+<indent>0</indent>
+<location>pages/item-fe44d6d5-7e6e-4f4b-b50e-3813fae14eb9/index.xml</location>
+<slug>hasil-cek-config</slug>
+<order>0</order>
+<parent></parent>
+<title>Hasil Cek Config Server Drupal</title>
+<description></description>
+<metadata>
+<created>1793037086</created>
+<updated>1793037086</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Ringkasan Infrastruktur</h2><p>Hasil pemeriksaan konfigurasi server Drupal dan mapping situs web.pesanweb.my.id / belajarweb.pesanweb.my.id.</p><h3>1. Server home.pesanweb.my.id (192.168.2.40)</h3><ul><li>Docker stack <code>drupal811</code>: nginx (drupal_web_server, publish 8086:80 dan 8087:81), d11_fpm (Drupal 11, PHP 8.4), d8_fpm (Drupal 8, PHP 7.4), drupal_database (MariaDB), phpmyadmin, mysql-cron-backup harian ke /data/compose/34/db-backup/</li><li>DB: drupal8, belajarweb, web, drupaldb, appdb</li></ul><h3>2. Server belajarweb (192.168.2.57, hostname armbian-master)</h3><ul><li>Nginx Proxy Manager (npm_app) meneruskan belajarweb.pesanweb.my.id ke http://192.168.2.57:8087</li><li>Stack <code>drupal-nfs</code>: nginx, drupal_fpm7 (Drupal 8), drupal_fpm, phpmyadmin, mysql-cron-backup, drupal_db (MariaDB)</li><li>DB di sini: belajarweb, drupal8, drupal11, drupal8db</li><li>Multi-site aktif hanya: sites/belajarweb.pesanweb.my.id (DB belajarweb, user belajarweb) dan sites/default (DB drupal8)</li><li>Folder sites/web.pesanweb.my.id TIDAK ADA di server ini</li></ul><h3>3. Kesimpulan</h3><p>web.pesanweb.my.id dilayani oleh home.pesanweb.my.id:8087 (DB drupal8 di sana), sedangkan belajarweb.pesanweb.my.id dilayani oleh server terpisah 192.168.2.57:8087. Untuk menyalin konten web ke belajarweb perlu dump dari DB drupal8 di home.pesanweb.my.id lalu import ke DB belajarweb di 192.168.2.57.</p>]]></content>
+</item>
