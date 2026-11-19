@@ -1,0 +1,161 @@
+id: item-2584d326-ff78-4850-8928-be649a6bd4c2
+indent: 0
+location: pages/item-2584d326-ff78-4850-8928-be649a6bd4c2/index.yaml
+slug: penjelasan-delink-rencana-setia-tautan
+order: 0
+parent: null
+title: Penjelasan de-link dan rencana setia-tautan
+description: ''
+metadata:
+  created: 1795042715
+  updated: 1795042715
+  images: []
+  videos: []
+content: >-
+  <h2>Penjelasan de-link + audit setia-tautan (rencana perbaikan sesuai
+  sumber)</h2>
+
+
+  <h3>1. Apa itu "404 pasti → de-link" dan ada di tautan apa</h3>
+
+  <p>Kemarin saya menghapus 5 tautan yang mati (404) dari body, karena tampak
+  buntu. Lokasinya (5 lesson):</p>
+
+  <table>
+
+  <tbody><tr><th>Lesson</th><th>Tautan yang dihapus</th><th>Fakta dari
+  sumber</th></tr>
+
+  <tr><td>vba — <a href="http://web.pesanweb.my.id/lesson/ranges">Range</a> (nid
+  464)</td><td>twitter.com/SkylarkHolly<b>%E2%80%8B</b> — URL berisi karakter
+  <em>lebar-nol</em> (karakter tak terlihat yang ikut menempel saat URL
+  disalin-tempel), bikin Twitter 404</td><td><strong>Sumber juga punya URL yang
+  sama rusaknya</strong> — tapi URL bersih tanpa karakter itu <strong>hidup
+  (200)</strong></td></tr>
+
+  <tr><td>vba — <a
+  href="http://web.pesanweb.my.id/lesson/profesormu">Profesormu</a> (nid
+  453)</td><td>maximumfun.org/shows/nobody-listens…</td><td>Sumber punya tautan
+  yang sama (404 juga di sumber)</td></tr>
+
+  <tr><td>webapps — <a
+  href="http://webapps.pesanweb.my.id/lesson/tentang-saya">Tentang saya</a> (nid
+  340)</td><td>maximumfun.org (sama)</td><td>Sumber punya tautan yang
+  sama</td></tr>
+
+  <tr><td>webapps — <a href="http://webapps.pesanweb.my.id/lesson/mn">M:N</a>
+  (nid 548)</td><td>en.wikipedia.org/wiki/<b>Numismatis</b> — ejaan
+  salah</td><td>Sumber memakai <b>Numismatist</b> (ejaan benar) — dan hidup
+  (200)</td></tr>
+
+  <tr><td>web — <a
+  href="http://web.pesanweb.my.id/lesson/berkomunikasi">Berkomunikasi</a> (nid
+  67)</td><td>support.gather.town (tidak jadi dihapus — ternyata teks dalam
+  contoh kode)</td><td>Sumber menampilkannya sebagai tautan sungguhan</td></tr>
+
+  </tbody></table>
+
+  <p><strong>Koreksi kebijakan diterima</strong>: tautan luar (halaman) tidak
+  masalah asal bukan gambar. Maka rencananya bukan menghapus, melainkan
+  <strong>memulihkan sesuai sumber dengan URL yang diperbaiki</strong>: twitter
+  tanpa karakter lebar-nol, wikipedia ejaan Numismatist, maximumfun tetap sesuai
+  sumber, gather sebagai tautan sungguhan.</p>
+
+
+  <h3>2. Audit setia-tautan: contoh proyek-akhir dan temuan penuh</h3>
+
+  <p>Contoh yang Anda berikan benar: body <a
+  href="http://web.pesanweb.my.id/exercise/proyek-akhir">proyek-akhir</a>
+  kehilangan tautan dari sumber <code>project-final-project</code> — di sumber
+  ada tautan bootswatch, blog shopify, creativecommons, dan 3 tautan ke situs
+  contoh pupperware (yang kini punya mirror lokal
+  <code>/examples/pupperware/final/</code>).</p>
+
+  <p>Audit penuh (halaman sumber di-fetch ulang, body dibandingkan, 348
+  lesson):</p>
+
+  <table>
+
+  <tbody><tr><th>Situs</th><th>Lesson bermasalah</th></tr>
+
+  <tr><td>vba</td><td>23</td></tr>
+
+  <tr><td>python</td><td>68</td></tr>
+
+  <tr><td>web</td><td>81</td></tr>
+
+  <tr><td>webapps</td><td>30</td></tr>
+
+  <tr><td><strong>Total</strong></td><td><strong>202 lesson, 269 tautan
+  hilang</strong></td></tr>
+
+  </tbody></table>
+
+  <h4>Rincian kategori</h4>
+
+  <table>
+
+  <tbody><tr><th>Kategori</th><th>Jumlah</th><th>Sifat</th></tr>
+
+  <tr><td>Footer creativecommons (boilerplate akhir body)
+  hilang</td><td>141</td><td>mekanis — tambah paragraf sama ke semua</td></tr>
+
+  <tr><td>Tautan webappexamples → kini <code>/phpexamples/</code> lokal
+  (paragraf "Coba URL ini…" hilang)</td><td>56</td><td>paragraf hilang — sisip
+  sesuai sumber</td></tr>
+
+  <tr><td>Tautan luar lain (shopify, bootswatch, unity,
+  dsb.)</td><td>50</td><td>paragraf hilang — sisip sesuai sumber (kebijakan
+  Anda: halaman luar boleh)</td></tr>
+
+  <tr><td>Tautan ke lesson sumber yang <em>alias EN-nya belum terdaftar</em>
+  (set-excel, when-you-get-stuck, submitting-exercises, generalize,
+  loops-vba-vs-javascript, taste-test-stats, filtering-invalid-data,
+  receivables, writing-first-program, structure-diagrams, keep-asking-numbers,
+  links-and-urls)</td><td>13</td><td>daftarkan alias EN di node yang sudah
+  ada</td></tr>
+
+  <tr><td>Tautan ke lesson sumber yang alias lokalnya sudah
+  ada</td><td>9</td><td>sisip anchor</td></tr>
+
+  <tr><td>webexamples → /examples</td><td>0</td><td>sudah bersih
+  (M2/F3)</td></tr>
+
+  </tbody></table>
+
+  <p>Catatan: pemetaan saat ini belum mencakup semua node <code>exercise</code>
+  — proyek-akhir sendiri di luar sampel; audit eksekusi akan memperluas peta ke
+  semua exercise sehingga jumlahnya sedikit lebih besar dari 269.</p>
+
+
+  <h3>Rencana (belum dieksekusi)</h3>
+
+  <ul>
+
+  <li><strong>H1 — Pulihkan 4-5 tautan de-link sesuai sumber</strong>: twitter
+  bersih (200), maximumfun ×2 sesuai sumber, wikipedia Numismatist (200), gather
+  sebagai tautan sungguhan di nid 67.</li>
+
+  <li><strong>H2 — Sisip paragraf tautan yang hilang</strong> (A+C+F ≈ 115
+  tautan di ~120 lesson): paragraf sumber disalin dengan URL diterjemahkan ke
+  lokal (/phpexamples/, /examples/) dan alias lokal; kalimat pengantar sumber
+  dipertahankan/terjemah ringkas. Contoh proyek-akhir: 3 tautan pupperware →
+  /examples/pupperware/final/.</li>
+
+  <li><strong>M1 — Daftarkan 13 alias EN</strong> yang hilang (set-excel, dst.)
+  supaya tautan sumber punya padanan lokal.</li>
+
+  <li><strong>M2 — Tambah footer creativecommons</strong> ke ~141 body
+  (boilerplate sumber).</li>
+
+  <li><strong>M3 — Perluas peta ke semua exercise</strong> lalu verifikasi ulang
+  sampai 0 tautan hilang.</li>
+
+  <li><strong>R — TRUNCATE cache (termasuk cache_render) + verifikasi render +
+  publikasi laporan.</strong></li>
+
+  </ul>
+
+  <p>Semua perubahan body reversibel (backup per node). Kebijakan yang berlaku:
+  tautan halaman luar <strong>boleh</strong> sesuai sumber; yang dimigrasi hanya
+  gambar/media/lampiran.</p>

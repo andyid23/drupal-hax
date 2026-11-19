@@ -163,5 +163,26 @@
       <guid>https://localhost/mysite/akses-admin-drupal8-python-pesanweb</guid>
       <pubDate>Mon, 09 Nov 2026 05:10:00 GMT</pubDate>
     </item>
+    <item>
+      <title>Clone Lesson first-program ke vba.pesanweb.my.id</title>
+      <link>https://localhost/mysite/clone-lesson-first-program-vba</link>
+      <description>Clone Lesson: first-program → vba.pesanweb.my.id (selesai) 1. Sumber dan target Sumber: https://vba.skilling.us/lesson/first-program (&quot;The first program&quot;) Target: vba.pesanweb.my.id (Drupal 8.9 multisite, container d8_fpm ) Hasil: node 344 , judul Program pertama , alias /lesson/first-program Skill/rujukan: drupal-lesson-authoring + references/clone-runbook.md , skilling-lesson-update , drupal-docker-admin 2. Inventaris sumber (dihitung, bukan diasumsikan) h3 : 10 h4 : 4 pause : 22 (marker &quot;M...</description>
+      <guid>https://localhost/mysite/clone-lesson-first-program-vba</guid>
+      <pubDate>Fri, 13 Nov 2026 21:23:59 GMT</pubDate>
+    </item>
+    <item>
+      <title>Kloning lesson Adelas turn ke vba</title>
+      <link>https://localhost/mysite/kloning-lesson-adelas-turn-vba</link>
+      <description>Kloning lesson &quot;Adela&apos;s turn&quot; ke vba.pesanweb.my.id Source: https://vba.skilling.us/lesson/adelas-turn → target https://vba.pesanweb.my.id/lesson/adelas-turn (node 349, judul &quot;Giliran Izza&quot;). Dibuat dengan runbook references/clone-runbook.md dari skill drupal-lesson-authoring . Inventaris source &amp;amp; hasil render Pause: source 9, render 9 h3: source 2 (&quot;Debugging&quot; → &quot;Debugging&quot;, &quot;Indenting&quot; → &quot;Indentasi&quot;), h2 = 0 Character container: source 16, render 16 Note box (annotation.): source 4, ren...</description>
+      <guid>https://localhost/mysite/kloning-lesson-adelas-turn-vba</guid>
+      <pubDate>Sat, 14 Nov 2026 07:12:13 GMT</pubDate>
+    </item>
+    <item>
+      <title>Kloning lesson easy-good ke vba.pesanweb.my.id (node 373)</title>
+      <link>https://localhost/mysite/kloning-lesson-easy-good-vba</link>
+      <description>Ringkasan Lesson https://vba.skilling.us/lesson/easy-good (&quot;Easy is good&quot;) dikloning ke vba.pesanweb.my.id dan diterjemahkan ke Bahasa Indonesia. Semua gate verifikasi lulus. Node: nid 373 — tipe lesson , status published Judul: Mudah itu bagus Alias: /lesson/easy-good (manual) dan /lesson/mudah-itu-bagus (pathauto) — keduanya HTTP 200 Book: bid 330 (&quot;Pemrograman dengan Excel VBA&quot;), pid 343 (&quot;Simple Programs&quot;), weight -8, depth 3 Panjang body: 10.932 byte (UTF-8), format skilling Inventaris s...</description>
+      <guid>https://localhost/mysite/kloning-lesson-easy-good-vba</guid>
+      <pubDate>Sat, 14 Nov 2026 08:44:22 GMT</pubDate>
+    </item>
   </channel>
 </rss>

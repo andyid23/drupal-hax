@@ -81,3 +81,10 @@
 <li><strong>F8 — outcome</strong>: halaman ini.</li>
 <li>Sisa (opsional): cek halaman hasil secara menyeluruh per gerbang h3/pause/char sudah dilakukan di F4 (11/11 PASS); bab database-apps &amp; capturing-data masih dalam bentuk plan.</li>
 </ul>
+<h3>9. Eksekusi bab database-apps &amp; capturing-data (2026-11-15)</h3>
+<ul>
+<li><strong>Dibuat</strong>: bab "Aplikasi basis data" (nid 535) + 14 anak (536–549), bab "Menangkap data" (nid 550) + 15 anak (551–565); deps 12 exercise (519–530), 3 principle baru (532–534), pattern <code>pisahkan-input-dari-pemrosesan</code> (531). <code>pattern_same_page_validation</code> sudah ada dari sesi paralel (nid 450) → di-UPDATE dengan konten Indonesia. Buku: Aplikasi basis data w=5, Menangkap data w=6, lima bab paralel digeser ke 7–11 (urutan sumber).</li>
+<li><strong>Gerbang render</strong>: semua widget-count == inventaris sumber per halaman (metrik sama di sumber &amp; target), 0 parser-error. Enam halaman menampilkan selisih h2/h3/h1 — semuanya artefak decode: situs ini merender isi code-container setelah decode entitas, sehingga demo HTML di dalam kode (&lt;h1&gt;Episode, &lt;h2&gt;Doggos) menjadi elemen nyata. Perilaku situs-wide, berlaku juga pada klon lama (nid 433: <code>&lt;kepala&gt;</code>, <code>&lt;judul&gt;</code>); body di DB sudah benar (satu kali escape, sama dengan konvensi sumber).</li>
+<li><strong>Kolisi sesi paralel</strong>: 4 node MCQ (385/386/389/390) sempat ditulis-ulang sesi lain dengan kode PHP ikut diterjemahkan ($tipehewan…) — dipulihkan dari spesifikasi (kode verbatim, prosa Indonesia, jawaban benar sama).</li>
+<li><strong>Alias pin + dedupe</strong>: 31 lesson + 17 dep nodes dipin; pasca-cron 38/38 URL = 200, baris alias utuh.</li>
+</ul>
