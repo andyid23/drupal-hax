@@ -714,6 +714,22 @@
       }
     },
     {
+      "id": "item-6a31d28f-9be1-4789-9cc4-4ef9c3a5433e",
+      "indent": 0,
+      "location": "pages/item-6a31d28f-9be1-4789-9cc4-4ef9c3a5433e/index.html",
+      "slug": "audit-tautan-gambar-skilling-us",
+      "order": 0,
+      "parent": null,
+      "title": "Audit tautan dan gambar eksternal skilling.us empat situs",
+      "description": "",
+      "metadata": {
+        "created": 1794849275,
+        "updated": 1794849275,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

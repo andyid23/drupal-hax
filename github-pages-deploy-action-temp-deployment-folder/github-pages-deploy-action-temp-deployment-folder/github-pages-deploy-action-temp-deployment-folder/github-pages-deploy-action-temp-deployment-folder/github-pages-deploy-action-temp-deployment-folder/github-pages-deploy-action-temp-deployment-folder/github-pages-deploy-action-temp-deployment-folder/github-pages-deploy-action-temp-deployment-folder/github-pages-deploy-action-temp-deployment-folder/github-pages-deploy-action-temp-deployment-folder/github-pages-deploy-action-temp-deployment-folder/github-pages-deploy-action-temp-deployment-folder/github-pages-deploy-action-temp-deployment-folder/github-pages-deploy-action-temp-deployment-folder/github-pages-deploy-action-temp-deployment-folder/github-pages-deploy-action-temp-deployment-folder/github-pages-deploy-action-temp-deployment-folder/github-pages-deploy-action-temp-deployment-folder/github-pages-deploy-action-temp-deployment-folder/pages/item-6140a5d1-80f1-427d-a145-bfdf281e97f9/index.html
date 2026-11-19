@@ -56,5 +56,29 @@
 <h3>Sisa agenda</h3>
 <ul>
 <li>448 (published, di luar book) dan 345 menunggu keputusan: unpublish, hapus, atau biarkan.</li>
-<li>Audit render 5-gerbang menyeluruh untuk seluruh 64 lesson (R1) — yang sudah lulus: 517, 518, 519.</li>
+</ul>
+
+<h2>Update pelajaran "Menggunakan situs ini" + hasil R1 (audit render menyeluruh, update 2026-11)</h2>
+<h3>Pelengkapan 338</h3>
+<p>Body 338 dibangun ulang dengan konvensi yang terbukti (join <code>&lt;br /&gt;\n&lt;br /&gt;\n</code>): kedua kotak catatan kini blok <code>annotation.</code> proper dengan title=Catatan (termasuk gambar right-click di dalam konten annotation pertama), pipe <code>|</code> diganti <code>&gt;</code>. Verifikasi: h3=3, pause=4, ann=2, img=4, errors=0, nav tetap gathertown → exercises.</p>
+
+<h3>R1: audit 5-gerbang atas 62 lesson (node 345 &amp; 448 tanpa padanan sumber, dilewati)</h3>
+<p>Metode: inventaris sumber (62 halaman vba.skilling.us diambil) vs render target (62 halaman), slice <code>field--name-body</code> → <code>book-navigation</code>, bandingkan hitungan top-level (mcq/fib/exercise/pattern/principle/character di-anchor <code>" id="</code>, plus pause/reflect/annotation/h3/img/code), cek <code>custom-tag-error</code>/<code>parser-error</code>, bocoran tag mentah, nav prev/next, dan probe 496 URL gambar eksternal.</p>
+<p><strong>Hasil akhir: 62 lesson, errors = 0 di semua halaman, 56 lulus penuh, 6 deviasi terdokumentasi, 496/496 gambar eksternal 200.</strong></p>
+<h3>Perbaikan yang dikerjakan selama R1</h3>
+<ul>
+<li><strong>Akar masalah blok mati ditemukan secara empiris</strong>: baris <code>pause.</code> yang digabung langsung ke blok berikutnya (tanpa baris kosong) menelan baris-baris berikutnya sebagai "options" sampai baris kosong pertama — p/h3/character/pattern hilang diam-diam (HTTP 200, errors=0). Diverifikasi dengan bisect <code>check_markup</code>. Diperbaiki di 484 (12 pause), 336, 337, 452, 334 — semua hitungan kini = body.</li>
+<li><strong>Heading turun level</strong>: 262 tanpa marker (6 h3 → h4); 349/466/472 marker tidak ditempel ke h3 pertama → diperbaiki (marker ditempel <code>&lt;/div&gt;&lt;h3&gt;</code>); 362/400 juga terkoreksi lewat jalur yang sama.</li>
+<li><strong>Widget hilang dipulihkan</strong>: 362 + <code>toc.</code>; 400 reflect statis diganti blok <code>reflect.</code> proper; 337 + annotation kamera; 504 karakter <code>character_izza_terkejut</code> → <code>character_izza_heran</code> (nid 62 menyimpan "heran", bukan "terkejut" — varian terkejut Izza/Fina tersimpan sebagai heran); 504 + path gambar layar administrasi yang benar.</li>
+<li><strong>Stub dilengkapi</strong>: 453 "Profesormu" (dari 1.162 char menjadi body lengkap: foto, audio kieran.mp3, biografi, + exercise node baru 520 "Tentang Anda" dengan iframe YouTube dan task terjemahan); 504 "Pseudents" (dari stub 305 char dengan heading dummy menjadi body lengkap 8 KB: 6 h3, 7 pause, 8 karakter, 4 catatan, gambar layar admin).</li>
+<li><strong>Gambar dilengkapi</strong>: 334 + noms4.jpg + pause ke-3; 452 + benjamin.jpg + 2 kalimat Inggris tersisa diterjemahkan.</li>
+</ul>
+<h3>Deviasi yang diterima (terdokumentasi)</h3>
+<ul>
+<li><strong>342</strong>: MCQ sumber sengaja ditampilkan statis (tercatat di field_notes); diff img = throbber widget.</li>
+<li><strong>344</strong>: deviasi minor (+1 pause, −3 code container = artefak embed pertanyaan fib di sumber; notes "body uji coba clone").</li>
+<li><strong>346</strong>: +1 MCQ (mcq_tip_meal, node ada) — tambahan sengaja.</li>
+<li><strong>362</strong>: 4 img = gambar task exercise (ada di node exercise 368 ✓); code ±1 = embed pertanyaan fib.</li>
+<li><strong>415</strong>: +1 annotation (definisi variabel perekat) — tambahan sengaja.</li>
+<li><strong>464</strong>: −1 annotation (chrome login anonim dilewati, tercatat di field_notes).</li>
 </ul>
