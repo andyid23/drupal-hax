@@ -16,3 +16,12 @@
 <li><strong>G2</strong> — tulis ulang halaman goats yang butuh DB: daftar klub, view, add, edit (+ comedians/goats bila ada di dump) dengan PDO; label &amp; perilaku mengikuti render sumber.</li>
 <li><strong>G3</strong> — verifikasi CRUD via POST nyata lewat nginx (Host header), lalu bersihkan baris uji; catat di laporan ini.</li>
 </ul>
+
+<h2>Update: G1–G3 dieksekusi (19 November 2026)</h2>
+<table>
+<tr><th>Item</th><th>Hasil</th></tr>
+<tr><td><strong>G1</strong> — dump &amp; import</td><td>✅ <code>goats.sql.zip</code> (dump penuh: CREATE + data + FK) diunduh dari sumber; 4 tabel di-import ke DB <code>webappexamples</code>: clubs 5, club_members 13, comedians 13, goats 9 — data awal persis dump (auto_increment clubs=8, goats=15, comedians=20)</td></tr>
+<tr><td><strong>G2</strong> — app ditulis ulang</td><td>✅ 17 file PDO di <code>/phpexamples/capturing-data/goats/</code>: daftar (clubs/comedians/goats, ORDER BY name sesuai render sumber), view (deets + relasi + pesan "has no members"/"isn't in any clubs"), add-edit (form prefill, radio kategori/gender, checkbox sponsored, select fave comedian "(Not given)", multi-select club memberships), confirm-delete, delete-confirmed (FK: membership dihapus dulu; fave_comedian di-NULL-kan), error "Sorry, no X with an id of N". Render lama di-backup <code>.render-backup/</code>. Banner "Changes will not be saved" dipertahankan sebagai teks template sumber — penyimpanan NYATA ke DB</td></tr>
+<tr><td><strong>G3</strong> — verifikasi CRUD nyata</td><td>✅ add club → 302 view (TestClubX, lalu diedit: nama+kategori+sponsored tersimpan) · add goat → 302 view (TestGoatY, fave Paula Poundstone + memberships Fashion &amp; Singing tampil) · add comedian → 302 view · confirm-delete render sesuai sumber · delete club/goat/comedian → 302 ke daftar · club-view tanpa id → "Sorry, no club with an id of 99" · daftar kembali persis render sumber. Baris uji dibersihkan: counts akhir 5/9/13/13 = data asli</td></tr>
+</table>
+<p>Jebakan baru: helper <code>club_row()</code> terpisah di <code>common-clubs.php</code> — 4 halaman lupa <code>require</code> → fatal "undefined function" (page putih 200); ditemukan via body curl (status 200 menipu).</p>
