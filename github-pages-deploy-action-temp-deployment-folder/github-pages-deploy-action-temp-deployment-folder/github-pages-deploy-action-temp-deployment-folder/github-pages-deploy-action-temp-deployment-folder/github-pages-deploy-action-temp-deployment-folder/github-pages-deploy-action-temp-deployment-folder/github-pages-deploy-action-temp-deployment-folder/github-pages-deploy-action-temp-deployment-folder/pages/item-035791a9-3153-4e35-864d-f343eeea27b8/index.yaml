@@ -1,0 +1,95 @@
+id: item-035791a9-3153-4e35-864d-f343eeea27b8
+indent: 0
+location: pages/item-035791a9-3153-4e35-864d-f343eeea27b8/index.yaml
+slug: r1-probe-tautan-eksternal
+order: 0
+parent: null
+title: 'R1: hasil probe tautan eksternal'
+description: ''
+metadata:
+  created: 1795004926
+  updated: 1795004926
+  images: []
+  videos: []
+content: >-
+  <h2>R1: Probe 194 tautan eksternal — hasil</h2>
+
+  <p>Eksekusi R1: semua tautan keluar (domain luar skilling.us/pesanweb)
+  di-probe dua kali (curl + retry, lalu verifikasi ulang dari jaringan kedua
+  untuk kasus meragukan). Tanggal 2026-11.</p>
+
+
+  <h3>Ringkasan</h3>
+
+  <ul>
+
+  <li><strong>Hidup: 155 tautan</strong> — dibiarkan apa adanya (dokumentasi,
+  bot-wall, hiburan).</li>
+
+  <li><strong>403/401 anti-bot: ~20 tautan</strong> (unsplash, monster.com,
+  moodle.org, allrecipes, w3.org, pngwing, godaddy, merriam-webster,
+  stackoverflow, ditto, pureinfotech…) — situs <em>hidup</em>, hanya memblokir
+  bot. Verifikasi ulang dengan header browser lengkap tetap 403 → <strong>tidak
+  di-de-link</strong>.</li>
+
+  <li><strong>000 (tak terjangkau dari dua jaringan): 8 tautan</strong>
+  (redsome, tonianitahull, forums.reclaimhosting, namakamu/untukmu.html,
+  portableapps ×2, linuxpip, simulator.seenow) — portableapps.com adalah situs
+  besar yang jelas hidup, jadi 000 ≠ pasti mati (kemungkinan blokir IP
+  datacenter) → <strong>dibiarkan</strong>, dicatat.</li>
+
+  <li><strong>500 paulapoundstone.com/podcast/ ×2</strong> — server error
+  persisten tapi situs induk hidup → dibiarkan.</li>
+
+  <li><strong>localhost ×2</strong> (instruksi XAMPP siswa) — tidak relevan
+  di-probe, dibiarkan.</li>
+
+  </ul>
+
+
+  <h3>De-link dilakukan (404 pasti, 5 kemunculan)</h3>
+
+  <table>
+
+  <tbody><tr><th>URL mati</th><th>Kode</th><th>Node</th><th>Tindakan</th></tr>
+
+  <tr><td>twitter.com/SkylarkHolly%E2%80%8B (URL berisi karakter
+  lebar-nol)</td><td>404</td><td>vba 464</td><td>anchor dibuang, teks
+  tetap</td></tr>
+
+  <tr><td>maximumfun.org/shows/nobody-listens-to-paula-poundstone</td><td>404</td><td>vba
+  453, webapps 340</td><td>de-link</td></tr>
+
+  <tr><td>en.wikipedia.org/wiki/Numismatis (artikel
+  dipindah)</td><td>404</td><td>webapps 548</td><td>de-link</td></tr>
+
+  <tr><td>support.gather.town/help/av-troubleshooting</td><td>404</td><td>web
+  67</td><td>ternyata <em>teks escaped</em> (contoh kode, bukan tautan) —
+  dibiarkan sebagai teks</td></tr>
+
+  </tbody></table>
+
+  <p>Verifikasi pasca-de-link: 3 dari 4 URL mati kini 0 baris di DB; yang
+  tersisa 1 (escaped text).</p>
+
+
+  <h3>Perbaikan bonus saat R1 (dari laporan "carousel tidak bisa")</h3>
+
+  <ul>
+
+  <li><strong>Akar masalah carousel1.html: bukan CDN</strong> — M1 tidak pernah
+  dijalankan; file dari andy1.rf.gd ternyata halaman anti-hotlink InfinityFree
+  (882 byte, aes.js). Konten asli diambil dari webexamples.skilling.us (carousel
+  + cards + forms + cryptid beserta 15 asetnya), timpa stub.</li>
+
+  <li>3 halaman andy1-only (basic-tags, mooya, kity2) diambil lewat browser
+  nyata (lolos challenge InfinityFree) + asetnya (kucing-moya.webp, styles.css,
+  moze.png) — semuanya 200 di web-contoh dan web.</li>
+
+  <li><strong>CDN stackpath.bootstrapcdn.com (ditutup Bootstrap 2024)</strong>
+  yang dipakai file course aktif (pupperware/final ×10, user-accounts/products,
+  app books/nobody yang ditulis) diganti ke <strong>jsdelivr — tetap CDN, tidak
+  dilokalkan</strong>; CDN jsdelivr/jquery yang hidup dibiarkan. Sisa stackpath
+  aktif: 0.</li>
+
+  </ul>
