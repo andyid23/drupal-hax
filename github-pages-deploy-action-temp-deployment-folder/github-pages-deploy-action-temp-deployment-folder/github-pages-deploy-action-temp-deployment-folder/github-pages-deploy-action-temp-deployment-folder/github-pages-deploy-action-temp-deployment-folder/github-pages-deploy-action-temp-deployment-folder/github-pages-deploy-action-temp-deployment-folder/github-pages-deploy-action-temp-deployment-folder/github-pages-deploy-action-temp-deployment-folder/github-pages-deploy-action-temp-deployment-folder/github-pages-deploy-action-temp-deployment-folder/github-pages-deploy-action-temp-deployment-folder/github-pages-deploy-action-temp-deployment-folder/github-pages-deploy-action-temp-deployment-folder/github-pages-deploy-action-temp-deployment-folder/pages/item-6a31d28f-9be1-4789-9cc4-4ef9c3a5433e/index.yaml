@@ -1,0 +1,143 @@
+id: item-6a31d28f-9be1-4789-9cc4-4ef9c3a5433e
+indent: 0
+location: pages/item-6a31d28f-9be1-4789-9cc4-4ef9c3a5433e/index.yaml
+slug: audit-tautan-gambar-skilling-us
+order: 0
+parent: null
+title: Audit tautan dan gambar eksternal skilling.us empat situs
+description: ''
+metadata:
+  created: 1794849275
+  updated: 1794849275
+  images: []
+  videos: []
+content: >-
+  <h2>Audit tautan &amp; gambar eksternal (*.skilling.us) — python, vba,
+  webapps, web</h2>
+
+  <p>Sweep DB keempat situs untuk semua referensi <code>*.skilling.us</code> di
+  body (tautan <code>&lt;a href&gt;</code>, gambar <code>&lt;img src&gt;</code>,
+  URL teks). 250 node mengandung referensi. Tanggal 2026-11.</p>
+
+
+  <h3>Rekap per situs</h3>
+
+  <table>
+
+  <tbody><tr><th>Situs</th><th>Node</th><th>Img total</th><th>Img
+  unik</th><th>Tautan lesson domain
+  sendiri</th><th>learnweb</th><th>webappexamples</th><th>webexamples</th></tr>
+
+  <tr><td>python</td><td>16</td><td>67</td><td>55</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+
+  <tr><td>vba</td><td>100</td><td>496</td><td>452</td><td>50</td><td>0</td><td>0</td><td>0</td></tr>
+
+  <tr><td>webapps</td><td>112</td><td>492</td><td>451</td><td>2</td><td>0</td><td>117</td><td>21</td></tr>
+
+  <tr><td>web</td><td>22</td><td>6</td><td>6</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+
+  <tr><td><strong>Total</strong></td><td>250</td><td>1061</td><td>964</td><td>53</td><td>1</td><td>117</td><td>21</td></tr>
+
+  </tbody></table>
+
+  <p>Referensi gambar menunjuk domain sumber masing-masing kursus
+  (python→python.skilling.us, dst.); <code>learnweb.skilling.us</code> muncul
+  hanya sebagai 1 tautan lesson (web nid 186) + 6 gambar di web (104, 247).</p>
+
+
+  <h3>Ketersediaan sumber</h3>
+
+  <ul>
+
+  <li>Probe acak 36 dari 964 URL gambar: <strong>semua 200</strong> — semuanya
+  masih bisa diunduh.</li>
+
+  <li>17 path unik ke <code>webexamples.skilling.us</code> dari webapps:
+  <strong>15 dari 17 hilang di mirror lokal</strong> (404 di
+  <code>/examples/</code>) tapi <strong>200 di server sumber</strong> — zip
+  arsip yang dipakai saat mirror tidak memuat file-file HTML contoh ini.</li>
+
+  <li>117 tautan ke <code>webappexamples.skilling.us</code> adalah
+  <strong>aplikasi PHP live</strong> (form, query string, zip) — tidak bisa
+  dijadikan file statis.</li>
+
+  </ul>
+
+
+  <h3>Rencana (belum dieksekusi)</h3>
+
+  <h4>F1 — Gambar dipindah lokal (964 file)</h4>
+
+  <ul>
+
+  <li>Unduh semua 964 URL unik ke docroot bersama
+  <code>/var/www/html2/drupal8/web/skilling/&lt;domain&gt;/sites/default/files/…</code>
+  (path sumber dipertahankan; nama file di-decode: <code>%20</code>→spasi).
+  Docroot di-share 4 multisite, nginx melayani file statis untuk Host apa
+  pun.</li>
+
+  <li>Rewrite <code>&lt;img src&gt;</code> per situs:
+  <code>https://&lt;domain&gt;.skilling.us/sites/…</code> →
+  <code>/skilling/&lt;domain&gt;/sites/…</code> (relatif → bekerja di semua
+  domain).</li>
+
+  <li>Verifikasi: 0 <code>&lt;img src&gt;</code> ber-URL skilling.us tersisa;
+  sampling path lokal 200; render 0 error.</li>
+
+  </ul>
+
+  <h4>F2 — Tautan lesson diubah lokal (53 tautan)</h4>
+
+  <ul>
+
+  <li>vba (50) + python (1): map slug sumber → alias Indonesia yang sudah ada di
+  DB masing-masing situs.</li>
+
+  <li>web 186 &amp; webapps 440 → <code>styling-images</code> = lesson web nid
+  155 "Penataan Gaya di Gambar" → tautan lintas-situs lokal.</li>
+
+  </ul>
+
+  <h4>F3 — Extend mirror webexamples (15 file + aset)</h4>
+
+  <ul>
+
+  <li>Unduh 15 file hilang + aset yang mereka butuhkan dari server live ke
+  <code>/examples/</code>; verifikasi 200.</li>
+
+  </ul>
+
+  <h4>F4 — Tautan webexamples di webapps (21 tautan, 17 path)</h4>
+
+  <ul>
+
+  <li>Rewrite ke <code>/examples/…</code> lokal (atau domain web-contoh bila
+  sudah aktif) setelah F3 selesai.</li>
+
+  </ul>
+
+  <h4>F5 — webappexamples.skilling.us (117 tautan) — tidak diubah</h4>
+
+  <ul>
+
+  <li>PHP live (form interaktif untuk latihan webapps). Memindah lokal
+  membutuhkan PHP server + DB contoh sendiri — proyek terpisah. Risiko: bila
+  domain sumber mati, latihan hilang. Dicatat sebagai ketergantungan
+  eksternal.</li>
+
+  </ul>
+
+  <h4>F6 — Cache &amp; publikasi</h4>
+
+  <ul>
+
+  <li>TRUNCATE cache_page + cache_dynamic_page_cache setelah setiap batch
+  rewrite; verifikasi render 0 error; laporan dipublikasi ke repo ini.</li>
+
+  </ul>
+
+
+  <h3>Estimasi</h3>
+
+  <p>F1 adalah bongkahan terbesar (964 unduhan + 4 rewrite DB ~250 node); F2–F4
+  kecil. Semua reversibel (backup body per situs sebelum rewrite).</p>

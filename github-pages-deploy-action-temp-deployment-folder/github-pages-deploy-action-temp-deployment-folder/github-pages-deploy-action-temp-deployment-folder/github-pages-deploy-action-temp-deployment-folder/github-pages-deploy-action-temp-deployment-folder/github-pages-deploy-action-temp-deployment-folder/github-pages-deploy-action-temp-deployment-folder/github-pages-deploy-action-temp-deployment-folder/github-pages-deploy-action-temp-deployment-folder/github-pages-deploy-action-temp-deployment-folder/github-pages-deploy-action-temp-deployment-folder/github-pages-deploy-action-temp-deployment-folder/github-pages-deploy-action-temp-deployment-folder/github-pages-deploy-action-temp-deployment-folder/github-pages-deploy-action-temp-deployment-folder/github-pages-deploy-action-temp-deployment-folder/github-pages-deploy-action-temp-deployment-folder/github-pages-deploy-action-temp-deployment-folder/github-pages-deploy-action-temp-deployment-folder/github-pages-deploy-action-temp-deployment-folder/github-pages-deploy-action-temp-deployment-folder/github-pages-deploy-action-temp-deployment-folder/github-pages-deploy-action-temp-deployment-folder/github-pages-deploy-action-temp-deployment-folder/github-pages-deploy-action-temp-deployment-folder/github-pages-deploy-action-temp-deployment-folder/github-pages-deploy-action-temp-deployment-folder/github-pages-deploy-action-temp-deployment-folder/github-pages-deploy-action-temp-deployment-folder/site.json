@@ -602,6 +602,22 @@
       }
     },
     {
+      "id": "item-6140a5d1-80f1-427d-a145-bfdf281e97f9",
+      "indent": 0,
+      "location": "pages/item-6140a5d1-80f1-427d-a145-bfdf281e97f9/index.html",
+      "slug": "laporan-t1-kloning-3-pelajaran-hilang",
+      "order": 0,
+      "parent": null,
+      "title": "Laporan T1: Kloning 3 pelajaran hilang (debugging, feedback, exercises)",
+      "description": "",
+      "metadata": {
+        "created": 1794743292,
+        "updated": 1794743292,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

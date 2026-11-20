@@ -73,3 +73,11 @@
 <li><strong>Belum</strong> (F5–F8): book outline (halaman belum tampak di sidebar — chapter baru butuh bid=331, pid=331, weight 4, anak depth 3 urut sumber), alias pin pathauto=0, dedupe, verifikasi pasca-cron, dan halaman HAXCMS outcome.</li>
 <li><strong>Pelajaran baru dicatat</strong> di skill drupal-lesson-authoring: MT per-leaf-block dengan placeholder ⟪n⟫, bentuk blok tag, id widget = internal name, principle body = summary, /tmp bersama antar sesi paralel, SIGPIPE dari <code>| head</code> saat build.</li>
 </ul>
+<h3>8. Hasil implementasi F5–F8 (2026-11-15)</h3>
+<ul>
+<li><strong>F5 — book outline</strong>: chapter "Pustaka validasi" (nid 508) outline depth 2, pid=331; 10 anak (nid 509–518) depth 3 pid=508 weight 1–10 urut sidebar sumber. Sesi paralel telah mengisi weight 4–8 (Sihir front-end, Akun pengguna, File log, Apa selanjutnya?, Tips dan trik) — bobot digeser: Pustaka validasi = 4, kelima bab itu = 5–9, sesuai urutan sumber.</li>
+<li><strong>F6 — alias pin + dedupe</strong>: 22 node dipin (11 lesson manual source-slug pathauto=0 + 11 dep nodes dengan alias pathauto-nya: exercise 3, principle 2, pattern 2, mcq 4). Dedupe global menghapus 26 baris duplikat (titipan save pin + 4 /form/contact bawaan).</li>
+<li><strong>F7 — verifikasi</strong>: cache:rebuild → 18 URL = 200 (11 lesson + 2 pattern + 2 principle + 3 exercise). DB: tiap lesson persis 2 baris alias (manual + pathauto), book rows benar. <code>drush cron</code> dijalankan → pasca-cron 22 baris alias utuh, HTTP tetap 200 (pin pathauto=0 bertahan terhadap BookUpdateTracker).</li>
+<li><strong>F8 — outcome</strong>: halaman ini.</li>
+<li>Sisa (opsional): cek halaman hasil secara menyeluruh per gerbang h3/pause/char sudah dilakukan di F4 (11/11 PASS); bab database-apps &amp; capturing-data masih dalam bentuk plan.</li>
+</ul>
