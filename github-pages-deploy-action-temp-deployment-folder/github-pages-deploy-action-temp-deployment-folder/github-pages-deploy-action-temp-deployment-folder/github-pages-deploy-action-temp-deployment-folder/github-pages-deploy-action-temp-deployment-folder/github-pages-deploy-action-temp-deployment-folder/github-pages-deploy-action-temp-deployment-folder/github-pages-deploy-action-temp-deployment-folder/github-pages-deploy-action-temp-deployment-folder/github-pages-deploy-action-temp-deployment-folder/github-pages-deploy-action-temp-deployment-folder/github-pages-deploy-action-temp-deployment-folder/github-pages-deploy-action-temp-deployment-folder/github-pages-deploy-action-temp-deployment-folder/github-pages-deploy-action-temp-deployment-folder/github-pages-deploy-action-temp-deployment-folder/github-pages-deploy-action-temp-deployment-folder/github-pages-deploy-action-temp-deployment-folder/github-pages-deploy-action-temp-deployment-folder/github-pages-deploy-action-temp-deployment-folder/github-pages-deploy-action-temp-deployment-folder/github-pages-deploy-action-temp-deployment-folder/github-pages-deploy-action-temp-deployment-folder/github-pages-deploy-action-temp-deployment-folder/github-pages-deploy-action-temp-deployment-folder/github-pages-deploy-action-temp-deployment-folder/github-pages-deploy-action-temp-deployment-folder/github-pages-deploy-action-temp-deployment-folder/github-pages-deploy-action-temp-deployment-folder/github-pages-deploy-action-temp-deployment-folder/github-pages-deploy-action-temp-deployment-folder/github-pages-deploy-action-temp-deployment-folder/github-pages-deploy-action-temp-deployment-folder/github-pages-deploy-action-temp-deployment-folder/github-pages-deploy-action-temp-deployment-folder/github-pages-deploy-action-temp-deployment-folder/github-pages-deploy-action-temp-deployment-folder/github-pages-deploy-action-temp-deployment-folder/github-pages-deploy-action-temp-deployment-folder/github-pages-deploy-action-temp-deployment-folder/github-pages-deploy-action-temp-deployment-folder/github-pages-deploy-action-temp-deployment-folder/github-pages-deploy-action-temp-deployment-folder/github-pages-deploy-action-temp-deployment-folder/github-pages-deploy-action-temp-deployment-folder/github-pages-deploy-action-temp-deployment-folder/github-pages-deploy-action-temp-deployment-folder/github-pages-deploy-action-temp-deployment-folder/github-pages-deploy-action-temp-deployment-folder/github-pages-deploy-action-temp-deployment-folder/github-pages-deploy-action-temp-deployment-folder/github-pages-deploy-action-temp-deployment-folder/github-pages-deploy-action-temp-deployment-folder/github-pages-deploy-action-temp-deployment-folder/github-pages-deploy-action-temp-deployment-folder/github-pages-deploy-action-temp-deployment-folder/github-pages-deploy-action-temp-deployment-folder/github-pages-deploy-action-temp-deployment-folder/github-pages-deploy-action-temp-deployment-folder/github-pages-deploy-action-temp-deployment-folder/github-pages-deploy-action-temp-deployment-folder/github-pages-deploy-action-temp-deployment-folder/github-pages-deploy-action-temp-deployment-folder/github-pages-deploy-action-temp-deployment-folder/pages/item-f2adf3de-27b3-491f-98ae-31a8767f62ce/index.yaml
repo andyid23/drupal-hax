@@ -1,0 +1,197 @@
+id: item-f2adf3de-27b3-491f-98ae-31a8767f62ce
+indent: 0
+location: pages/item-f2adf3de-27b3-491f-98ae-31a8767f62ce/index.yaml
+slug: cara-cek-container-vhost-nginx
+order: 0
+parent: null
+title: Cara Cek Container Aktif, vhost nginx & Arti /data/compose
+description: ''
+metadata:
+  created: 1793054609
+  updated: 1793054609
+  images: []
+  videos: []
+content: >-
+  <h2>Pertanyaan</h2>
+
+  <p>Bagaimana cara melihat container yang aktif dan vhost nginx apa saja yang
+  disajikannya? Apa isi <code>ls /data/compose/</code> (10 12 14 16 19 23 30 32
+  33 34 drupal drupal-darinfs drupal8 drupal8a)? Apa arti tabel Volumes
+  container <code>drupal_web_server</code>?</p>
+
+
+  <h2>1. Cara cek container aktif &amp; vhost-nya (home.pesanweb.my.id)</h2>
+
+  <pre><code># Project compose mana yang aktif
+
+  ssh home.pesanweb.my.id "docker compose ls -a"
+
+  #  → drupal811  running(6)  /data/compose/34/docker-compose.yml
+
+  #  → root       running(1)  /root/portainer-compose.yaml
+
+
+  # Container + project + dir kerja masing-masing
+
+  docker ps --format '{{.Names}}\t{{.Label
+  "com.docker.compose.project"}}\t{{.Label
+  "com.docker.compose.project.working_dir"}}'
+
+
+  # Port mapping container nginx
+
+  docker port drupal_web_server
+
+  #  → 80/tcp -&gt; 0.0.0.0:8086   81/tcp -&gt; 0.0.0.0:8087
+
+
+  # Mount apa saja yang dipakai container (bind vs volume)
+
+  docker inspect drupal_web_server --format '{{json .Mounts}}'
+
+
+  # CARA PALING LENGKAP: dump seluruh config nginx yang benar-benar aktif
+
+  docker exec drupal_web_server nginx -T | grep -E 'listen|server_name|root
+  |fastcgi_pass'</code></pre>
+
+  <p>Di mesin swarm (192.168.2.57) namanya service, bukan compose: <code>docker
+  service ls</code>, <code>docker service ps &lt;nama&gt;</code>, <code>docker
+  service inspect --format '{{json .Spec.TaskTemplate.ContainerSpec.Mounts}}'
+  &lt;nama&gt;</code>.</p>
+
+
+  <h2>2. Hasil <code>nginx -T</code> — vhost aktif
+  <code>drupal_web_server</code></h2>
+
+  <table>
+
+  <thead><tr><th>listen</th><th>server_name</th><th>root</th><th>fastcgi_pass</th></tr></thead>
+
+  <tbody>
+
+  <tr><td>80 (host
+  8086)</td><td>localhost</td><td>/var/www/html/drupal11/web</td><td>drupal_fpm:9000
+  (Drupal 11)</td></tr>
+
+  <tr><td>81 (host
+  8087)</td><td>localhost</td><td>/var/www/html2/drupal8/web</td><td>drupal_fpm7:9000
+  (Drupal 8)</td></tr>
+
+  </tbody>
+
+  </table>
+
+  <p><strong>Poin penting:</strong> nginx di sini <em>bukan</em> memilih
+  berdasarkan domain — <code>server_name localhost</code> artinya catch-all.
+  Yang membedakan domain adalah <strong>port</strong> (80 vs 81), dan pembeda
+  domain di dalam Drupal 8 dilakukan oleh <strong>multisite</strong> lewat Host
+  header (<code>sites/web.pesanweb.my.id/</code>,
+  <code>sites/belajarweb.pesanweb.my.id/</code>). Jadi "vhost" sesungguhnya di
+  mesin ini = 2 blok server berbasis port.</p>
+
+
+  <h2>3. Penjelasan isi <code>/data/compose/</code></h2>
+
+  <p>Bukti: <code>docker compose ls</code> hanya menampilkan
+  <strong>drupal811</strong> (dari <code>/data/compose/34/</code>) + portainer.
+  Sisanya bukan project aktif:</p>
+
+  <table>
+
+  <thead><tr><th>Folder</th><th>Status</th><th>Isi / fungsi</th></tr></thead>
+
+  <tbody>
+
+  <tr><td><code>34</code></td><td><strong>AKTIF</strong></td><td>Project
+  <code>drupal811</code> yang berjalan sekarang (drupal8-src, drupal11-src,
+  nginx-conf, db-backup, drupal-data)</td></tr>
+
+  <tr><td><code>10 12 14 16 19 23 30 32
+  33</code></td><td>inaktif</td><td>Snapshot deployment lama (Des 2025),
+  struktur serupa (drupal8-src, nginx-conf, db-backup…). Arsip/rollback —
+  <strong>jangan</strong> dihapus asal</td></tr>
+
+  <tr><td><code>drupal-darinfs</code></td><td>inaktif</td><td>Snapshot paling
+  lengkap (ada drupal8_data, drupal8_files, dump, images, import, private,
+  snippets, template). Owner <code>nobody:nogroup</code> → hasil copy/rsync
+  (kemungkinan dari NFS)</td></tr>
+
+  <tr><td><code>drupal</code>, <code>drupal8</code>,
+  <code>drupal8a</code></td><td>—</td><td>Folder kosong</td></tr>
+
+  </tbody>
+
+  </table>
+
+  <p>Pola penomoran = urutan deployment; tiap kali deploy baru dibuat folder
+  nomor baru, folder lama ditinggalkan (bukan dihapus). Hanya folder yang ada di
+  <code>docker compose ls</code> + <code>docker ps</code> label
+  <code>working_dir</code>-nya yang benar-benar jalan.</p>
+
+
+  <h2>4. Penjelasan tabel Volumes <code>drupal_web_server</code></h2>
+
+  <table>
+
+  <thead><tr><th>Host/volume</th><th>Path di container</th><th>Jenis &amp;
+  guna</th></tr></thead>
+
+  <tbody>
+
+  <tr><td><code>/data/compose/34/nginx-conf</code></td><td>/etc/nginx/conf.d</td><td><strong>bind</strong>
+  — config vhost. Edit di host, reload nginx, langsung berlaku</td></tr>
+
+  <tr><td><code>/data/compose/34/drupal11-src</code></td><td>/var/www/html/drupal11</td><td><strong>bind</strong>
+  — kode Drupal 11</td></tr>
+
+  <tr><td><code>/data/compose/34/drupal8-src</code></td><td>/var/www/html2/drupal8</td><td><strong>bind</strong>
+  — kode Drupal 8 + semua folder multisite (<code>web/sites/*</code>)</td></tr>
+
+  <tr><td><code>drupal811_drupal11_files_volume</code></td><td>/var/www/html/drupal11/web/sites/default/files</td><td><strong>named
+  volume</strong> — upload D11. Terpisah dari kode → aman saat ganti/update
+  source</td></tr>
+
+  <tr><td><code>drupal811_drupal8_files_volume</code></td><td>/var/www/html2/drupal8/web/sites/default/files</td><td><strong>named
+  volume</strong> — upload D8 situs default</td></tr>
+
+  </tbody>
+
+  </table>
+
+  <p>Volume named lengkap di mesin ini:
+  <code>drupal811_drupal8_files_volume</code>,
+  <code>drupal811_drupal11_files_volume</code>,
+  <code>drupal811_drupal11_config_sync_volume</code> (sync config D11),
+  <code>drupal811_drupal_db_data</code> (data MariaDB).</p>
+
+  <p><strong>Catatan penting:</strong> files untuk situs multisite
+  (<code>web.pesanweb.my.id</code>, <code>belajarweb.pesanweb.my.id</code>)
+  <em>bukan</em> di named volume — ikut bind mount <code>drupal8-src</code> di
+  host:
+  <code>/data/compose/34/drupal8-src/web/sites/&lt;domain&gt;/files/</code>.
+  Hanya situs <code>default</code> yang files-nya pakai named volume.</p>
+
+
+  <h2>5. Ringkasan ekosistem dua mesin</h2>
+
+  <table>
+
+  <thead><tr><th></th><th>home.pesanweb.my.id</th><th>192.168.2.57</th></tr></thead>
+
+  <tbody>
+
+  <tr><td>Orkestrator</td><td>docker compose (project <code>drupal811</code>,
+  dir <code>/data/compose/34</code>)</td><td>docker swarm (stack
+  <code>drupal-nfs</code>, dir <code>/data/compose/98</code>)</td></tr>
+
+  <tr><td>Routing domain</td><td>Port host 8086/8087 + multisite
+  Drupal</td><td>Nginx Proxy Manager (tabel <code>proxy_host</code>) → 8087 →
+  container :81</td></tr>
+
+  <tr><td>Situs D8</td><td>web.pesanweb.my.id (DB
+  drupal8)</td><td>belajarweb.pesanweb.my.id (DB belajarweb)</td></tr>
+
+  </tbody>
+
+  </table>

@@ -1,0 +1,18 @@
+<h2>Perbaikan kontainer kode &amp; gambar webapps (19 November 2026)</h2>
+
+<h3>1. Kontainer kode: tag nyata alih-alih teks (penyebab jarak)</h3>
+<p>Gejala pada <code>webapps.pesanweb.my.id/lesson/record-list</code>: baris kode di <code>skilling-code-container</code> tampak kosong/berjarak. Penyebab: body tersimpan dengan escaping satu lapis (<code>&amp;lt;table&amp;gt;</code>) sedangkan Skilling meng-unescape satu kali saat render — tag <code>&lt;table&gt;</code> dst. diparse browser sebagai elemen nyata (tak terlihat), bukan teks kode. Sumber menyimpan dua lapis (<code>&amp;amp;lt;</code>).</p>
+<p>Perbaikan: 18 lesson webapps di-upgrade ke double-escape + indentasi <code>&amp;nbsp;</code> dipulihkan sesuai sumber. Verifikasi render <code>record-list</code>: baris kini tampil sebagai teks (<code>&lt;li&gt;&amp;lt;table&amp;gt;</code> dst.) dengan indentasi benar. Lesson python (18) dan vba (2) yang sempat terflag ternyata benar saat dicek render — tidak diubah. Web: 0 kasus.</p>
+
+<h3>2. Gambar webapps: 452 file diunduh</h3>
+<p>Audit seluruh render (126 halaman, 661 path gambar lokal): 452 path 404 — berasal dari paragraf sumber yang disisipkan pada putaran restorasi tautan (atribut <code>src</code> tidak ikut unduh) dan beberapa referensi lama. Semua 452 file diunduh dari domain sumber ke <code>/skilling/&lt;domain&gt;/sites/…</code> (total 1.541 file lokal). Hasil verifikasi: 450 dari 452 kini HTTP 200; 2 file memang mati di sumber (404): <code>pokemon-petting-zoo-tickets/mountain-lions.jpg</code> dan <code>doggos-like-bootstrap/output-bootstrap-wide.png</code> — biarkan mengarah ke path lokal.</p>
+
+<h3>3. clubs.php (goats) — status</h3>
+<p><code>/phpexamples/capturing-data/goats/</code> masih mirror statis hasil render: halaman daftar klub tampil (Butting, Fashion, Singing, Sleeping, Theoretical Physics), tetapi <strong>Add club / View / Edit tidak berfungsi</strong> karena PHP asli sumber tidak bisa diunduh (sumber mengirim hasil render). Solusi mengikuti pola books (H1): pakai DB <code>webappexamples</code> yang sudah ada, unduh dump schema <code>goats.sql.zip</code> dari lampiran sumber, import tabel, tulis ulang halaman daftar/view/edit/add dengan PDO, verifikasi lewat POST nyata, bersihkan baris uji.</p>
+
+<h3>Rencana (menunggu persetujuan)</h3>
+<ul>
+<li><strong>G1</strong> — unduh &amp; import <code>goats.sql.zip</code> ke DB <code>webappexamples</code>; cek isi tabel (clubs, comedians, relasi).</li>
+<li><strong>G2</strong> — tulis ulang halaman goats yang butuh DB: daftar klub, view, add, edit (+ comedians/goats bila ada di dump) dengan PDO; label &amp; perilaku mengikuti render sumber.</li>
+<li><strong>G3</strong> — verifikasi CRUD via POST nyata lewat nginx (Host header), lalu bersihkan baris uji; catat di laporan ini.</li>
+</ul>
