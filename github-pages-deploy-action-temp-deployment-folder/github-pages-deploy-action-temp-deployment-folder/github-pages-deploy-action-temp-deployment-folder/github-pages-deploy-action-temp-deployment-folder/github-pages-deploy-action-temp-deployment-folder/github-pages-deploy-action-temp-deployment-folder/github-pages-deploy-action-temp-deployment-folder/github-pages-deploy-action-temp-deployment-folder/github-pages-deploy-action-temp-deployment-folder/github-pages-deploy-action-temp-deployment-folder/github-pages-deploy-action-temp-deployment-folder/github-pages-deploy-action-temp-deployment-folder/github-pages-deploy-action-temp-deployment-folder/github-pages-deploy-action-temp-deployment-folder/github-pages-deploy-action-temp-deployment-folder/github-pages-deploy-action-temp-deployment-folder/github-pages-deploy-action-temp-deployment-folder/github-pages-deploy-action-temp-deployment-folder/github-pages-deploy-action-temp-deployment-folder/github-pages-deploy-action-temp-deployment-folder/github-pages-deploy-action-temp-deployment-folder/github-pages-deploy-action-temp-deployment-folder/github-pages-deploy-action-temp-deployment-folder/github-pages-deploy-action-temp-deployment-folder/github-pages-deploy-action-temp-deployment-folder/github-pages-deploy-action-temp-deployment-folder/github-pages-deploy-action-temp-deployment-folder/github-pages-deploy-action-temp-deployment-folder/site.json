@@ -618,6 +618,38 @@
       }
     },
     {
+      "id": "item-839f857b-2d53-4d88-b26c-06a9ccac48d2",
+      "indent": 0,
+      "location": "pages/item-839f857b-2d53-4d88-b26c-06a9ccac48d2/index.html",
+      "slug": "audit-python-pesanweb",
+      "order": 0,
+      "parent": null,
+      "title": "Audit python.pesanweb.my.id vs python.skilling.us dan perbaikan",
+      "description": "",
+      "metadata": {
+        "created": 1794755541,
+        "updated": 1794755541,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
+      "id": "item-bd8f6810-cc71-4bb4-a2de-7025a644031c",
+      "indent": 0,
+      "location": "pages/item-bd8f6810-cc71-4bb4-a2de-7025a644031c/index.html",
+      "slug": "perbaikan-lesson-templat-halaman-error-webapps",
+      "order": 0,
+      "parent": null,
+      "title": "Perbaikan lesson Templat halamannya (node 410 webapps)",
+      "description": "",
+      "metadata": {
+        "created": 1794759163,
+        "updated": 1794759163,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

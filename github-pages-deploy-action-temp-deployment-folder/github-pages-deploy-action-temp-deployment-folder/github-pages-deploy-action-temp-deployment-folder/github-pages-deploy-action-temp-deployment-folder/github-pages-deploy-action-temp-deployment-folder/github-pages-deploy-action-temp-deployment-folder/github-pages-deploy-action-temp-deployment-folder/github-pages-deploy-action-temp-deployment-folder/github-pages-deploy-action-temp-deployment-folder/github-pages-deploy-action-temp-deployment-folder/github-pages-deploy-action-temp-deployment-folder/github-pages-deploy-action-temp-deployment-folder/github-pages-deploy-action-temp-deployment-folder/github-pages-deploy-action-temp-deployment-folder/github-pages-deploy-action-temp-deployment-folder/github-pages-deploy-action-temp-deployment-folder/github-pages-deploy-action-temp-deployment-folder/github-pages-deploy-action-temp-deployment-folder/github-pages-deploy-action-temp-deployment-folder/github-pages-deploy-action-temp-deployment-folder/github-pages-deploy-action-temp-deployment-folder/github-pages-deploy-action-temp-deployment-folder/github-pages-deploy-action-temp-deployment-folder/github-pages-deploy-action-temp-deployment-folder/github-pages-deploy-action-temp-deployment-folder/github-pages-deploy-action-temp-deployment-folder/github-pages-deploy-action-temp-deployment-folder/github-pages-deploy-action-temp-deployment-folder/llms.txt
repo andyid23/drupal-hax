@@ -47,6 +47,8 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Node karakter duplikat memutus render lesson](https://localhost/mysite/pages/item-3da379ff-c61a-41dd-8bd4-e811cff538e7/index.md)
 - [Plan klon Validation library ke webapps](https://localhost/mysite/pages/item-5024fc15-00d5-44a3-aacd-2a5047228d3a/index.md)
 - [Laporan T1: Kloning 3 pelajaran hilang (debugging, feedback, exercises)](https://localhost/mysite/pages/item-6140a5d1-80f1-427d-a145-bfdf281e97f9/index.md)
+- [Audit python.pesanweb.my.id vs python.skilling.us dan perbaikan](https://localhost/mysite/pages/item-839f857b-2d53-4d88-b26c-06a9ccac48d2/index.md)
+- [Perbaikan lesson Templat halamannya (node 410 webapps)](https://localhost/mysite/pages/item-bd8f6810-cc71-4bb4-a2de-7025a644031c/index.md)
 - [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional
