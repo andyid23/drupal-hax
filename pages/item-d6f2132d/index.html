@@ -81,3 +81,12 @@
 <li>Verifikasi render: h3 = 10 (kembali benar), h4 = 0, pause 16, karakter 8, kode tampil utuh, 0 dari 3 class error, alias 200.</li>
 <li>Catatan penggunaan: saat mengedit lesson di editor Drupal, tempel/ubah HTML lewat tombol <strong>Source (‹›)</strong> CKEditor; hindari mengedit di mode visual karena CKEditor merformat ulang tag textile &amp; entitas (tercatat di skill).</li>
 </ul>
+
+<h2>Update: enter-php retranslasi + tautan cats.html (21 November 2026)</h2>
+<table>
+<tr><th>Item</th><th>Hasil</th></tr>
+<tr><td><strong>enter-php (nid 414)</strong></td><td>✅ akar masalah: sesi clone lama menerjemahkan per-text-node — kalimat ber-inline-tag jadi campuran Indonesia/Inggris ("PHP ada di antara<code>&lt;?php</code> and … This is so the PHP interpreter…", "hat is, there is no <code>Dim</code> statement") dan spasi hilang di sekitar tautan ("beberapa<a>standar pengkodean</a>dalam"). Body diretranslasi per-leaf (mtlib, kontainer kode di-stash — 8 kontainer &amp; 48 li double-escape utuh). Render kini 100% Indonesia, heading 6×h3 + 1×h5 persis sumber (perbaikan juga: serialization mtlib membuat marker self-closing yang menurunkan heading ke h4 — dinormalkan ke <code>&lt;br /&gt;</code> + marker pasangan), 0 error</td></tr>
+<tr><td><strong>Tautan cats.html</strong></td><td>✅ page-template (410): <code>dog.html</code> → <code>cats.html</code> (tautan "coba halamannya"); daftar tautan contoh kini cats/goats/llamas — semuanya target blank</td></tr>
+<tr><td><strong>Mode biasa vs incognito</strong></td><td>Server mengirim <code>Cache-Control: no-cache, must-revalidate</code> dan render terkini benar — yang beda hanya cache lokal browser; normal mode masih memakai salinan lama. Tekan <strong>Ctrl+F5</strong> (hard refresh) atau hapus cache situs</td></tr>
+</table>
+<p><strong>Cara kerja perbaikan (jawaban pertanyaan)</strong>: skrip Python/PHP dijalankan di sandbox lokal (/opt/data/cache/scratch — otomatis dibersihkan setelah 24 jam idle), dikirim ke server via scp ke <code>/tmp</code>, dieksekusi lewat <code>docker exec d8_fpm</code>, hasilnya dibaca kembali. File di server hanya skrip + dump kecil di /tmp (puluhan KB) — disk bebas ±181 GB; tidak ada yang berjalan permanen.</p>

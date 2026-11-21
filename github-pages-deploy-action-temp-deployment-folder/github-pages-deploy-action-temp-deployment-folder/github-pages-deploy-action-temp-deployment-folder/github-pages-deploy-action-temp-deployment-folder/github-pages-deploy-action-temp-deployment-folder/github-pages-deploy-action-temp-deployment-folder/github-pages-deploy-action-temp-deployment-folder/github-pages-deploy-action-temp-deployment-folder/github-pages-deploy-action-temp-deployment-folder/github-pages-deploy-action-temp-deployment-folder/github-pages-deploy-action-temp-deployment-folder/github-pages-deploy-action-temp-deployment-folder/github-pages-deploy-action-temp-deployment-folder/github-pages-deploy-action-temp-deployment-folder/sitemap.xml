@@ -258,4 +258,16 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/migrasi-aset-skilling-us-lokal</loc>
+    <lastmod>2026-11-16T23:36:14.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://localhost/mysite/rencana-books-app-mysql-tautan-keluar</loc>
+    <lastmod>2026-11-17T11:34:56.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>

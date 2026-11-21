@@ -50,3 +50,36 @@
 
 <h3>Estimasi</h3>
 <p>F1 adalah bongkahan terbesar (964 unduhan + 4 rewrite DB ~250 node); F2–F4 kecil. Semua reversibel (backup body per situs sebelum rewrite).</p>
+
+<h2>Update: jawaban pertanyaan lanjutan (2026-11)</h2>
+<h4>Ukuran file gambar</h4>
+<p>HEAD-request semua 964 URL: <strong>963 file berhasil (200), total 25,4 MB</strong> — vba 8,8 MB (452 file), webapps 14,2 MB (451), python 2,3 MB (54), learnweb 0,1 MB (6). Satu URL 404: <code>python.skilling.us/.../bonus-plotting/scatter-goats.png</code> (perlu substitusi — dicek saat build). Sangat kecil.</p>
+<h4>Sisa harddisk server</h4>
+<p>Root 196 GB: terpakai 5,8 GB, <strong>bebas 181 GB (4%)</strong>. Menambah 25 MB gambar + mirror PHP tidak bermasalah sama sekali.</p>
+<h4>Bisa "rubah gambar jadi Indonesia"?</h4>
+<p><strong>Tidak bisa otomatis.</strong> Gambar-gambar ini adalah screenshot perangkat lunak (Excel, VBE, cPanel, phpMyAdmin, Chrome DevTools) — teks Inggrisnya "terbakar" di dalam piksel. Opsi:</p>
+<ul>
+<li>Biarkan Inggris — praktik umum di pendidikan TI Indonesia (istilah menu tetap Inggris saat praktik nyata).</li>
+<li>Re-screenshot manual dengan UI bahasa Indonesia, satu per satu — kerja manusia, tidak terotomasi. Struktur folder lokal (F1) memudahkan ini: ganti file dengan nama sama, langsung live.</li>
+<li>Foto/diagram (kambing, karakter, diagram alur) tidak berteks — tidak perlu diubah.</li>
+</ul>
+<h4>Path folder sendiri untuk dimodifikasi</h4>
+<p>Ya. F1 menempatkan file di docroot bersama: di dalam container <code>/var/www/html2/drupal8/web/skilling/&lt;domain&gt;/sites/default/files/…</code>, di host <code>/data/compose/34/drupal8-src/web/skilling/…</code> (bind mount — bertahan lintas rebuild container). File biasa: bisa diedit, diganti, atau dihapus kapan saja, efeknya langsung live (file statis nginx).</p>
+<h4>webappexamples (PHP live) bisa diinstall lokal?</h4>
+<p><strong>Bisa.</strong> Sumbernya PHP murni + sebagian butuh MySQL. Dua opsi:</p>
+<ul>
+<li><strong>Opsi A (disarankan): pakai php-fpm yang sudah ada.</strong> nginx drupal_web_server sudah meneruskan semua <code>.php</code> ke <code>d8_fpm:9000</code> (PHP 7.4) dengan <code>$document_root</code> = docroot bersama — cukup taruh file di <code>web/phpexamples/…</code> dan langsung dieksekusi, tanpa container baru. Database: mariadb (<code>drupal_database</code>) sudah ada — buat DB contoh, import dump yang disediakan sumber (goats.sql.zip, nobody-db.sql, dsb.), atur kredensial lewat file konfig kecil.</li>
+<li><strong>Opsi B: container php:apache terpisah</strong> — isolasi lebih bersih; tambah service compose + routing.</li>
+</ul>
+<p>Risiko: kode PHP lawas (era 2020, PHP 7.x — fpm 7.4 cocok); app ber-DB perlu edit kredensial; unduhan = seluruh pohon situs (dicroawl saat build, diperkirakan puluhan MB).</p>
+
+<h2>Rencana revisi (belum dieksekusi)</h2>
+<ul>
+<li><strong>F1</strong> — 963 gambar (25,4 MB) → <code>/skilling/&lt;domain&gt;/…</code> + rewrite <code>&lt;img src&gt;</code> 4 situs; tangani 1 file 404.</li>
+<li><strong>F2</strong> — 53 tautan lesson → alias lokal.</li>
+<li><strong>F3</strong> — extend mirror: 15 file webexamples hilang + aset → <code>/examples/</code>.</li>
+<li><strong>F4</strong> — 21 tautan webexamples di webapps → mirror lokal.</li>
+<li><strong>F5 (baru, menggantikan "tidak diubah")</strong> — Mirror webappexamples lokal: crawl seluruh pohon, unduh ke <code>/phpexamples/</code>, jalankan via php-fpm eksisting, buat DB contoh + import dump, rewrite 117 tautan, verifikasi 200 per app.</li>
+<li><strong>F6</strong> — TRUNCATE cache tiap batch + verifikasi render + publikasi laporan akhir.</li>
+</ul>
+<p>Total tambahan disk: &lt; 100 MB dari 181 GB bebas.</p>
