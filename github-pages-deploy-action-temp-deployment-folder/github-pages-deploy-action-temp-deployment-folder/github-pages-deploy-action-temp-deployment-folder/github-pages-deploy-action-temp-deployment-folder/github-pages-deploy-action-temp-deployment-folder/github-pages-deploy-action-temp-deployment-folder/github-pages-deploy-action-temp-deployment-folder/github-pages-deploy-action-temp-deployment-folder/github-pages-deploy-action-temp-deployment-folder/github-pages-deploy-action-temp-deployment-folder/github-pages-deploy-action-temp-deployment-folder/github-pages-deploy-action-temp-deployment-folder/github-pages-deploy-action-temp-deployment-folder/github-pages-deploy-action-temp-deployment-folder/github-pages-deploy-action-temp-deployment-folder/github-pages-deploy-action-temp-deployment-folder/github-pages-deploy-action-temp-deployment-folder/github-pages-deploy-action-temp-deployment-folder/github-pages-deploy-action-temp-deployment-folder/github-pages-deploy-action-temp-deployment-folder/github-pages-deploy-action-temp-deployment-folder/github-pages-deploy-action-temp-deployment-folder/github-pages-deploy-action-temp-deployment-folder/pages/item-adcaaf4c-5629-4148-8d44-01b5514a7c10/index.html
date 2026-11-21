@@ -37,10 +37,11 @@
 <li>20 URL dicek: semua HTTP 200</li>
 </ul>
 
-<h2>Yang tersisa</h2>
+<h2>Yang tersisa → sudah tuntas</h2>
 <ul>
-<li>8 lesson PHP (enter-php, getting-data, conditional-styles, no-not-there, old-school-debugging, optional-phpstorm-and-xdebug, more-conditions, appending-file, log-record-format) masih membawa nama variabel hasil terjemahan (<code>$anjing</code>, <code>$cutestDog</code>, <code>$sekarang</code>, <code>$Namapengguna</code>) — konsisten dengan prosenya, tapi tidak sama dengan sumber; memulihkan ke Inggris menuntut rombakan prosa juga</li>
+<li>9 lesson PHP (enter-php, getting-data, conditional-styles, no-not-there, old-school-debugging, optional-phpstorm-and-xdebug, more-conditions, appending-file, log-record-format): semua kontainer kode direstorasi dari sumber — nama variabel kembali bahasa Inggris (<code>$dogs</code>, <code>$errorMessage</code>, <code>$salesTaxRate</code>, <code>$now</code>, <code>$userName</code>, dst.), komentar PHP diterjemahkan dengan <strong>proteksi identifier</strong> (variabel di-stash sebelum MT, contoh hasil: <code>// Buat $errorMessage.</code>).</li>
+<li>Verifikasi final: 0 kontainer dengan identifier terjemahan di seluruh 33 lesson yang diperbaiki; 15 halaman di-render ulang — 0 sampah, 0 parser error.</li>
+<li>Pelajaran tambahan: MT komentar yang tidak melindungi <code>$variabel</code> justru MENERJEMAHKAN nama variabel di dalam komentar ("<code>// Create $product</code>" menjadi "<code>$produk</code>") — pipeline harus stash identifier sebelum MT.</li>
 </ul>
-
 <h2>Fold ke skill</h2>
 <p>Skill <code>drupal-lesson-authoring</code> v1.4.0: konvensi double-escape, jebakan Textile <code>--</code>, stash-kontainer-sebelum-MT, dan prosedur perbaikan batch (scanner flag, restore posisional dari sumber, apply + pin alias + dedupe + rebuild, verifikasi render).</p>

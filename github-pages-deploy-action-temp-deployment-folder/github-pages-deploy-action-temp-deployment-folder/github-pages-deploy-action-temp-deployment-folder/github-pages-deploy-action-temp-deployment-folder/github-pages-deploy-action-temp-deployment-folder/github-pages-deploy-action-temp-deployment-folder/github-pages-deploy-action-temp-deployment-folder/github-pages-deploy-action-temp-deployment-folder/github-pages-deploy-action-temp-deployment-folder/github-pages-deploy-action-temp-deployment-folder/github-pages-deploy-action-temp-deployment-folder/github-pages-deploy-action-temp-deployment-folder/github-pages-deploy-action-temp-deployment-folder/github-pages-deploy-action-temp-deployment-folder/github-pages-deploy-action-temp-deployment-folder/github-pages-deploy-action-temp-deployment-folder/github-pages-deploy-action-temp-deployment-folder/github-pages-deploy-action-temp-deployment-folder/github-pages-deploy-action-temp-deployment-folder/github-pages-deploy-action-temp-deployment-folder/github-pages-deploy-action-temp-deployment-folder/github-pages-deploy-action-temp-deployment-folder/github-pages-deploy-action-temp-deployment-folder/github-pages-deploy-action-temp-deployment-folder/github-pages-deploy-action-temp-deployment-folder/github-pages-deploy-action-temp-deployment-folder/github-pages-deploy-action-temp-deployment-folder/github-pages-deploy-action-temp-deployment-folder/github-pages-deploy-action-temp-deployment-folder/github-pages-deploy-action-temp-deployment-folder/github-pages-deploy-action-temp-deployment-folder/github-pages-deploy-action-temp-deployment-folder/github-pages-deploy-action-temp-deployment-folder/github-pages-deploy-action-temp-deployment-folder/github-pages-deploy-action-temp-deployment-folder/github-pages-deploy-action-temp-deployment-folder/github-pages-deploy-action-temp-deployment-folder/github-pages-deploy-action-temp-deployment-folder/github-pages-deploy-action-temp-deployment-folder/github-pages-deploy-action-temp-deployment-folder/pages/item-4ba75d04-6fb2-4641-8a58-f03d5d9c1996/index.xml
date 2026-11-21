@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-4ba75d04-6fb2-4641-8a58-f03d5d9c1996</id>
+<indent>0</indent>
+<location>pages/item-4ba75d04-6fb2-4641-8a58-f03d5d9c1996/index.xml</location>
+<slug>kloning-lesson-guard-pattern-ke-vba</slug>
+<order>0</order>
+<parent></parent>
+<title>Kloning lesson guard-pattern ke VBA</title>
+<description></description>
+<metadata>
+<created>1794649687</created>
+<updated>1794649687</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Clone lesson Guard pattern ke vba.pesanweb.my.id</h2>
+<p>Sumber: <a href="https://vba.skilling.us/lesson/guard-pattern">vba.skilling.us/lesson/guard-pattern</a> → target <code>/lesson/guard-pattern</code> (nid 414). Target dicek 404 sebelum dibuat (belum ada node).</p>
+
+<h3>Inventaris sumber vs hasil render</h3>
+<table>
+<tbody><tr><th>Item</th><th>Sumber</th><th>Render</th></tr>
+<tr><td>h3</td><td>2</td><td>2 (0 h2)</td></tr>
+<tr><td>pause</td><td>4</td><td>4</td></tr>
+<tr><td>karakter</td><td>3</td><td>3</td></tr>
+<tr><td>code container</td><td>4</td><td>4</td></tr>
+<tr><td>MCQ</td><td>0</td><td>0</td></tr>
+<tr><td>FIB</td><td>0</td><td>0</td></tr>
+<tr><td>pattern tag</td><td>1</td><td>1</td></tr>
+<tr><td>reflect</td><td>1</td><td>1</td></tr>
+<tr><td>parser error</td><td>—</td><td>0</td></tr>
+</tbody></table>
+
+<h3>Karakter</h3>
+<ul>
+<li>Georgina neutral1 → <code>character_izza_masuk</code> (aturan Adela→Fina, Georgina→Izza).</li>
+<li>Ethan smile2 dan yay1 <strong>dipertahankan</strong> karena node-nya ada di vba (nid 288, 297); dialog diterjemahkan.</li>
+<li>Urutan widget render sama dengan urutan sumber (dicek per posisi, bukan hanya jumlah).</li>
+</ul>
+
+<h3>Gambar selfie-holder</h3>
+<p>Gambar kambing memakai format yang sudah terbukti di node 335-337: <code>&lt;p class="selfie-holder"&gt;&lt;img ... /&gt; ... &lt;/p&gt;</code> — render persis <code>&lt;p class="selfie-holder"&gt;</code> dengan alt/title diterjemahkan ("Tumpukan kambing"). Semua 4 URL gambar eksternal di-HEAD-probe: HTTP 200.</p>
+
+<h3>Dependency baru: pattern_guard (nid 410)</h3>
+<p>Node pattern <code>pattern_guard</code> belum ada di vba, dibuat lebih dulu (situation/needs/provides/summary/action dari halaman sumber, diterjemahkan; komentar kode jadi <code>' Lindungi dari tanpa kambing.</code>). Alias pathauto <code>/pattern/guard-pattern</code> mengembalikan 200.</p>
+
+<h3>Book outline + tabrakan weight</h3>
+<p>Lesson masuk bab Keputusan (nid 392, bid 330). Sesi paralel sempat menambah node 409 (nested-ifs) dan 415 (multiway) sehingga tiga node bertabrakan di weight=2 — prev/next sempat salah arah. Diperbaiki sesuai urutan sumber (multiway → nested-ifs → guard-pattern): 415 w=2, 409 w=3, 414 w=4. Navigasi akhir: prev = If bersarang, Up = Keputusan, tanpa next (basic-validation-strings belum dikloning).</p>
+
+<h3>Alias</h3>
+<p>Satu baris alias untuk nid 414: <code>/lesson/guard-pattern</code> (status=1, langcode=en). Alias manual yang terhapus oleh save tetangga dipulihkan: <code>/lesson/program-pertama</code>, <code>/lesson/dialogs</code>, <code>/lesson/nested-ifs</code>, <code>/lesson/if-bersarang</code>; duplikat <code>/lesson/dialog</code> didedup. Cek akhir: 36 URL lesson/pattern semua HTTP 200.</p>
+
+<h3>Pelajaran untuk runbook</h3>
+<ul>
+<li>Jangan re-run script update PHP untuk "mengecek" — setiap save memicu pathauto lagi; setelah re-run, jalankan ulang alias-fix + cache:rebuild + curl ulang.</li>
+<li>Query weight book <em>tepat sebelum</em> set weight; sesi paralel bisa menambah node di antara query.</li>
+<li>Loop curl per-URL harus jalan di host, bukan di dalam container (docker tidak tersedia di dalam).</li>
+</ul>]]></content>
+</item>
