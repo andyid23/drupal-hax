@@ -1,0 +1,12 @@
+    1  cd ../data/
+    2  cd home
+    3  cd Documents/
+    4  cd git/
+    5  ls
+    6  cd andyid23/
+    7  ls
+    8  cd mysite/
+    9  npm start
+   10  hax start
+   11  hax
+   12  history >> perintah.txt
