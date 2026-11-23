@@ -73,3 +73,11 @@
 <tr><td><strong>E3</strong> — node 344 rebuild</td><td>✅ body dibangun ulang dari sumber <code>software-get</code> (4.663 → 14.189 char): 77 paragraf + 11 h3 + 13 pause + 1 karakter (Ethan dipertahankan) + 2 list, terjemah Indonesia via MT per-leaf (placeholder tag inline), 17 gambar lokal 200/200, 9 tautan luar target blank termasuk getgreenshot.org, judul &amp; alias <code>/lesson/software-get</code> ter-pin (1 duplikat alias dibuang). Render: 0 dari 3 class error</td></tr>
 <tr><td><strong>Editor</strong></td><td>Format <code>skilling</code> = CKEditor aktif, <code>filter_html</code> nonaktif (HTML tempelan tidak dibuang); gunakan tombol <strong>Source (‹›)</strong> saat menempel HTML; perbaikan massal dilakukan programatik</td></tr>
 </table>
+
+<h2>Update: pulihkan node 410 pasca-edit manual CKEditor (20 November 2026 malam)</h2>
+<p>Edit manual via editor Drupal (CKEditor, format <code>skilling</code>) yang hanya menambahkan <code>target="_blank"</code> pada 2 tautan ternyata <strong>merombak seluruh markup body</strong>: 10 heading h3 berubah jadi h4 (heading halaman melompat level), penanda offset menerima <code>&amp;nbsp;</code> di dalamnya, spasi-ber-<code>&amp;nbsp;</code> masuk di banyak baris, indentasi/entity direformat. Render masih 0 error tapi struktur heading salah.</p>
+<ul>
+<li>Body dipulihkan dari revisi sebelum edit (vid 808, 26.500 char), lalu perubahan yang dimaksud diterapkan ulang programatik: 3 tautan contoh (<code>goats.html</code> "coba halamannya", <code>llamas.html</code> "melihat halamannya", 1 lainnya) kini semua <code>target="_blank" rel="noopener noreferrer"</code>.</li>
+<li>Verifikasi render: h3 = 10 (kembali benar), h4 = 0, pause 16, karakter 8, kode tampil utuh, 0 dari 3 class error, alias 200.</li>
+<li>Catatan penggunaan: saat mengedit lesson di editor Drupal, tempel/ubah HTML lewat tombol <strong>Source (‹›)</strong> CKEditor; hindari mengedit di mode visual karena CKEditor merformat ulang tag textile &amp; entitas (tercatat di skill).</li>
+</ul>
