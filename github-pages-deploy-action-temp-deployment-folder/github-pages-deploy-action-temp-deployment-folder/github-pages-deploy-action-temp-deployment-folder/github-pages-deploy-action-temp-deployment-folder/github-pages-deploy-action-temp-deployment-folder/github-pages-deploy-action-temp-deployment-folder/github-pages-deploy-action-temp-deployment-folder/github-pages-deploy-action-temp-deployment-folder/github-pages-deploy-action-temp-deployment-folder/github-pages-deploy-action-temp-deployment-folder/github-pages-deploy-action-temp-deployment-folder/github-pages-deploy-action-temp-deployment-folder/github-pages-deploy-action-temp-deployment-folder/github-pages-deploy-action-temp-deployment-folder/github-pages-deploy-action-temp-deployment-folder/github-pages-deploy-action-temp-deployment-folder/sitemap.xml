@@ -270,4 +270,16 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/r1-probe-tautan-eksternal</loc>
+    <lastmod>2026-11-18T12:28:46.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://localhost/mysite/penjelasan-delink-rencana-setia-tautan</loc>
+    <lastmod>2026-11-18T22:58:35.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>

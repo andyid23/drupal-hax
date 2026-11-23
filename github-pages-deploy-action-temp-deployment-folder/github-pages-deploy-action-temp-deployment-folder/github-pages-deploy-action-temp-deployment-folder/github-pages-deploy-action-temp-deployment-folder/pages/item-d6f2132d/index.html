@@ -90,3 +90,12 @@
 <tr><td><strong>Mode biasa vs incognito</strong></td><td>Server mengirim <code>Cache-Control: no-cache, must-revalidate</code> dan render terkini benar — yang beda hanya cache lokal browser; normal mode masih memakai salinan lama. Tekan <strong>Ctrl+F5</strong> (hard refresh) atau hapus cache situs</td></tr>
 </table>
 <p><strong>Cara kerja perbaikan (jawaban pertanyaan)</strong>: skrip Python/PHP dijalankan di sandbox lokal (/opt/data/cache/scratch — otomatis dibersihkan setelah 24 jam idle), dikirim ke server via scp ke <code>/tmp</code>, dieksekusi lewat <code>docker exec d8_fpm</code>, hasilnya dibaca kembali. File di server hanya skrip + dump kecil di /tmp (puluhan KB) — disk bebas ±181 GB; tidak ada yang berjalan permanen.</p>
+
+<h2>Update: cutest.php hidup + inventaris halaman ber-param (21 November 2026)</h2>
+<p><code>/phpexamples/html/enter-php/cutest.php?name=Kity&amp;cuteness=12</code> kini menghasilkan <em>Cutest cat: Kity — Rating: 12 out of 10.</em> (sebelumnya statis; sumbernya PHP hidup). Label "cat" sesuai konversi kucing kursus.</p>
+<p><strong>Inventaris 21 halaman ber-parameter</strong> (semua tautan ber-<code>?</code> di body diklasifikasi, sumber diambil dengan parameter):</p>
+<ul>
+<li><strong>Sumber PHP hidup → perlu implementasi lokal (10)</strong>: circle, microwave-time, multifield-sales-tax, state-sales-tax-rate, goat-fuel, parade-length, multifield-with-functions, sphere, football-scores, payments. Zip kode asli tersedia untuk 3 (multifield-sales-tax, state-sales-tax-rate, multifield-with-functions); 7 lainnya ditulis ulang dari spesifikasi perilaku (3–5 varian param per halaman diambil dari sumber).</li>
+<li><strong>Sumber juga statis → dibiarkan setia (11)</strong>: bug1–bug6, animal-images, monsters, party-planner, wombat-games/show-wombat, dropdowns (404 di sumber), cutest.php versi lama.</li>
+</ul>
+<p><strong>Rencana E5</strong> (menunggu persetujuan): implementasi 10 halaman hidup di atas + verifikasi param nyata per halaman.</p>

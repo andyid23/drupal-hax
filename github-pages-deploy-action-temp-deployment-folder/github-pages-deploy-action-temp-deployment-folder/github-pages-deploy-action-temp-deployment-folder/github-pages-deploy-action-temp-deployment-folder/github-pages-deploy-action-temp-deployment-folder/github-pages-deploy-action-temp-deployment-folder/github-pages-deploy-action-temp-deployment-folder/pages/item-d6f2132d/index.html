@@ -64,3 +64,12 @@
 <li>Karakter Ray/Ethan dipertahankan (konvensi kursus).</li>
 </ul>
 <p><strong>Lokasi file contoh</strong> (<code>/phpexamples/html/page-structure/doggos.html</code>): container <code>/var/www/html2/drupal8/web/phpexamples/html/page-structure/doggos.html</code> = host bind-mount <code>/data/compose/34/drupal8-src/web/phpexamples/html/page-structure/doggos.html</code> — edit di host langsung live. Salinan lain ada di <code>/examples/pupperware/final/doggos.html</code>.</p>
+
+<h2>Update: tautan contoh tab baru + koreksi Georgina→Fina + rebuild software-get (E1–E4, 20 November 2026)</h2>
+<table>
+<tr><th>Item</th><th>Hasil</th></tr>
+<tr><td><strong>E1</strong> — tautan contoh → tab baru</td><td>✅ webapps 66 node (172 tautan <code>/phpexamples/…</code> &amp; <code>/examples/…</code>) + web 1 node (3 tautan) → <code>target="_blank" rel="noopener noreferrer"</code>. python/vba 0 tautan contoh. 0 tautan dir tanpa slash di semua body</td></tr>
+<tr><td><strong>E2</strong> — Georgina → Fina</td><td>✅ koreksi sesuai aturan baru (adela→izza, georgina→fina): blok georgina_smile2 (410) → <code>fina_senang</code> (dibedakan dari blok adela via dialog "metadata"); 424 georgina_smile1 → <code>fina_senang</code>; 453 neutral1+smile3 → <code>fina_masuk</code>+<code>fina_senang</code>; 456 smile3 → <code>fina_senang</code>. Render: 0 error, <code>character_fina_*</code> tampil. Teks prosa tidak memuat nama karakter (dialog terjemahan tanpa nama) — tidak ada sisa salah</td></tr>
+<tr><td><strong>E3</strong> — node 344 rebuild</td><td>✅ body dibangun ulang dari sumber <code>software-get</code> (4.663 → 14.189 char): 77 paragraf + 11 h3 + 13 pause + 1 karakter (Ethan dipertahankan) + 2 list, terjemah Indonesia via MT per-leaf (placeholder tag inline), 17 gambar lokal 200/200, 9 tautan luar target blank termasuk getgreenshot.org, judul &amp; alias <code>/lesson/software-get</code> ter-pin (1 duplikat alias dibuang). Render: 0 dari 3 class error</td></tr>
+<tr><td><strong>Editor</strong></td><td>Format <code>skilling</code> = CKEditor aktif, <code>filter_html</code> nonaktif (HTML tempelan tidak dibuang); gunakan tombol <strong>Source (‹›)</strong> saat menempel HTML; perbaikan massal dilakukan programatik</td></tr>
+</table>
