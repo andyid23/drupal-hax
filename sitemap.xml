@@ -282,4 +282,16 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/perbaikan-kode-container-gambar-webapps</loc>
+    <lastmod>2026-11-19T10:16:12.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://localhost/mysite/tombol-more-tergeser-html-mcq-tak-seimbang</loc>
+    <lastmod>2026-11-23T20:43:50.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
