@@ -113,3 +113,11 @@
 <li><strong>how-many-dog.php</strong> (baru, varian Indonesia lokal — tautan di lesson conditional-styles) — <code>?kucing=3</code> → "Jumlah kucing: 3 — Wow, itu banyak kucing!"; 0 → "Kamu tidak punya kucing! Aduh! Pelihara kucing!"; ambang sama dgn how-many-dogs (0 argh / 1 fair / 2 good / ≥3 fair). File how-many-dogs.php (EN) tetap utuh.</li>
 </ul>
 <p>Total halaman ber-param yang kini hidup lokal: <strong>15</strong>. Frozen di sumber juga (bug1–6, animal-images, monsters, dropdowns 404, wombat-games/show-wombat) tetap setia.</p>
+
+<h2>Update: bug1–6, more-conditions, scarf-order, lampiran broken-styles (21 November 2026)</h2>
+<ul>
+<li><strong>bug1–bug6</strong> (debugging-old-school) — ternyata PHP hidup di sumber (probe pertama memakai param salah). Perilaku semua versi: formula yang benar tapi ada satu bug yang diajarkan — asuransi hanya berlaku untuk <code>y</code> huruf kecil (huruf besar <code>Y</code> diabaikan → <code>1/Y</code> = 0.4, <code>1/y</code> = 1.2; <code>5/N</code> = 0.8). Diterapkan identik di 6 file.</li>
+<li><strong>more-conditions</strong> — <code>?product=k32&amp;issue=returns</code> → "Please call 1-800-666-6666, and ask Adam the Felber about your K32." ✓; issue lain → Toni Anita Hull; produk lain → "Sorry, {PRODUK} is not one of ours."</li>
+<li><strong>scarf-order</strong> — <code>?product_id=1&amp;quantity=2</code> → Watermelon $6.95 ×2 = $13.9 ✓ (1=Watermelon 6.95, 2=Reddy 8.95, 3=Sun yellow 5.95; id lain "(Unknown)" $0; quantity bukan angka → total $0 sesuai sumber). Path tautan lesson <code>links</code> (nid 429) dikembalikan ke <code>dog-scarves</code> (nama folder asli; sebelumnya berubah jadi <code>kucing-scarves</code> akibat sweep anjing→kucing).</li>
+<li><strong>Lampiran latihan broken-styles</strong> — <code>styles.css</code> (198 B) diunduh dari sumber &amp; dipasang di <code>attachments/1/</code>; <code>dog.html</code> sudah ada. Keduanya 200.</li>
+</ul>
