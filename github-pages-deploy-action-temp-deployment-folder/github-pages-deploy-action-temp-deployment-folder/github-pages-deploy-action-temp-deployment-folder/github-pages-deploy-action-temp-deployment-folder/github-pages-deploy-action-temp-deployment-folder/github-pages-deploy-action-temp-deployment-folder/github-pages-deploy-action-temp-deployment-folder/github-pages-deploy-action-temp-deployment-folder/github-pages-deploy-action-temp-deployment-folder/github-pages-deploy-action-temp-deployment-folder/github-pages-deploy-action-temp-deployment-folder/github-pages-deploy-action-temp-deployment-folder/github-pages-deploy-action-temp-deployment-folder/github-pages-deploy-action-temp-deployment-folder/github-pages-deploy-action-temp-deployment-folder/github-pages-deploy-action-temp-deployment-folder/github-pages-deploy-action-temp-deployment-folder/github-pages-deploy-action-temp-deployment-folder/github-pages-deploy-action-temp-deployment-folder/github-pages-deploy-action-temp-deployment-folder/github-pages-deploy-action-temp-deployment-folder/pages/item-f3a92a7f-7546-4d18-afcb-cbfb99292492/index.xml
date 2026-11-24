@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-f3a92a7f-7546-4d18-afcb-cbfb99292492</id>
+<indent>0</indent>
+<location>pages/item-f3a92a7f-7546-4d18-afcb-cbfb99292492/index.xml</location>
+<slug>rencana-books-app-mysql-tautan-keluar</slug>
+<order>0</order>
+<parent></parent>
+<title>Rencana books app MySQL dan tautan keluar</title>
+<description></description>
+<metadata>
+<created>1794915296</created>
+<updated>1794915296</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Rencana: books app dengan MySQL + arsitektur + tautan keluar</h2>
+<p>Jawaban atas tiga pertanyaan: (1) books app ber-MySQL, (2) cara kerja web ber-DB terpisah dari Drupal, (3) inventaris tautan keluar keempat situs. Belum dieksekusi — rencana.</p>
+
+<h3>1. Books app dengan MySQL — bisa</h3>
+<ul>
+<li><strong>Fakta penting: seluruh 200 file <code>.php</code> di <code>/phpexamples/</code> adalah output yang sudah di-render</strong> (0 tag <code>&lt;?php</code>) — server sumber mengeksekusi PHP sebelum unduhan, jadi kode sumber aslinya tidak bisa didapat. Membuat books bekerja dengan MySQL berarti <strong>menulis ulang</strong> app-nya (bukan sekadar clone).</li>
+<li>App books kecil: 3 halaman (index.php, books.php, authors.php) — di sumber daftarnya <strong>kosong</strong> (DB sumber juga kosong; siswa mengisi sendiri). Re-implementasi ≈ 200 baris CRUD: daftar + tambah books, authors, dan relasi <code>wrote</code> (m-n).</li>
+<li><strong>Schema tersedia</strong>: <code>books.sql</code> dari <code>webapps.skilling.us/.../attachments/1/books.sql_.zip</code> — tabel <code>authors (author_id, first_name, last_name, notes)</code>, <code>books (book_id, title, notes)</code>, <code>wrote (author_id, book_id)</code> dengan PK/FK lengkap. <em>Tanpa data seed</em>.</li>
+<li><strong>PDO mysql tersedia</strong> di d8_fpm (PHP 7.4.26, pdo_mysql ✓).</li>
+</ul>
+
+<h3>2. Cara kerja: web ber-DB lain + situs statis + Drupal</h3>
+<p>Satu nginx (drupal_web_server, port 81 internal) melayani tiga lapisan, semuanya berdasar path/Host:</p>
+<table>
+<tbody><tr><th>Lapisan</th><th>Contoh</th><th>Yang mengeksekusi</th><th>Database</th></tr>
+<tr><td>Statis</td><td><code>/examples/</code>, <code>/skilling/</code>, situs web-contoh</td><td>nginx langsung (tanpa PHP, tanpa DB)</td><td>—</td></tr>
+<tr><td>PHP mandiri</td><td><code>/phpexamples/…</code></td><td>php-fpm d8_fpm:9000 (PHP 7.4)</td><td><strong>DB contoh sendiri</strong> — bukan DB Drupal</td></tr>
+<tr><td>Drupal multisite</td><td>vba/python/web/webapps</td><td>php-fpm → Drupal (sites.php by Host)</td><td>DB Drupal per situs</td></tr>
+</tbody></table>
+<p>Semua database hidup di satu container <code>drupal_database</code> (MariaDB 12.1) tapi <strong>DB dipisah per peran</strong>: Drupal pakai DB-nya masing-masing; contoh PHP akan pakai DB baru <code>webappexamples</code> + user khusus — tanpa koneksi apa pun ke DB Drupal. Kelola datanya lewat phpMyAdmin yang sudah ada (<code>drupal_pma</code>, port 8083): import books.sql, tambah baris, dll.</p>
+<p><code>web-contoh.pesanweb.my.id</code> tidak butuh apa pun selain DNS + proxy host NPM: file statis dilayani catch-all nginx untuk Host apa pun; backend dan port sama dengan situs lain.</p>
+
+<h3>3. Tautan keluar — inventaris 194 tautan</h3>
+<table>
+<tbody><tr><th>Situs</th><th>Tautan keluar</th><th>Contoh domain terbesar</th></tr>
+<tr><td>python</td><td>10</td><td>wikipedia, docs.python.org, unsplash</td></tr>
+<tr><td>vba</td><td>25</td><td>msdn.microsoft ×3, twitter, youtube, techonthenet</td></tr>
+<tr><td>webapps</td><td>75</td><td><strong>getbootstrap ×13</strong>, bootswatch, moodle, reclaimhosting, php.net</td></tr>
+<tr><td>web</td><td>84</td><td><strong>getbootstrap ×12</strong>, <strong>andy1.rf.gd ×20</strong> (hosting lama Anda), google, apache</td></tr>
+</tbody></table>
+<h4>Kategori + solusi</h4>
+<table>
+<tbody><tr><th>Kategori</th><th>Jumlah</th><th>Solusi</th></tr>
+<tr><td>Dokumentasi/alat resmi (getbootstrap, php.net, xdebug, filezilla, msdn, stackoverflow…)</td><td>~70</td><td><strong>Biarkan</strong> — dokumentasi online resmi; lokal-kan cepat basi</td></tr>
+<tr><td><strong>CDN aset</strong> (cdn.jsdelivr.net bootstrap.min.css ×10, stackpath ×2, code.jquery)</td><td>~13</td><td><strong>Lokal-kan</strong>: unduh css/js ke <code>/library/</code> + rewrite — kalau CDN gagal/offline, tampilan app contoh rusak</td></tr>
+<tr><td>Host milik Anda sendiri: <strong>andy1.rf.gd ×20</strong> (web) — sebagian path persis sama dengan mirror <code>/examples/</code></td><td>20</td><td><strong>Rewrite ke lokal</strong> yang cocok (grid/, bs-themes/, responsive-grid/…); yang tidak ada di mirror (kucing/, restauran/, cryptid/) → mirror kecil atau biarkan; hosting gratisan bisa mati sewaktu-waktu</td></tr>
+<tr><td>Hiburan/karakter konten (cutepuppers, cupcakeipsum, xkcd, paulapoundstone, goatsoap…)</td><td>~20</td><td>Biarkan; probe — yang 404 permanen di-de-link</td></tr>
+<tr><td><code>http://localhost/…</code> (instruksi XAMPP untuk mesin siswa)</td><td>2</td><td>Biarkan — instruksional</td></tr>
+<tr><td>Wikipedia/YouTube/Twitter/lainnya</td><td>sisanya</td><td>Biarkan</td></tr>
+</tbody></table>
+
+<h3>Rencana (belum dieksekusi)</h3>
+<ul>
+<li><strong>H1 — Books app CRUD</strong>: buat DB <code>webappexamples</code> + user khusus di mariadb eksisting; import books.sql (via phpMyAdmin); tulis ulang index/books/authors.php (+ add/edit, relasi wrote) dengan PDO di <code>/phpexamples/database/exercises/books/</code> (file lama render di-backup); verifikasi tambah-lihat-hapus via web.</li>
+<li><strong>H2 (opsional, lanjutan)</strong>: re-implementasi app ber-DB lain yang sering dipakai latihan (wombat-list, nobody, dishes) — satu per satu, pola sama dengan H1.</li>
+<li><strong>M1 — Lokal-kan CDN aset</strong>: unduh bootstrap.min.css (+jquery/popper yang dipakai) ke <code>/phpexamples/library/</code> dan <code>/examples/…</code>, rewrite 13 tautan CDN.</li>
+<li><strong>M2 — Tautan andy1.rf.gd</strong>: rewrite 20 tautan → <code>/examples/…</code> untuk path yang cocok; sisanya keputusan (mirror kecil atau biarkan).</li>
+<li><strong>R1 — Probe tautan eksternal</strong>: HEAD-probe 194 tautan, de-link yang mati permanen; tabel hasil dipublikasi.</li>
+<li><strong>R2 — Publikasi laporan</strong> (halaman ini + hasil eksekusi nanti).</li>
+</ul>]]></content>
+</item>

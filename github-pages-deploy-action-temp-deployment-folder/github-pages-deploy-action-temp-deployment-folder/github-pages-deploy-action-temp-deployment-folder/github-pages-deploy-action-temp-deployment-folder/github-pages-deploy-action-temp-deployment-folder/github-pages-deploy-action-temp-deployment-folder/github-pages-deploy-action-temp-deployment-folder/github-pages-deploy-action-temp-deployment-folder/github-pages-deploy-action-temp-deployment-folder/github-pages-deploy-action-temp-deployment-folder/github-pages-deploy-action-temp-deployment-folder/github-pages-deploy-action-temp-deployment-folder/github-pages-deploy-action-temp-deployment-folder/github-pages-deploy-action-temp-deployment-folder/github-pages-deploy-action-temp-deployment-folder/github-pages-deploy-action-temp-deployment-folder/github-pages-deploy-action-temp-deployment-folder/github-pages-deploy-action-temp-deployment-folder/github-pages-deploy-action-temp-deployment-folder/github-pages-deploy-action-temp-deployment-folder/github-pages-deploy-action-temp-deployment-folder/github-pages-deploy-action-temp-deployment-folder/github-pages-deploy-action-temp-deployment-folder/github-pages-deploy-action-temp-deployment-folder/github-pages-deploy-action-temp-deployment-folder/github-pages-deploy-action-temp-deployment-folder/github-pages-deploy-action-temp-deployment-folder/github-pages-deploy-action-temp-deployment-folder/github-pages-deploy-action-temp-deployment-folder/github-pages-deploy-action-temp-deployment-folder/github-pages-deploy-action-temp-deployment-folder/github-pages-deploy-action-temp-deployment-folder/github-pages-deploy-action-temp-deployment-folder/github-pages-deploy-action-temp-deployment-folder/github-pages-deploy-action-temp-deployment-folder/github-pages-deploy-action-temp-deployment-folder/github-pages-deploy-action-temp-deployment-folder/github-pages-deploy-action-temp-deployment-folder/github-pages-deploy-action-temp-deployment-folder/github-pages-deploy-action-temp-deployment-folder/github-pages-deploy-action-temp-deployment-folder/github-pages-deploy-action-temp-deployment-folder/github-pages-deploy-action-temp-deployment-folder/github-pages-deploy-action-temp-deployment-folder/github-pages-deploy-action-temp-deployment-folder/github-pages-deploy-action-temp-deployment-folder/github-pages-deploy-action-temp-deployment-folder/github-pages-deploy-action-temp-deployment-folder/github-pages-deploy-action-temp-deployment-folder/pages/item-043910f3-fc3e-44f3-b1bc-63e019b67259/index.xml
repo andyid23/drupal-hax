@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+<id>item-043910f3-fc3e-44f3-b1bc-63e019b67259</id>
+<indent>0</indent>
+<location>pages/item-043910f3-fc3e-44f3-b1bc-63e019b67259/index.xml</location>
+<slug>kloning-lesson-more-debugging-vba</slug>
+<order>0</order>
+<parent></parent>
+<title>Kloning lesson more-debugging ke vba.pesanweb.my.id (node 381)</title>
+<description></description>
+<metadata>
+<created>1794646676</created>
+<updated>1794646676</updated>
+<images>
+</images>
+<videos>
+</videos>
+</metadata>
+<content><![CDATA[<h2>Ringkasan</h2>
+<p>Lesson <code>https://vba.skilling.us/lesson/more-debugging</code> ("More debugging") dikloning ke <code>vba.pesanweb.my.id</code> dan diterjemahkan ke Bahasa Indonesia. Semua gate verifikasi lulus.</p>
+<ul>
+<li>Node: <strong>nid 381</strong> — tipe <code>lesson</code>, published, body 12.960 karakter (format <code>skilling</code>)</li>
+<li>Judul: <strong>Debugging lebih lanjut</strong></li>
+<li>Alias: <code>/lesson/more-debugging</code> (manual) dan <code>/lesson/debugging-lebih-lanjut</code> (pathauto) — keduanya HTTP 200</li>
+<li>Book: bid 330, pid 343 ("Simple Programs"), weight -7, depth 3; pager prev "Mudah itu bagus"</li>
+</ul>
+
+<h2>Inventaris sumber vs hasil render</h2>
+<table class="table">
+<tbody><tr><th>Widget</th><th>Sumber</th><th>Hasil (nid 381)</th></tr>
+<tr><td><code>h3</code></td><td>5</td><td>5</td></tr>
+<tr><td><code>pause.</code></td><td>8</td><td>8</td></tr>
+<tr><td><code>character.</code></td><td>11</td><td>11</td></tr>
+<tr><td><code>mcq.</code></td><td>2</td><td>2</td></tr>
+<tr><td><code>exercise.</code></td><td>1</td><td>1</td></tr>
+<tr><td><code>annotation.</code></td><td>3</td><td>3</td></tr>
+<tr><td><code>reflect.</code></td><td>1</td><td>1</td></tr>
+<tr><td><code>toc.</code></td><td>1</td><td>1 (judul "Daftar isi")</td></tr>
+<tr><td>Blok kode</td><td>1</td><td>1</td></tr>
+<tr><td>Gambar</td><td>13 di body + 2 di exercise + 1 di MCQ + 11 foto karakter</td><td>semua 200, tidak ada URL relatif</td></tr>
+<tr><td>Parser error</td><td>—</td><td>0</td></tr>
+</tbody></table>
+<p>Urutan widget (<em>sequence diff</em>, 33 token) identik dengan sumber; perbedaan hanya teks terjemahan dan nama karakter hasil recast.</p>
+
+<h2>Pemetaan karakter (Adela → Fina, Georgina → Izza)</h2>
+<table class="table">
+<tbody><tr><th>Sumber</th><th>Dipakai di Drupal</th><th>Catatan</th></tr>
+<tr><td><code>adela_smile2</code>, <code>adela_smile3</code></td><td><code>character_fina_senang</code></td><td>ramah/positif</td></tr>
+<tr><td><code>adela_pc_3</code></td><td><code>character_fina_masuk</code></td><td>pose di depan komputer, netral</td></tr>
+<tr><td><code>adela_pc_1</code></td><td><code>character_fina_kenapa</code></td><td>pose duduk/menjelaskan</td></tr>
+<tr><td><code>adela_pc_2</code></td><td><code>character_fina_heran</code></td><td>mengamati nilai variabel</td></tr>
+<tr><td><code>adela_oh_no1</code></td><td><code>character_fina_sedih</code></td><td>kaget/menyesal</td></tr>
+<tr><td><code>georgina_pc_2</code></td><td><code>character_izza_senang</code></td><td>berterima kasih</td></tr>
+<tr><td><code>ray_listening2</code>, <code>ray_smiling3</code></td><td><code>character_ray_listening2</code>, <code>character_ray_smiling3</code></td><td>Ray dipertahankan</td></tr>
+</tbody></table>
+<p>Semua 11 blok karakter mendapat foto dari node (tidak ada gambar karakter inline). Teks yang menyebut nama juga disesuaikan: "Hai, Fina!", "Fina bisa memperbaikinya", "terima kasih sudah menunjukkan itu, Fina". Hasil render: 0 kemunculan "Adela"/"Georgina".</p>
+
+<h2>Dependensi baru yang dibuat lebih dulu</h2>
+<ul>
+<li><code>mcq_breakpoint</code> → <strong>nid 378</strong>, judul "Apa itu breakpoint?", 4 pilihan, jawaban benar C ("Menghentikan program, sehingga Anda bisa mengintip isi memori"). Jawaban benar tidak ada di HTML sumber — diturunkan dari isi pelajaran dan dicatat di <code>field_notes</code>.</li>
+<li><code>mcq_locals_window</code> → <strong>nid 379</strong>, judul "Apa yang ditampilkan jendela Locals VBE?", 4 pilihan, jawaban benar B ("Nilai variabel yang ada di memori").</li>
+<li><code>exercise_goat_party_planner</code> → <strong>nid 380</strong>, judul "Perencana pesta kambing", <code>field_challenge=0</code>, tugas HTML lengkap dengan tabel biaya dan dua gambar (200). Alias <code>/exercise/perencana-pesta-kambing</code> 200.</li>
+</ul>
+<p>Bundle <code>multiple_choice_question</code> di vba ternyata sudah berisi node (4 sebelumnya) — jadi tag <code>mcq.</code> memang bisa dirender di situs ini, bukan harus diganti teks statis.</p>
+
+<h2>Temuan teknis (masuk ke skill)</h2>
+<ul>
+<li><strong>Alias lesson yang sudah selesai bisa hilang saat mengerjakan lesson berikutnya.</strong> Setelah node 381 dibuat dan masuk book outline, alias manual <code>/lesson/easy-good</code> (nid 373) ikut terhapus dan muncul baris pathauto ganda. Perbaikannya: di akhir sesi, pasang ulang alias manual untuk <em>semua</em> node yang pernah dikloning, hapus baris duplikat, lalu <code>cache:rebuild</code>. Tanpa rebuild, alias yang dihapus masih menyajikan 200 dari cache sementara alias baru justru 404.</li>
+<li><strong>Tag <code>toc.</code> tidak butuh node</strong>, tetapi judul defaultnya tetap "Lesson contents" (Inggris) — gunakan opsi <code>title=Daftar isi</code>.</li>
+<li><strong>Jawaban benar MCQ tidak pernah ada di HTML sumber</strong> (semua opsi berkelas <code>response-active</code>); harus diturunkan dari teks pelajaran.</li>
+<li><strong>Path <code>/mcq/&lt;slug&gt;</code> membalas 403 untuk anonim</strong> — itu halaman access-denied untuk node yang ada, bukan tanda node gagal dibuat; verifikasi lewat widget di dalam lesson.</li>
+<li><strong>Builder lxml:</strong> <code>tostring(el).strip()</code> membuang <em>tail text</em> anak, yaitu tempat baris kosong antar-paragraf dialog karakter berada. Akibatnya dialog multi-paragraf tidak pernah cocok dengan tabel terjemahan. Gunakan <code>with_tail=True</code> dan strip hanya pada hasil gabungan.</li>
+</ul>
+
+<h2>Verifikasi</h2>
+<ul>
+<li><code>/lesson/more-debugging</code>, <code>/lesson/debugging-lebih-lanjut</code>, <code>/node/381</code>, <code>/lesson/easy-good</code>, <code>/lesson/mudah-itu-bagus</code>, <code>/lesson/cells-yang-terpisah</code>, <code>/exercise/perencana-pesta-kambing</code> → 200</li>
+<li>Parser error 0; tidak ada markup mentah bocor; 18 URL gambar eksternal semuanya 200</li>
+<li>Pager: prev "Mudah itu bagus"; next kosong karena lesson "Another worked example" belum ada di buku target</li>
+</ul>]]></content>
+</item>

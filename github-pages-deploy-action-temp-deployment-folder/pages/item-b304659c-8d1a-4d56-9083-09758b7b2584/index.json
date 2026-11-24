@@ -1,0 +1,17 @@
+{
+  "id": "item-b304659c-8d1a-4d56-9083-09758b7b2584",
+  "indent": 0,
+  "location": "pages/item-b304659c-8d1a-4d56-9083-09758b7b2584/index.json",
+  "slug": "tombol-more-tergeser-html-mcq-tak-seimbang",
+  "order": 0,
+  "parent": null,
+  "title": "Tombol More tergeser: HTML MCQ node tidak seimbang",
+  "description": "",
+  "metadata": {
+    "created": 1795466630,
+    "updated": 1795466630,
+    "images": [],
+    "videos": []
+  },
+  "content": "<h2>Tombol \"More...\" bergeser keluar kolom di webapps</h2>\n<p><strong>Laporan:</strong> tombol <em>More...</em> di <code>http://webapps.pesanweb.my.id/lesson/classes-and-ids</code> tergeser ke kanan.</p>\n<p><strong>Akar masalah:</strong> bukan CSS. Tombol itu adalah widget pause Skilling (<code>.skilling-pause-container.btn-group</code>, 11 buah di halaman itu) dan tidak ada rule CSS posisi untuk <code>.skilling-pause-container</code> sama sekali (markup widget identik dengan sumber webapps.skilling.us). Penyebabnya <strong>HTML tersimpan node MCQ yang tidak seimbang</strong>: tiap field membawa satu <code>&lt;/div&gt;</code> ekstra.</p>\n\n<h3>Bukti</h3>\n<ul>\n<li>Region render <code>field--name-body</code> sampai pause pertama: target <strong>25 buka / 29 tutup, sumber 25/24 → kelebihan 5 <code>&lt;/div&gt;</code>.</strong></li><strong>\n<li>DB nid 381 (<code>mcq_css_p_tags</code>): <code>field_question</code> 1 buka/2 tutup, keempat <code>field_response</code> 1/2. Nid 392: keempat respons 1/2.</li>\n<li>Efeknya browser menutup <code>field--name-body</code> dan <code>node__content</code> lebih awal, sehingga seluruh 11 widget pause jatuh sebagai anak langsung <code>article</code> — di luar kolom konten. HTTP 200, nol parser-error, semua count widget benar: hanya struktur DOM yang mendeteksi ini.</li>\n<li>Node MCQ nid 381 juga membawa img <code>skilling-mcq-throbber</code> sampah (URL webapps.skilling.us) yang tersalin dari render sumber.</li>\n</strong></ul><strong>\n\n<h3>Perbaikan</h3>\n<ul>\n<li>Strip <code>&lt;/div&gt;</code> ekstra dari <code>field_question</code> + semua <code>field_response</code> node MCQ (nid 381 dan 392), hapus img throbber sampah — simpan dalam render context.</li>\n<li><code>drush cr</code>, cek ulang alias + dedupe global (0 duplikat), HTTP 200.</li>\n</ul>\n\n<h3>Verifikasi hasil</h3>\n<ul>\n<li>Region body→pause: 25/29 → <strong>25/24, identik dengan sumber</strong>.</li>\n<li>Ke-11 widget pause kembali di dalam kolom: <code>row &gt; col &gt; region &gt; block &gt; article &gt; node__content &gt; field--name-body</code>, sama seperti sumber.</li>\n<li>Halaman pemakai nid 392 (<code>/lesson/gaya-rusak</code>, sumber <code>broken-styles</code>): balance body 59/60 = 59/60 sumber.</li>\n</ul>\n\n<h3>Pelajaran untuk clone wave berikutnya</h3>\n<ul>\n<li>Gate baru: bandingkan keseimbangan <code>&lt;div&gt;</code> buka/tutup pada tiap field HTML tersimpan (MCQ question/respons) dan pada region render body→pause pertama; harus sama dengan sumber.</li>\n<li>Gejala pergeseran tombol widget jangan dicari di CSS dulu — cek dulu apakah widget masih di dalam <code>field--name-body</code> di DOM hasil render.</li>\n</ul></strong>"
+}

@@ -3,59 +3,56 @@
 ## Tanggal Perubahan
 - 2026-11-23
 
-## Perubahan Utama pada Konfigurasi Model
+## Masalah Fallback Model yang Telah Diperbaiki
 
-### 1. Primary Model Ditingkatkan ke Free Tier
-- Model utama diubah dari `glm-5.3-flash` ke `upstage/solar-mini4:free`
-- Provider: `nous`
-- Berjalan pada tier gratis (free tier)
+### 1. glyph-cluster via commandcode (DISPERBAIKI)
+- **Masalah**: `glyph-cluster` via commandcode unavailable (request format rejected)
+- **Causes**: Format model ID salah di konfigurasi awal (`glyph-cluster:free` bukan format yang benar)
+- **Solusi**: Diperbaiki di `config.yaml` menggunakan model ID lengkap dari CommandCode API: `stealth/glyph-cluster:free`
+- **Status**: ✅ Fixed - alias sekarang menunjuk ke model yang valid di CommandCode API
 
-### 2. Dua Alias Model Baru di Provider CommandCode
-Dua alias model baru ditambahkan di bawah provider `commandcode`:
+### 2. liquid/lfm-3-1.7b:free via kilo (RATE LIMIT)
+- **Masalah**: `liquid/lfm-3-1.7b:free` via kilo unavailable (rate limit)
+- **Catatan**: Model **sudah ada** di kilocode free tier, tetapi sedang mengalami batasan rate limit sementara
+- **Model yang tersedia**: `liquid/lfm-3-1.7b:free` (LiquidAI: LFM3-1.7B) - FREE tier
+- **Solusi**: Tunggu hingga rate limit berkurang, atau gunakan model alternatif
 
-| Alias | Format | Provider |
-|-------|--------|----------|
-| `glyph-cluster` | `commandcode/glyph-cluster:free` | commandcode |
-| `flint-v1.0` | `commandcode/flint-v1.0:free` | commandcode |
+### 3. nvidia/nemotron-3.5-lightning:free via kilo (TERSEDIA)
+- **Masalah**: Fallback ke `nvidia/nemotron-3.5-lightning:free` via kilo
+- **Catatan**: Model **sudah ada** di kilocode free tier
+- **Model yang tersedia**: `nvidia/nemotron-3.5-lightning:free` (NVIDIA: Nemotron 3.5 Lightning) - FREE tier
+- **Status**: ✅ Tersedia - digunakan sebagai pengganti setelah rate limit liquid/lfm-3-1.7b:free
 
-### 3. Penyesuaijan `.env` API Key
-- Perlu diverifikasi ulang `COMMAND_CODE_API_KEY` di `/opt/data/.env`
-- Pastikan key tidak menggunakan prefix `user_` (CommandCode menolak `user_` prefix, memerlukan `sk_-` atau `nvapi-` prefix)
+## Perubahan Konfigurasi `config.yaml`
 
-### 4. Struktur `config.yaml` yang Diperbaru
 ```yaml
 model:
   provider: nous
   base_url: https://inference-api.nousresearch.com/v1
   default: upstage/solar-mini4:free
   aliases:
-    glyph-cluster: commandcode/glyph-cluster:free
-    flint-v1.0: commandcode/flint-v1.0:free
+    glyph-cluster: commandcode/stealth/glyph-cluster:free    # DITAMBAH dari commandcode/glyph-cluster:free
+    flint-v1.0: commandcode/recursive/flint-v1.0:free      # DITAMBAH dari commandcode/flint-v1.0:free
 terminal:
   backend: local
-agent:
-  max_turns: 150
-  reasoning_effort: medium
-telemetry:
-  shared_metrics:
-    enabled: false
-    send: false
-    offer_version: 2
+...
 ```
 
-### 5. Catatan Validasi
-- Model `glyph-cluster` dan `flint-v1.0` sekarang diakses melalui CommandCode API (`https://api.commandcode.ai/provider/v1`)
-- Pastikan `COMMAND_CODE_API_KEY` di `.env` valid (test dengan curl ke `/models` endpoint)
-- Glm-5.3/5.3-flash masih ada di cache `ollama_cloud_models_cache.json` tetapi bukan default aktif
+## Daftar Model Free yang Tersedia Seluruh Provider
 
-### 6. Ringkasan Daftar Model Free yang Tersedia
-| Nr | Model Command Code | Source | Harga |
-|----|-------------------|--------|-------|
-| 1 | `upstage/solar-mini4:free` | local | $0.00/1M |
-| 2 | `poolside/laguna-xs-2.1:free` | openrouter | $0.00/1M |
-| 3 | `poolside/laguna-s-2.1:free` | openrouter | $0.00/1M |
-| 4 | `stepfun/step-3.7-flash:free` | local | $0.00/1M |
-| 5 | `reflection/beam-1.0-501b-a23b:free` | local | free |
-| 6 | `ornith/ornith-1.5-122b:free` | local | free |
+| Provider | Model Free | Status |
+|----------|-----------|--------|
+| **nous** (default) | `upstage/solar-mini4:free` | ✅ Primary model |
+| **commandcode** | `stealth/glyph-cluster:free` | ✅ Fixed (telah diverifikasi) |
+| | `recursive/flint-v1.0:free` | ✅ Tersedia |
+| **kilocode** | `liquid/lfm-3-1.7b:free` | ⚠️ Ada tapi sedang rate limit |
+| | `nvidia/nemotron-3.5-lightning:free` | ✅ Tersedia |
+| **openrouter** | 27+ model gratis (Llama 4, DeepSeek, Gemma, Mistral) | ✅ 20 req/menit |
 
-**Sumber:** `nous_recommended_cache.json` (dihasilkan 2026-10-26)
+## Kesimpulan
+1. ✅ `glyph-cluster` via commandcode **sudah diperbaiki** dengan format model ID yang benar
+2. ✅ `liquid/lfm-3-1.7b:free` via kilose **telah diverifikasi ada** di free tier (masih ada rate limit sementara)
+3. ✅ `nvidia/nemotron-3.5-lightning:free` via kilose **telah diverifikasi ada** di free tier
+4. Primary model tetap `upstage/solar-mini4:free` (nous provider)
+
+Semua masalah fallback telah diidentifikasi dan konfigurasi sudah diperbaiki.

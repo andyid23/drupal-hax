@@ -294,4 +294,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://localhost/mysite/perbaikan-contoh-php-debugging-old-school-attachment-kucing</loc>
+    <lastmod>2026-11-24T04:51:24.000Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>

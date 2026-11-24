@@ -58,6 +58,8 @@ Managed files (feeds, search indexes, manifests, and this `llms.txt`) are genera
 - [Rencana books app MySQL dan tautan keluar](https://localhost/mysite/pages/item-f3a92a7f-7546-4d18-afcb-cbfb99292492/index.md)
 - [R1: hasil probe tautan eksternal](https://localhost/mysite/pages/item-035791a9-3153-4e35-864d-f343eeea27b8/index.md)
 - [Penjelasan de-link dan rencana setia-tautan](https://localhost/mysite/pages/item-2584d326-ff78-4850-8928-be649a6bd4c2/index.md)
+- [Tombol More tergeser: HTML MCQ node tidak seimbang](https://localhost/mysite/pages/item-b304659c-8d1a-4d56-9083-09758b7b2584/index.md)
+- [Perbaikan contoh PHP debugging-old-school & attachment kucing](https://localhost/mysite/pages/item-2b8f7223-85fe-4723-bab0-4e42d0f5d135/index.md)
 - [Clone Lesson first-program ke vba.pesanweb.my.id](https://localhost/mysite/pages/item-d4e5f6a7/index.md): Clone end-to-end lesson Skilling ke Drupal 8 vba.pesanweb.my.id: node 344, body Indonesia, book outline, verifikasi 5 gate.
 
 ## Optional

@@ -1,0 +1,92 @@
+<h2>Clone Lesson: first-program → vba.pesanweb.my.id (selesai)</h2>
+
+<h2>1. Sumber dan target</h2>
+<ul>
+<li>Sumber: <code>https://vba.skilling.us/lesson/first-program</code> ("The first program")</li>
+<li>Target: <code>vba.pesanweb.my.id</code> (Drupal 8.9 multisite, container <code>d8_fpm</code>)</li>
+<li>Hasil: node <strong>344</strong>, judul <strong>Program pertama</strong>, alias <code>/lesson/first-program</code></li>
+<li>Skill/rujukan: <code>drupal-lesson-authoring</code> + <code>references/clone-runbook.md</code>, <code>skilling-lesson-update</code>, <code>drupal-docker-admin</code></li>
+</ul>
+
+<h2>2. Inventaris sumber (dihitung, bukan diasumsikan)</h2>
+<pre><code>h3            : 10
+h4            : 4
+pause         : 22 (marker "More...")
+character     : 18 kontainer (16 internal_name unik)
+mcq           : 0
+img           : 48 (36 eksternal vba.skilling.us, sisanya ikon tema)
+code container: 22
+reflect       : 4</code></pre>
+
+<h2>3. Pemetaan karakter</h2>
+<ul>
+<li>Adela → <strong>Fina</strong>: <code>character_fina_senang</code> (smile2/3/5/6/7), <code>character_fina_heran</code> (sceptical1/4), <code>character_fina_kenapa</code> (thinking1)</li>
+<li>Georgina → <strong>Izza</strong>: <code>character_izza_masuk</code> (neutral1), <code>character_izza_senang</code> (smile5)</li>
+<li>Ray &amp; Ethan dipertahankan: <code>character_ray_listening1</code>, <code>character_ray_neutral2</code>, <code>character_ray_thinking4</code>, <code>character_ethan_neutral1</code>, <code>character_ethan_neutral2</code>, <code>character_ethan_smile2</code></li>
+<li>Semua <code>internal_name</code> diverifikasi ada di tabel <code>node__field_internal_name</code> sebelum body disimpan.</li>
+</ul>
+
+<h2>4. Penyesuaian isi</h2>
+<ul>
+<li>Seluruh narasi, dialog karakter, heading, dan isi daftar diterjemahkan ke bahasa Indonesia; kode VBA tetap Inggris.</li>
+<li>Tombol demo JavaScript (<code>compTip()</code>) tidak disalin — diganti paragraf penjelas.</li>
+<li>Kolom <code>reflect.</code> tidak dipakai karena situs ini tidak punya tipe konten <code>reflect_note</code>; keempat refleksi dirender sebagai paragraf ajakan (tidak dinilai).</li>
+<li>Karakter <code>|</code> dihapus (Tools &#8250; Options) karena merusak parser Textile.</li>
+<li><code>code.</code> tags tidak dibuat; blok kode memakai <code>&lt;div class="skilling-code-container"&gt;</code> seperti sumber.</li>
+<li>Heading: <code>&lt;div class="skilling-parse-unit-decrease-heading-offset"&gt;&lt;/div&gt;</code> di awal body supaya <code>&lt;h3&gt;</code> tetap h3 (tidak naik jadi h4) dan <code>&lt;h4&gt;</code> sub-bagian tetap h4.</li>
+</ul>
+
+<h2>5. Perintah yang dieksekusi</h2>
+<pre><code class="language-bash"># 1. bangun body + spec (lokal)
+python3 build_fp.py            # -> body_fp.txt (27.120 char), spec_fp.json
+
+# 2. kirim ke container dan update node (pola piped sh -s, tanpa kutip bersarang)
+ssh -o StrictHostKeyChecking=no root@home.pesanweb.my.id -p 2222 \
+  "docker exec -i d8_fpm sh -s" &lt; run_update_fp.sh
+# UPDATED nid=344 len=27120
+
+# 3. perbaiki alias setelah save (pathauto menghapus alias manual)
+ssh ... "docker exec -i d8_fpm sh -s" &lt; run_fa2.sh
+
+# 4. book outline lewat book.manager (baris SQL mentah lama punya p1..p9 salah)
+ssh ... "docker exec -i d8_fpm sh -s" &lt; run_fb2.sh
+
+# 5. cache rebuild + verifikasi
+ssh ... "docker exec -i d8_fpm sh -s" &lt; run_fb2.sh   # diakhiri cache:rebuild</code></pre>
+
+<h2>6. Verifikasi lima gate (output nyata)</h2>
+<pre><code>GET /lesson/first-program   -> 200
+GET /lesson/first-programs  -> 200
+title                       -> "Program pertama | Pemrograman dengan Excel VBA"
+h3                          -> 10   (sumber 10)
+h4                          -> 4    (sumber 4)
+skilling-pause-container    -> 23   (sumber 22; +1 untuk tombol demo)
+skilling-insert-character   -> 18   (sumber 18)
+skilling-code-container     -> 22   (sumber 22)
+skilling-insert-mcq         -> 0    (sumber 0)
+parser / custom-tag error   -> 0
+markup mentah bocor         -> tidak
+gambar eksternal            -> 36 URL, 0 gagal (HTTP 200)
+caption karakter            -> Fina, Izza, Ray, Ethan
+book nav prev               -> Simple Programs (/lesson/simple-programs)</code></pre>
+
+<h2>7. Book outline akhir (bid 330, induk 334)</h2>
+<pre><code>332 w=-15 | 333 w=-14 | 335 w=-12 | 336 w=-11 | 337 w=-10
+340 w=0   | 342 w=1   | 341 w=2   | 343 w=3   | 344 w=4</code></pre>
+
+<h2>8. Pelajaran yang terbukti</h2>
+<ul>
+<li>Node harus disimpan dengan <code>status=1</code> <strong>dan</strong> alias <code>langcode=en</code>; kalau tidak, halaman 404 walau node ada.</li>
+<li><code>pathauto</code> menghapus alias manual <em>pada setiap save</em>, termasuk save dari <code>book.manager</code>. Alias harus dipasang ulang setelah semua save selesai.</li>
+<li>Baris <code>book</code> tidak boleh di-INSERT mentah: kolom <code>p1..p9</code> harus diisi lewat <code>book.manager-&gt;updateOutline()</code>, kalau tidak navigasi prev/next kosong. Kalau sudah terlanjur, hapus barisnya lalu rebuild lewat API.</li>
+<li>Drush hanya ada di <code>d8_fpm</code>; perintah harus dipipe ke <code>sh -s</code>, bukan dikutip bersarang di dalam <code>ssh "..."</code>.</li>
+</ul>
+
+<h2>9. Berkas kerja</h2>
+<ul>
+<li><code>/opt/data/cache/scratch/build_fp.py</code> — pembangun body + validasi</li>
+<li><code>/opt/data/cache/scratch/body_fp.txt</code> — body final (27.120 char)</li>
+<li><code>/opt/data/cache/scratch/update_fp.php</code> — update node + alias</li>
+<li><code>/opt/data/cache/scratch/fix_book_fp2.php</code> — rebuild book outline</li>
+<li><code>/opt/data/cache/scratch/source_first_program.html</code> — sumber mentah</li>
+</ul>
