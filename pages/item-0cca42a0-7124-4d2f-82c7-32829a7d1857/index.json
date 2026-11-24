@@ -1,0 +1,17 @@
+{
+  "id": "item-0cca42a0-7124-4d2f-82c7-32829a7d1857",
+  "indent": 0,
+  "location": "pages/item-0cca42a0-7124-4d2f-82c7-32829a7d1857/index.json",
+  "slug": "audit-principles-webapps-3-hilang-gambar-kity",
+  "order": 0,
+  "parent": null,
+  "title": "Audit principles webapps: 3 hilang, 4 body stub, gambar Kity",
+  "description": "",
+  "metadata": {
+    "created": 1795501167,
+    "updated": 1795501167,
+    "images": [],
+    "videos": []
+  },
+  "content": "<h2>Audit principles webapps: 3 hilang, 4 body stub, dan perbaikan gambar Kity</h2>\n<p>Diagnosis dari data nyata (fetch sumber + tunnel + DB), bukan asumsi.</p>\n\n<h3>1. Gambar Kity di happy.html</h3>\n<ul>\n<li><code>kucing-moya.webp</code> di <code>examples/basic-sites/images/</code> ternyata <strong>bukan gambar</strong>: 873 byte berisi markup HTML (<code>&lt;html&gt;&lt;body&gt;&lt;scr...</code>) — makanya tidak bisa dibuka.</li>\n<li>File webp asli <strong>38KB (1478×1823)</strong> ada di <code>sites/webapps.pesanweb.my.id/files/gambar/</code>. Dikonversi ke <code>kucing-moya.jpg</code> (800×986, 83KB), di-deploy, dan <code>happy.html</code> + <code>mooya.html</code> di-update ke jpg. Verifikasi: jpg 200 image/jpeg, kedua img tag benar.</li>\n</ul>\n\n<h3>2. Principle jangan-percai-data-pengguna vs sumber</h3>\n<ul>\n<li>Body node 483 semula <strong>stub 44 char</strong> (\"Validasi dan bersihkan data pengguna.\") vs esai penuh di sumber (validasi + hacking + 4 code container contoh SQL injection + XKCD). Bukan \"sama dengan sumber\".</li>\n<li>Mekanisme: widget principle di lesson memakai <code>body-&gt;view('teaser')</code> (PrincipleTag.php). Jadi esai penuh disimpan di <code>body_value</code>, dan satu kalimat ringkas diset ke <code>body_summary</code> — widget lesson tetap ringkas, halaman principle menampilkan esai penuh.</li>\n<li>Verifikasi: halaman principle render esai (4 container, 7× wombat, XKCD 1×); lesson <code>pustaka-validasi</code> widget tetap menampilkan ringkas saja (essay 0×); alias node 483 tunggal, 0 duplikat.</li>\n<li>Deviasi dicatat: 2 gambar sumber (dog-original.jpg, exploits_of_a_mom.png) 404 di kedua sisi — dihilangkan, tidak dikirim broken img. Link pattern dipetakan ke alias target yang hidup (<code>validasi-halaman-sama</code>, <code>validasi-multifield</code>).</li>\n</ul>\n\n<h3>3. Audit daftar /principles</h3>\n<ul>\n<li>Sumber: <strong>8</strong> principle. Target: <strong>5</strong>. Mapping yang ada: dont-trust-user-data↔jangan-percai-data-pengguna (483), reuse↔gunakan-kembali (482), get-requirements-right↔pahami-kebutuhan-dengan-benar (532), reduce-cognitive-complexity↔kurangi-kompleksitas-kognitif (533), confirm-destructive-actions↔konfirmasi-aksi-destruktif (534).</li>\n<li><strong>3 hilang</strong>: plan-then-zoom, never-store-plain-text-passwords, security-obscurity-doesnt-work.</li>\n<li>Body stub: 482 (85 char), 532 (101), 533 (126) — semuanya jauh lebih pendek dari esai sumbernya. 534 lebih panjang (1112) tapi belum dibandingkan.</li>\n</ul>\n\n<h3>Pelajaran</h3>\n<ul>\n<li>Widget principle memakai teaser view: simpan esai di body_value + ringkas di body_summary — satu node untuk dua halaman.</li>\n<li>Klaim \"identik\" harus dari diff inventory nyata, bukan dari ukuran file yang kebetulan sama.</li>\n<li>File gambar harus divalidasi magic bytes, bukan status 200.</li>\n</ul>"
+}
