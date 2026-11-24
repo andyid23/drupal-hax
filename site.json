@@ -826,6 +826,22 @@
       }
     },
     {
+      "id": "item-0cca42a0-7124-4d2f-82c7-32829a7d1857",
+      "indent": 0,
+      "location": "pages/item-0cca42a0-7124-4d2f-82c7-32829a7d1857/index.html",
+      "slug": "audit-principles-webapps-3-hilang-gambar-kity",
+      "order": 0,
+      "parent": null,
+      "title": "Audit principles webapps: 3 hilang, 4 body stub, gambar Kity",
+      "description": "",
+      "metadata": {
+        "created": 1795501167,
+        "updated": 1795501167,
+        "images": [],
+        "videos": []
+      }
+    },
+    {
       "id": "item-d4e5f6a7",
       "indent": 0,
       "location": "pages/item-d4e5f6a7/index.html",

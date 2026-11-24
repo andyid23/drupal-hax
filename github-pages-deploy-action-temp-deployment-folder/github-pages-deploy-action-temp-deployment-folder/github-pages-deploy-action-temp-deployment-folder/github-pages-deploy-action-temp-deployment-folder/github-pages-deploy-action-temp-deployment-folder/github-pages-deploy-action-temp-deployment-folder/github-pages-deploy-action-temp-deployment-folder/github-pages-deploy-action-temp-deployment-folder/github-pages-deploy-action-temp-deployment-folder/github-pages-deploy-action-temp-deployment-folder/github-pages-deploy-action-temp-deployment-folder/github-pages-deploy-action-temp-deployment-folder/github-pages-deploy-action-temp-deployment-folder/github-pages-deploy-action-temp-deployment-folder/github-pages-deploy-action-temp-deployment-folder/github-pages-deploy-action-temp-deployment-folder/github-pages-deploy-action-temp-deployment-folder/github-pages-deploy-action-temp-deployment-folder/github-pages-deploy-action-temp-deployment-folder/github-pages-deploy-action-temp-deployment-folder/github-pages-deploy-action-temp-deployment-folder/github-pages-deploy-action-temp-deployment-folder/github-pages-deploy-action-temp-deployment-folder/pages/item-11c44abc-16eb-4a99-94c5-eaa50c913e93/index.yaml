@@ -1,0 +1,124 @@
+id: item-11c44abc-16eb-4a99-94c5-eaa50c913e93
+indent: 0
+location: pages/item-11c44abc-16eb-4a99-94c5-eaa50c913e93/index.yaml
+slug: migrasi-aset-skilling-us-lokal
+order: 0
+parent: null
+title: Migrasi aset skilling.us ke lokal selesai
+description: ''
+metadata:
+  created: 1794872174
+  updated: 1794872174
+  images: []
+  videos: []
+content: >-
+  <h2>Laporan: migrasi aset skilling.us ke lokal — selesai (F1–F6)</h2>
+
+  <p>Eksekusi rencana F1–F6 (laporan sebelumnya:
+  "audit-tautan-gambar-skilling-us"). Semua aset gambar, media, lampiran, contoh
+  web, dan aplikasi PHP contoh kini dilayani dari server lokal. Tanggal
+  2026-11.</p>
+
+
+  <h3>Hasil eksekusi</h3>
+
+  <table>
+
+  <tbody><tr><th>Step</th><th>Isi</th><th>Hasil</th></tr>
+
+  <tr><td>F1 — gambar &amp; media</td><td>Unduh 1089 file (964 gambar + karakter
+  + video + audio) ke <code>/skilling/&lt;domain&gt;/sites/…</code>; rewrite
+  <code>&lt;img src&gt;</code> + <code>&lt;source&gt;</code> di 4 DB
+  (multi-langcode), iterasi 3 ronde</td><td><strong>0 hotlink src
+  tersisa</strong> di python, vba, webapps; web menyisakan 6 referensi di dalam
+  contoh kode escaped (dibiarkan — konten ajar)</td></tr>
+
+  <tr><td>F2 — tautan lesson &amp; lampiran</td><td>12 tautan halaman → alias
+  lokal (5 vba, 2 webapps, 2 styling-images lintas situs, 1 filtering); 43
+  lampiran (.xlsm/.csv/.txt/.mp3) → <code>/skilling/…</code></td><td>Semua
+  tautan halaman lokal; 2 tautan vba yang mati (404/403 di sumber sendiri)
+  di-de-link (teks tetap); <code>/patterns</code> dan
+  <code>highlight-questions</code> dibiarkan (halaman katalog sumber masih
+  hidup)</td></tr>
+
+  <tr><td>F3 — extend mirror</td><td>15 halaman webexamples hilang + asetnya (19
+  file)</td><td>Semua path yang dilink webapps kini 200 di
+  <code>/examples/</code></td></tr>
+
+  <tr><td>F4 — tautan webexamples</td><td>Rewrite 21 tautan di webapps →
+  <code>/examples/…</code></td><td>0 tautan webexamples tersisa (1 teks domain
+  dalam <code>&lt;code&gt;</code> — konten ajar, dibiarkan)</td></tr>
+
+  <tr><td>F5 — webappexamples lokal</td><td>Crawl 94 direktori, 200 file
+  PHP/HTML/aset (2,7 MB) → <code>/phpexamples/</code>; nginx <code>location
+  /phpexamples/</code> + autoindex (setia ke sumber Apache); 3 file hilang
+  dilengkapi (dishes, nobody-db.sql); 2 kasus kapitalisasi path
+  diperbaiki</td><td><strong>45/45 path yang dilink = 200</strong>; PHP
+  dieksekusi via php-fpm eksisting (tanpa container baru)</td></tr>
+
+  <tr><td>F6 — cache &amp; verifikasi</td><td>TRUNCATE cache_page +
+  cache_dynamic_page_cache + <strong>cache_render</strong> tiap
+  batch</td><td>Render sampel 4 situs: 0 hotlink, 0 custom-tag-error</td></tr>
+
+  </tbody></table>
+
+
+  <h3>Catatan penting</h3>
+
+  <ul>
+
+  <li><strong>File .php webappexamples adalah output yang sudah
+  di-render</strong> (Apache sumber mengeksekusi sebelum unduhan) — cocok untuk
+  keperluan baca; app ber-DB tampil dengan data demo ("Changes will not be
+  saved" memang bawaan sumber). Kode sumber asli tidak dapat diunduh
+  publik.</li>
+
+  <li><strong>cache_render wajib di-truncate</strong> setelah rewrite body —
+  ditemukan lagi saat verifikasi akhir (render basi menampilkan hotlink yang
+  DB-nya sudah bersih).</li>
+
+  <li>Tiga video lesson navbars (too-narrow, too-wide, just-right) + 1 audio
+  (kieran.mp3) ikut dimigrasi — ditemukan di pemeriksaan per-node.</li>
+
+  <li>Satu gambar sumber 404 (<code>scatter-goats.png</code>, lesson python
+  "Bonus: Membuat Grafik") — dibiarkan hotlink; dicatat sebagai
+  pengecualian.</li>
+
+  <li>Total tambahan disk: ~204 MB dari 180 GB bebas.</li>
+
+  </ul>
+
+
+  <h3>Struktur akhir di docroot bersama</h3>
+
+  <ul>
+
+  <li><code>/skilling/&lt;domain&gt;/sites/…</code> — 1089 file (186 MB):
+  gambar, karakter, video, audio, lampiran .xlsm/.csv/.txt</li>
+
+  <li><code>/phpexamples/…</code> — 200 file (2,7 MB): aplikasi PHP contoh
+  (autoindex seperti sumber)</li>
+
+  <li><code>/examples/…</code> — 65 file (15 MB): situs contoh statis (mirror
+  webexamples)</li>
+
+  </ul>
+
+  <p>Di host:
+  <code>/data/compose/34/drupal8-src/web/{skilling,phpexamples,examples}</code>
+  — bisa dimodifikasi langsung, efek langsung live.</p>
+
+
+  <h3>Sisa ketergantungan eksternal</h3>
+
+  <ul>
+
+  <li><code>vba.skilling.us/patterns</code> (katalog),
+  <code>skilling.us/highlight-questions/</code> — halaman sumber non-lesson,
+  masih hidup.</li>
+
+  <li>1 gambar 404 di sumber (scatter-goats.png).</li>
+
+  <li>6 referensi di contoh kode escaped (web).</li>
+
+  </ul>

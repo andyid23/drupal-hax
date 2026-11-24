@@ -54,3 +54,13 @@
 <tr><td><strong>Tautan luar → tab baru</strong></td><td>✅ 26 node: semua <code>&lt;a href="http(s)://…"&gt;</code> ke luar pesanweb.my.id kini <code>target="_blank" rel="noopener noreferrer"</code> (71/73; 2 sisanya tautan <code>localhost</code> XAMPP milik pembaca — tetap tab sama). Contoh: getgreenshot.org di lesson software-get kini buka tab baru</td></tr>
 </table>
 <p><strong>Temuan baru (menunggu keputusan)</strong>: node 344 (<code>/lesson/software-get</code>) body-nya berisi konten lesson lain (<em>functions-and-teams</em> — checkState/signature), bukan konten software-get (XAMPP, PHPStorm, FileZilla, section Greenshot dgn tautan getgreenshot.org hilang). Body sumber 19,9 KB vs target 4,6 KB. Perlu pembangunan ulang body dari sumber + terjemahan Indonesia.</p>
+
+<h2>Update: karakter Adela/Georgina → Izza (webapps)</h2>
+<p>Permintaan: karakter Adela di <code>/lesson/page-template</code> belum diganti. Audit semua lesson/exercise webapps:</p>
+<ul>
+<li><strong>Blok karakter</strong>: <code>character_adela_smile3</code> (410), <code>character_adela_sceptical4</code> (542), <code>character_adela_aha1</code> (545), <code>character_georgina_smile2</code> (410) → dipetakan ke varian Izza yang ada: senang / heran / kenapa (4 pemetaan).</li>
+<li><strong>Teks prosa</strong>: "Adela" dan "Georgina" → "Izza" di 17 node (termasuk di antara dialog karakter lain).</li>
+<li><strong>Verifikasi</strong>: 0 sisa adela/georgina (internal_name maupun teks); render <code>page-template</code> menampilkan kontainer <code>character_izza_senang</code> dengan foto Izza; cache truncate + cr.</li>
+<li>Karakter Ray/Ethan dipertahankan (konvensi kursus).</li>
+</ul>
+<p><strong>Lokasi file contoh</strong> (<code>/phpexamples/html/page-structure/doggos.html</code>): container <code>/var/www/html2/drupal8/web/phpexamples/html/page-structure/doggos.html</code> = host bind-mount <code>/data/compose/34/drupal8-src/web/phpexamples/html/page-structure/doggos.html</code> — edit di host langsung live. Salinan lain ada di <code>/examples/pupperware/final/doggos.html</code>.</p>

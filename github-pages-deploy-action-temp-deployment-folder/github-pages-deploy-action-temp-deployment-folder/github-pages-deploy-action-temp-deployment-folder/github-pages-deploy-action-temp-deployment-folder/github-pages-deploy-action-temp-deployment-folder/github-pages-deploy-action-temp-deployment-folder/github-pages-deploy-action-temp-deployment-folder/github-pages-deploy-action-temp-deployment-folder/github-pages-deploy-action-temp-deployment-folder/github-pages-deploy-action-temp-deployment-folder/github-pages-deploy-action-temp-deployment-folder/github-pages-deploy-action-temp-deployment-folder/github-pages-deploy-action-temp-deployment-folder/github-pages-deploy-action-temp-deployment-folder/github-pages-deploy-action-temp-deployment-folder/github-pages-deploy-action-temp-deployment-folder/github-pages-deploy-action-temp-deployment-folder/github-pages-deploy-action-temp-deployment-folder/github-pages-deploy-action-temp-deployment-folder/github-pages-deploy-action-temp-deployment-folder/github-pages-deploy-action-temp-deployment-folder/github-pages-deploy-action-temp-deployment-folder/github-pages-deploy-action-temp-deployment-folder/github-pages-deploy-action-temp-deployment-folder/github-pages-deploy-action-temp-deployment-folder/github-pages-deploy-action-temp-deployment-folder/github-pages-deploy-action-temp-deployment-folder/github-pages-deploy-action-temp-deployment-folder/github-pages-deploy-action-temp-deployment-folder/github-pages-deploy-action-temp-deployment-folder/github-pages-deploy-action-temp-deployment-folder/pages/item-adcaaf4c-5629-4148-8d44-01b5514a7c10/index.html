@@ -1,0 +1,46 @@
+<h2>Ringkasan</h2>
+<p>Laporan pengguna: halaman <code>http://webapps.pesanweb.my.id/lesson/griddy-template</code> "banyak tidak rapi tidak lurus atas jadi mepet ke pinggir", dengan potongan teks sampah seperti <code>row"&gt;</code>, <code>kol-12"&gt;</code>, <code>Dunia Doggo</code> di luar kotak kode. Penyelidikan menemukan akar masalahnya bukan satu, melainkan dua lapis yang saling menguatkan.</p>
+
+<h2>Akar masalah 1: kode di dalam kontainer kode ikut diterjemahkan</h2>
+<p>Sesi kloning paralel menerjemahkan isi kode contoh HTML/CSS/PHP ke Indonesia:</p>
+<ul>
+<li><code>&lt;body&gt;</code> menjadi <code>&lt;tubuh&gt;</code>, <code>&lt;head&gt;</code> menjadi <code>&lt;kepala&gt;</code></li>
+<li><code>class="container"</code> menjadi <code>kelas="wadah"</code>, <code>row</code> menjadi <code>baris</code>, <code>col</code> menjadi <code>kol</code></li>
+<li>Bahkan urutan atribut tertukar (<code>&lt;kelas div="…&gt;</code>) dan variabel PHP ikut diterjemahkan (<code>$dog</code> menjadi <code>$anjing</code>, <code>$now</code> menjadi <code>$sekarang</code>, <code>$_GET['dog']</code> menjadi <code>$_GET['anjing']</code>)</li>
+<li>Node MCQ juga: opsi <code>mcq_bold_text</code> menjadi <code>font-tebal: berat;</code> (sumber: <code>font-bold: heavy;</code>)</li>
+</ul>
+
+<h2>Akar masalah 2: template code-container meng-decode entity satu kali</h2>
+<p>Konvensi penyimpanan situs sumber menyimpan isi <code>&lt;li&gt;</code> kode secara ter-escape (<code>&amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;</code>). Template code-container di webapps ini meng-decode entity <strong>satu kali</strong> sebelum output, sehingga:</p>
+<ul>
+<li>Kode HTML single-escape dirender sebagai elemen nyata — <code>&lt;div class="row"&gt;</code> menjadi div sungguhan yang tak terlihat, bukan teks kode</li>
+<li><span class="skilling-code-emph2">span</span> penekanan yang menyertai tanda kutip tak ter-escape bocor ke halaman sebagai teks <code>row"&gt;</code> dan <code>kol-12"&gt;</code> — persis sampah yang dilaporkan pengguna</li>
+<li>Kode VBA/PHP tanpa kurung sudut "terlihat baik" hanya karena kebetulan</li>
+</ul>
+<p><strong>Konvensi perbaikan: kode contoh HTML harus disimpan double-escape</strong> (<code>&amp;amp;lt;body&amp;amp;gt;</code>) dengan <code>&amp;nbsp;</code> dan span penekanan tetap nyata. HTML yang dikirim lalu menampilkan <code>&amp;lt;body&amp;gt;</code>, dan browser menampilkan kode literal dengan penekanan bergaya — persis seperti situs sumber.</p>
+
+<h2>Jebakan tambahan: Textile merusak <code>--</code></h2>
+<p>Pass tipografi Textile menulis ulang literal <code>--</code> (komentar HTML <code>&lt;!-- … --&gt;</code>, komentar SQL) menjadi dash berjarak, jadi komentar tampil rusak (<code>&lt;!  -   Tajuk   -  &gt;</code>). Solusi: simpan tanda hubung sebagai <code>&amp;amp;#45;&amp;amp;#45;</code> — tampilan identik (<code>--</code>) dan tak terlihat oleh Textile.</p>
+
+<h2>Perbaikan yang dieksekusi</h2>
+<ul>
+<li><strong>27 lesson</strong> diperbaiki: front-end-magic (get-bootstrapy, bootstrap-styles, overriding-bs-styles, griddy-template, whats-responsive, being-responsive, responsive-images, navbars, forms), html (few-tags, phpstorm, simple-styling, classes-and-ids, divs-and-spans, broken-styles, images, links, page-components, code-standards), user-accounts (log-inout), validation-library (multifield-validation), capturing-data (add-data, beginning-forms, dropping-down, editing-relationships) — 63+ kontainer kode direstorasi 1:1 dari webapps.skilling.us</li>
+<li><strong>2 node MCQ</strong>: <code>mcq_css_p_tags</code> (nid 381, pertanyaan + 4 opsi) dan <code>mcq_bold_text</code> (nid 392, 4 opsi) — kode opsi direstorasi dari widget sumber</li>
+<li>Komentar HTML di kode diterjemahkan (Header→Tajuk, dsb.) via endpoint MT; semua alias yang terkena save dipin ulang <code>pathauto=0</code>, dedupe, cache rebuild</li>
+<li>Prosedur MT harus <em>stash</em> kontainer kode dulu — menerjemahkan seluruh blok membuat MT menerjemahkan isi kode (<code>&amp;lt;body&amp;gt;</code> berubah jadi <code>&lt;tubuh&gt;</code> karena MT melihat versi ter-decode)</li>
+</ul>
+
+<h2>Verifikasi</h2>
+<ul>
+<li>Rescan 26 lesson: 0 kontainer rusak tersisa (sisa flag hanya 8 lesson PHP yang komentarnya sengaja diterjemahkan)</li>
+<li>Render ulang griddy-template, classes-and-ids, broken-styles, whats-responsive, forms: 0 sampah teks, 0 parser error, kode tampil sebagai teks literal dengan penekanan bergaya</li>
+<li>20 URL dicek: semua HTTP 200</li>
+</ul>
+
+<h2>Yang tersisa</h2>
+<ul>
+<li>8 lesson PHP (enter-php, getting-data, conditional-styles, no-not-there, old-school-debugging, optional-phpstorm-and-xdebug, more-conditions, appending-file, log-record-format) masih membawa nama variabel hasil terjemahan (<code>$anjing</code>, <code>$cutestDog</code>, <code>$sekarang</code>, <code>$Namapengguna</code>) — konsisten dengan prosenya, tapi tidak sama dengan sumber; memulihkan ke Inggris menuntut rombakan prosa juga</li>
+</ul>
+
+<h2>Fold ke skill</h2>
+<p>Skill <code>drupal-lesson-authoring</code> v1.4.0: konvensi double-escape, jebakan Textile <code>--</code>, stash-kontainer-sebelum-MT, dan prosedur perbaikan batch (scanner flag, restore posisional dari sumber, apply + pin alias + dedupe + rebuild, verifikasi render).</p>

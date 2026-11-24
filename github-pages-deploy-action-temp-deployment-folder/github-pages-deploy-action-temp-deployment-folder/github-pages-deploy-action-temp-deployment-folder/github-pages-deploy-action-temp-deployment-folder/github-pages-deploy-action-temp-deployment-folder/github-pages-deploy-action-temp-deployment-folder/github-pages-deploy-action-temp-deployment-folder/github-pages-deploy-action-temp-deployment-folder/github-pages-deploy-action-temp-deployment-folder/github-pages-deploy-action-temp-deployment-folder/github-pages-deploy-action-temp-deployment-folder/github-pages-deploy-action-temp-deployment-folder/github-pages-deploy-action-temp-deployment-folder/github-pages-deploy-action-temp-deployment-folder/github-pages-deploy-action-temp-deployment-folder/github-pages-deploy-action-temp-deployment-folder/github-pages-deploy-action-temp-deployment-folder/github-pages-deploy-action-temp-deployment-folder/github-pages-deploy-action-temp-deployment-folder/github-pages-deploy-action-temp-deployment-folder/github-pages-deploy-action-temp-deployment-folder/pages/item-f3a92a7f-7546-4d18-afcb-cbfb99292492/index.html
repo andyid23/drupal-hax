@@ -48,3 +48,12 @@
 <li><strong>R1 — Probe tautan eksternal</strong>: HEAD-probe 194 tautan, de-link yang mati permanen; tabel hasil dipublikasi.</li>
 <li><strong>R2 — Publikasi laporan</strong> (halaman ini + hasil eksekusi nanti).</li>
 </ul>
+
+<h2>Update: H1, H2, M2 dieksekusi (2026-11); M1 dilewati</h2>
+<ul>
+<li><strong>H1 selesai</strong>: DB <code>webappexamples</code> + user khusus dibuat di mariadb eksisting; books.sql di-import; app books ditulis ulang dengan PDO (index/books/authors.php + tautkan/lepas relasi <code>wrote</code>, hapus) — CRUD terverifikasi via POST nyata; file render lama di-backup di <code>.render-backup/</code>; data uji dibersihkan (DB kosong seperti sumber). Password DB di-reset setelah tidak sengaja terekspoz di log dan disimpan root-only.</li>
+<li><strong>H2 selesai</strong> (dua app, lewati dishes — tak ada dump): (a) <strong>nobody</strong> (episode ⇄ orang, m-n): import <code>nobody-db.sql</code> (16 orang, 10 episode); index/episodes/people/person/episode.php dengan PDO — person.php?id=12 menampilkan Raymond + episode "95. Hero on Aisle 7!". (b) <strong>wombat-list</strong>: tabel <code>wombats</code> dibuat dari kolom dump + 17 baris data; wombat-list.php + show-wombat.php (perilaku setia: tanpa id → pesan galat seperti sumber).</li>
+<li><strong>M2 selesai</strong>: 8 halaman + aset andy1.rf.gd ditarik ke <code>/examples/</code> (kucing/kity2, mooya, cryptid, basic-styles, cards, carousels, forms); 20 tautan di-rewrite dengan terjemahan path (grid→grids, gambar-responsif→responsive-images, restauran→restaurant); verifikasi 13 target = 200. Sisa 3 penyebutan andy1.rf.gd = teks/kode ajar (bukan tautan) — dibiarkan.</li>
+<li><strong>M1 dilewati</strong> sesuai keputusan.</li>
+</ul>
+<p><strong>Status: DB Drupal tak tersentuh; tiga app contoh kini benar-benar ber-DB lokal.</strong></p>

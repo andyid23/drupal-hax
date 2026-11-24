@@ -1,0 +1,39 @@
+<h2>Perbaikan 5 isu: contoh PHP debugging-old-school, attachment kucing, refleksi broken-styles, gambar Kity</h2>
+<p>Laporan pengguna mencakup lima hal di <code>webapps.pesanweb.my.id</code>. Diagnosis dari data nyata (curl via nginx + Host header, dump DB, banding sumber), bukan asumsi.</p>
+
+<h3>1. bug2/3/4/6.php — baris debug hilang</h3>
+<ul>
+<li>Href di lesson <strong>sudah benar</strong> dan logika cost <strong>sudah benar</strong> (0.4). Yang hilang: blok debug <code>&lt;pre&gt;</code> yang di-echo sebelum doctype (ter-strip saat clone).</li>
+<li>Sumber asli di <code>webappexamples.skilling.us</code> (bukan webapps.skilling.us — URL itu 404); WAF-nya 406 untuk curl tanpa UA, jadi golden direkonstruksi dari body lesson yang memang sudah memuat teksnya.</li>
+<li>Restorasi per file sesuai golden: bug2 = After GET; bug3/4 = +cost; bug6 = +cost +Before if <em>false</em> +After if <em>0.4</em>.</li>
+<li>Verifikasi curl <code>?quonks=1&amp;insured=Y</code>: keempat output kini cocok dengan golden. bug1/bug5 tidak tersentuh (tetap 200).</li>
+</ul>
+
+<h3>2. Tautan exercise fakta-kucing-rusak "tidak bisa"</h3>
+<ul>
+<li><code>dog.html</code> ternyata <strong>halaman 404 Drupal yang tersimpan sebagai file</strong> (35KB "Page not found") — status 200, jadi cek status-saja tidak mendeteksinya.</li>
+<li>Di-rebuild dari sampel kode ter-escape di body lesson + analisis screenshot tujuan (<code>kucing_0.jpg</code>): halaman "Kucing Fakta Menarik", ol 5 fakta.</li>
+<li><code>styles.css</code> sudah benar: CSS sengaja-rusak (back-color, sansserif, font-weight: bald, orenge, italian, <code>ol l1</code>) — sesuai desain lesson, tidak dibetulkan.</li>
+</ul>
+
+<h3>3. Refleksi broken-styles "tidak ada"</h3>
+<ul>
+<li>Ternyata <strong>sudah ada</strong> di HTML target: <code>286-reflect_refresh_bold_or_not</code>, id &amp; posisi identik sumber (4 pause sebelum reflect di kedua halaman). Tidak ada perubahan.</li>
+</ul>
+
+<h3>4. Ganti gambar Kity di happy.html</h3>
+<ul>
+<li><code>img</code> diganti: rosie1.jpg → <code>kucing-moya.webp</code> (alt="Kity"), verifikasi 200 image/webp.</li>
+</ul>
+
+<h3>Catatan kecil</h3>
+<ul>
+<li><code>&lt;link href="styles.css"&gt;</code> di halaman bug 404 lokal, dan file sumber tak bisa dikonfirmasi (WAF 406). Teks golden tidak menyebut styling — dibiarkan, jangan mengarang.</li>
+</ul>
+
+<h3>Pelajaran</h3>
+<ul>
+<li>Cek status HTTP saja tidak cukup: attachment 200 bisa berisi halaman 404 tersimpan — selalu inspeksi isi.</li>
+<li>Sebelum "menambah" widget yang dilaporkan hilang, bandingkan dulu id &amp; posisi dengan sumber — bisa jadi sudah ada.</li>
+<li>Restorasi file contoh: cocokkan echo debug dengan teks golden di body lesson, bukan tebak-tebakan.</li>
+</ul>
